@@ -204,27 +204,45 @@ function toBufferGeometry(geometry) {
 	let colors2 = new Float32Array(arrayLength);
 
 	let hasColors = !!geometry.morphColors;
-
+    console.log("here");
 	geometry.faces.forEach(function (face, index) {
-		positions[index*9 + 0] = geometry.vertices[face.a].x;
-		positions[index*9 + 1] = geometry.vertices[face.a].y;
-		positions[index*9 + 2] = geometry.vertices[face.a].z;
-		positions[index*9 + 3] = geometry.vertices[face.b].x;
-		positions[index*9 + 4] = geometry.vertices[face.b].y;
-		positions[index*9 + 5] = geometry.vertices[face.b].z;
-		positions[index*9 + 6] = geometry.vertices[face.c].x;
-		positions[index*9 + 7] = geometry.vertices[face.c].y;
-		positions[index*9 + 8] = geometry.vertices[face.c].z;
 
-		normals[index*9 + 0] = face.vertexNormals[0].x;
-		normals[index*9 + 1] = face.vertexNormals[0].y;
-		normals[index*9 + 2] = face.vertexNormals[0].z;
-		normals[index*9 + 3] = face.vertexNormals[1].x;
-		normals[index*9 + 4] = face.vertexNormals[1].y;
-		normals[index*9 + 5] = face.vertexNormals[1].z;
-		normals[index*9 + 6] = face.vertexNormals[2].x;
-		normals[index*9 + 7] = face.vertexNormals[2].y;
-		normals[index*9 + 8] = face.vertexNormals[2].z;
+        //size scale
+        let xmult = lungScale.x;//width
+        let ymult = lungScale.y;//depth
+        let zmult = lungScale.z;//height
+
+        positions[index*9 + 0] = geometry.vertices[face.a].x * xmult;
+        positions[index*9 + 3] = geometry.vertices[face.b].x * xmult;
+        positions[index*9 + 6] = geometry.vertices[face.c].x * xmult;
+
+        positions[index*9 + 1] = geometry.vertices[face.a].y * ymult;
+        positions[index*9 + 4] = geometry.vertices[face.b].y * ymult;
+        positions[index*9 + 7] = geometry.vertices[face.c].y * ymult;
+
+		positions[index*9 + 2] = geometry.vertices[face.a].z * zmult;
+		positions[index*9 + 5] = geometry.vertices[face.b].z * zmult;
+		positions[index*9 + 8] = geometry.vertices[face.c].z * zmult;
+
+		normals[index*9 + 0] = face.vertexNormals[0].x * xmult;
+		normals[index*9 + 1] = face.vertexNormals[0].y * ymult;
+		normals[index*9 + 2] = face.vertexNormals[0].z * zmult;
+		normals[index*9 + 3] = face.vertexNormals[1].x * xmult;
+		normals[index*9 + 4] = face.vertexNormals[1].y * ymult;
+		normals[index*9 + 5] = face.vertexNormals[1].z * zmult;
+		normals[index*9 + 6] = face.vertexNormals[2].x * xmult;
+		normals[index*9 + 7] = face.vertexNormals[2].y * ymult;
+        normals[index*9 + 8] = face.vertexNormals[2].z * zmult;
+        
+        // normals[index*9 + 0] = face.vertexNormals[0].x;
+		// normals[index*9 + 1] = face.vertexNormals[0].y;
+		// normals[index*9 + 2] = face.vertexNormals[0].z;
+		// normals[index*9 + 3] = face.vertexNormals[1].x;
+		// normals[index*9 + 4] = face.vertexNormals[1].y;
+		// normals[index*9 + 5] = face.vertexNormals[1].z;
+		// normals[index*9 + 6] = face.vertexNormals[2].x;
+		// normals[index*9 + 7] = face.vertexNormals[2].y;
+		// normals[index*9 + 8] = face.vertexNormals[2].z;
 
 		if (hasColors) {
 			let cis = [face.a, face.b, face.c];

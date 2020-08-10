@@ -55,3 +55,10 @@ document.getElementById('information').addEventListener('click', function(e) {
 	}
 });
 
+var lungScale = {
+    x : 1,//width
+    y : 1,//depth
+    z : 1//height
+}
+
+var numbers = [1,1,1];
