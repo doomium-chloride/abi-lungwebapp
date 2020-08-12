@@ -7,31 +7,18 @@
 		<a class="nav-button" href="#/breathing-gas-exchange">Learn more about GAS<br>EXCHANGE</a>
 	</article>
 	<article class="right clickable">
-        Age:
+        Age: <span id="show-age"></span>
         <input type="range" min="1" max="200" value="100" class="slider" id="slider-age">
-        Gender:
+        Gender: <span id="show-gender"></span>
         <input type="range" min="1" max="200" value="100" class="slider" id="slider-gender">
-        FEV1:
+        FEV1: <span id="show-fev1"></span>
         <input type="range" min="1" max="200" value="100" class="slider" id="slider-fev1">
-        %TLC:
+        %TLC: <span id="show-tlc"></span>
         <input type="range" min="1" max="200" value="100" class="slider" id="slider-tlc">
 	</article>
 </section>
 
 <script>
-loadScene({
-	vs: 'shaders/surface.vs',
-	fs: 'shaders/surface.fs',
-	view: 'models/surface_view.json',
-	models: [
-		'models/surface_1.json',
-		'models/surface_2.json',
-		'models/surface_3.json',
-		'models/surface_4.json',
-		'models/surface_5.json',
-		'models/surface_6.json',
-	],
-}, surfaceUniforms);
 //initialise the scripts that control the sliders
 initSliders();
 </script>
