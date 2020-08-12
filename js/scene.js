@@ -104,13 +104,14 @@ const setScene = function (name, scene, material) {
 
 // vs and fs are shader files
 
-const loadScene = function(data, uniforms) {
+const loadScene = function(data, uniforms, pca = null) {
 	if (!zincRenderer) {
 		console.error('zinc not loaded');
 		return;
 	}
 
-	let name = JSON.stringify(data).hashCode();
+    let name = (JSON.stringify(data) + pca + "").hashCode();
+
 	if (name in scenes) {
 		setScene(name, scenes[name], materials[name]);
 		return;
@@ -119,7 +120,7 @@ const loadScene = function(data, uniforms) {
 	startLoading();
 	const scene = zincRenderer.createScene(name);
 	Zinc.loadExternalFiles([data.vs, data.fs], function (shaderText) {
-		scene.loadViewURL(data.view);
+            scene.loadViewURL(data.view);
 
 		const material = new THREE.ShaderMaterial({
 			vertexShader: shaderText[0],
