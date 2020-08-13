@@ -104,7 +104,7 @@ const setScene = function (name, scene, material) {
 
 // vs and fs are shader files
 
-const loadScene = function(data, uniforms, pca = null) {
+const loadScene = function(data, uniforms, pca = null, keepViewPort = false) {
 	if (!zincRenderer) {
 		console.error('zinc not loaded');
 		return;
@@ -118,10 +118,17 @@ const loadScene = function(data, uniforms, pca = null) {
 	}
 
 	startLoading();
-	const scene = zincRenderer.createScene(name);
+    const scene = zincRenderer.createScene(name);
+    
 	Zinc.loadExternalFiles([data.vs, data.fs], function (shaderText) {
+        
+        
+        if(keepViewPort){
+            scene.getZincCameraControls().setCurrentCameraSettings(currentViewPort);
+        } else{
             scene.loadViewURL(data.view);
-
+        }
+            
 		const material = new THREE.ShaderMaterial({
 			vertexShader: shaderText[0],
 			fragmentShader: shaderText[1],
@@ -133,7 +140,9 @@ const loadScene = function(data, uniforms, pca = null) {
 		});
 
     loadModels(name, scene, data, material);
-	});
+    });
+
+    globalScene = scene;
 };
 
 const loadModels = function (name, scene, data, material) {
@@ -220,7 +229,7 @@ function toBufferGeometry(geometry) {
 	let colors2 = new Float32Array(arrayLength);
 
 	let hasColors = !!geometry.morphColors;
-    console.log("here");
+
 	geometry.faces.forEach(function (face, index) {
 
         //size scale

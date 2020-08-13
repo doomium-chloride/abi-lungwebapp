@@ -61,4 +61,10 @@ var lungScale = {
     z : 1//height
 }
 
-var numbers = [1,1,1];
+var numbers = [1,1,1,0];
+
+var globalScene = null;
+
+var currentViewPort = null;
+
+var viewPortListenerAdded = false;

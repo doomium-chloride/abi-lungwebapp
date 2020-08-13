@@ -1,36 +1,22 @@
 var showSliders = false;
 
-var rendererComponent;
-
 function setSliderValue(value, slider, spanID){
     let span = document.getElementById(spanID);
     span.innerText = value + "";
     slider.value = value;
 }
 
-function initSliders(){
-    let sliderAge = document.getElementById('slider-age');
-    sliderAge.addEventListener('input', (event) => sliderListener(event, dummyFormula, 0));
-    sliderAge.addEventListener('input', (event) => showValue(event, 'show-age'));
-    sliderSetValue(numbers[0], dummyFormula, 0)
-    setSliderValue(numbers[0], sliderAge, 'show-age');
+function saveViewPort(){
+    currentViewPort = globalScene.getZincCameraControls().getCurrentViewport();
+    console.log(globalScene.getZincCameraControls());
+}
 
-    let sliderGender = document.getElementById('slider-gender');
-    sliderGender.addEventListener('input', (event) => showValue(event, 'show-gender'));
+function initScene(){
 
-    let sliderFev1 = document.getElementById('slider-fev1');
-    sliderFev1.addEventListener('input', (event) => sliderListener(event, dummyFormula, 1));
-    sliderFev1.addEventListener('input', (event) => showValue(event, 'show-fev1'));
-    sliderSetValue(numbers[1], dummyFormula, 1)
-    setSliderValue(numbers[0], sliderFev1, 'show-fev1');
-
-    let sliderTlc = document.getElementById('slider-tlc');
-    sliderTlc.addEventListener('input', (event) => sliderListener(event, dummyFormula, 2));
-    sliderTlc.addEventListener('input', (event) => showValue(event, 'show-tlc'));
-    sliderSetValue(numbers[1], dummyFormula, 1)
-    setSliderValue(numbers[0], sliderTlc, 'show-tlc');
-    
-    rendererComponent = document.getElementById('renderer');
+    if(!viewPortListenerAdded){
+        document.addEventListener('mouseup', saveViewPort);
+        viewPortListenerAdded = true;
+    }
 
     loadScene({
         vs: 'shaders/surface.vs',
@@ -44,7 +30,35 @@ function initSliders(){
             'models/surface_5.json',
             'models/surface_6.json',
         ],
-    }, surfaceUniforms, Math.random());
+    }, surfaceUniforms);
+}
+
+function initSliders(){
+
+    initScene();
+
+    let sliderAge = document.getElementById('slider-age');
+    sliderAge.addEventListener('input', (event) => sliderListener(event, dummyFormula, 0));
+    sliderAge.addEventListener('input', (event) => showValue(event, 'show-age'));
+    sliderSetValue(numbers[0], dummyFormula, 0, false)
+    setSliderValue(numbers[0], sliderAge, 'show-age');
+
+    let sliderGender = document.getElementById('slider-gender');
+    sliderGender.addEventListener('input', (event) => showValue(event, 'show-gender'));
+    setSliderValue(numbers[3], sliderGender, 'show-gender');
+
+    let sliderFev1 = document.getElementById('slider-fev1');
+    sliderFev1.addEventListener('input', (event) => sliderListener(event, dummyFormula, 1));
+    sliderFev1.addEventListener('input', (event) => showValue(event, 'show-fev1'));
+    sliderSetValue(numbers[1], dummyFormula, 1, false)
+    setSliderValue(numbers[1], sliderFev1, 'show-fev1');
+
+    let sliderTlc = document.getElementById('slider-tlc');
+    sliderTlc.addEventListener('input', (event) => sliderListener(event, dummyFormula, 2));
+    sliderTlc.addEventListener('input', (event) => showValue(event, 'show-tlc'));
+    sliderSetValue(numbers[2], dummyFormula, 2, false)
+    setSliderValue(numbers[2], sliderTlc, 'show-tlc');
+
 }
 
 function showValue(event, spanID){
@@ -53,17 +67,14 @@ function showValue(event, spanID){
     span.innerText = value + "";
 }
 
-function sliderListener(event, formula, opt){
-    sliderSetValue(event.target.value, formula, opt);
+function sliderListener(event, formula, opt, keepViewPort = true){
+    sliderSetValue(event.target.value, formula, opt, keepViewPort);
 }
 
-function sliderSetValue(value, formula, opt){
+function sliderSetValue(value, formula, opt, keepViewPort = true){
     numbers[opt] = value;
     let vector3 = formula(numbers[0], numbers[1], numbers[2]);
     setLungScale(vector3);
-    console.log(lungScale);
-
-    let currentScene = zincRenderer.getCurrentScene();
 
     loadScene({
         vs: 'shaders/surface.vs',
@@ -77,7 +88,7 @@ function sliderSetValue(value, formula, opt){
             'models/surface_5.json',
             'models/surface_6.json',
         ],
-    }, surfaceUniforms, Math.random());
+    }, surfaceUniforms, Math.random(), keepViewPort);
 
 }
 
