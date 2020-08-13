@@ -1,5 +1,7 @@
 var showSliders = false;
 
+let renderer;
+
 function setSliderValue(value, slider, spanID){
     let span = document.getElementById(spanID);
     span.innerText = value + "";
@@ -8,15 +10,15 @@ function setSliderValue(value, slider, spanID){
 
 function saveViewPort(){
     currentViewPort = globalScene.getZincCameraControls().getCurrentViewport();
-    console.log(globalScene.getZincCameraControls());
 }
 
 function initScene(){
 
-    if(!viewPortListenerAdded){
-        document.addEventListener('mouseup', saveViewPort);
-        viewPortListenerAdded = true;
-    }
+
+    // if(!viewPortListenerAdded){
+    //     document.addEventListener('mouseup', saveViewPort);
+    //     viewPortListenerAdded = true;
+    // }
 
     loadScene({
         vs: 'shaders/surface.vs',
@@ -36,6 +38,9 @@ function initScene(){
 function initSliders(){
 
     initScene();
+    saveViewPort();
+
+    let sliders = document.getElementById('slider-section');
 
     let sliderAge = document.getElementById('slider-age');
     sliderAge.addEventListener('input', (event) => sliderListener(event, dummyFormula, 0));
@@ -59,6 +64,7 @@ function initSliders(){
     sliderSetValue(numbers[2], dummyFormula, 2, false)
     setSliderValue(numbers[2], sliderTlc, 'show-tlc');
 
+    sliders.addEventListener('mousedown', saveViewPort);
 }
 
 function showValue(event, spanID){

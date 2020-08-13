@@ -119,7 +119,7 @@ const loadScene = function(data, uniforms, pca = null, keepViewPort = false) {
 
 	startLoading();
     const scene = zincRenderer.createScene(name);
-    
+    globalScene = scene;
 	Zinc.loadExternalFiles([data.vs, data.fs], function (shaderText) {
         
         
@@ -141,8 +141,6 @@ const loadScene = function(data, uniforms, pca = null, keepViewPort = false) {
 
     loadModels(name, scene, data, material);
     });
-
-    globalScene = scene;
 };
 
 const loadModels = function (name, scene, data, material) {
