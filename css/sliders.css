@@ -30,3 +30,7 @@
     border: 3px solid seashell;
     cursor: pointer;
 }
+
+.toggle-button {
+    text-align: right;
+}

@@ -2,8 +2,9 @@ var showSliders = false;
 
 let renderer;
 
-function setSliderValue(value, slider, spanID){
-    let span = document.getElementById(spanID);
+let optionalSliders = [];
+
+function setSliderValue(value, slider, span){
     span.innerText = value + "";
     slider.value = value;
 }
@@ -37,49 +38,72 @@ function initScene(){
 
 function initSliders(){
 
+    optionalSliders = [];
+
     initScene();
     saveViewPort();
 
     let sliders = document.getElementById('slider-section');
 
-    let sliderAge = document.getElementById('slider-age');
-    sliderAge.addEventListener('input', (event) => sliderListener(event, dummyFormula, 0));
-    sliderAge.addEventListener('input', (event) => showValue(event, 'show-age'));
-    sliderSetValue(numbers[0], dummyFormula, 0, false)
-    setSliderValue(numbers[0], sliderAge, 'show-age');
+    //toggle button
+    let toggleButton = document.getElementById('auto-fill-toggle');
+    toggleButton.addEventListener('click', () => toggleAutoButton(toggleButton));
+    toggleAutoButton(toggleButton, true);
 
-    let sliderGender = document.getElementById('slider-gender');
-    sliderGender.addEventListener('input', (event) => showValue(event, 'show-gender'));
-    setSliderValue(numbers[3], sliderGender, 'show-gender');
+    //age
+    initSliderCombo('age');
 
-    let sliderFev1 = document.getElementById('slider-fev1');
-    sliderFev1.addEventListener('input', (event) => sliderListener(event, dummyFormula, 1));
-    sliderFev1.addEventListener('input', (event) => showValue(event, 'show-fev1'));
-    sliderSetValue(numbers[1], dummyFormula, 1, false)
-    setSliderValue(numbers[1], sliderFev1, 'show-fev1');
+    //height
+    initSliderCombo('height');
 
-    let sliderTlc = document.getElementById('slider-tlc');
-    sliderTlc.addEventListener('input', (event) => sliderListener(event, dummyFormula, 2));
-    sliderTlc.addEventListener('input', (event) => showValue(event, 'show-tlc'));
-    sliderSetValue(numbers[2], dummyFormula, 2, false)
-    setSliderValue(numbers[2], sliderTlc, 'show-tlc');
+    //bmi
+    initSliderCombo('bmi');
+
+    //sex gender
+    initSliderCombo('gender');
+
+    //fvc
+    initSliderCombo('fvc', true);
+
+    //rv/tlc
+    initSliderCombo('rvtlc', true);
+
+    //dlco
+    initSliderCombo('dlco', true);
 
     sliders.addEventListener('mousedown', saveViewPort);
+    saveViewPort();
 }
 
-function showValue(event, spanID){
-    let value = event.target.value;
+function initSliderCombo(variable, optional = false){
+    let sliderID = 'slider-' + variable;
+    let spanID = 'show-' + variable;
+    initSliderPart(sliderID, spanID, variable, optional);
+}
+
+function initSliderPart(sliderID, spanID, variable, optional = false){
+    let slider = document.getElementById(sliderID);
     let span = document.getElementById(spanID);
+    slider.addEventListener('input', (event) => sliderListener(event, variable));
+    slider.addEventListener('input', (event) => showValue(event, span));
+    sliderSetValue(sliderVariables[variable], variable, false)
+    setSliderValue(sliderVariables[variable], slider, span);
+    if(optional){
+        optionalSliders.push({slider: slider, variable: variable, span: span});
+    }
+}
+
+function showValue(event, span){
+    let value = event.target.value;
     span.innerText = value + "";
 }
 
-function sliderListener(event, formula, opt, keepViewPort = true){
-    sliderSetValue(event.target.value, formula, opt, keepViewPort);
+function sliderListener(event, variable, keepViewPort = true){
+    sliderSetValue(event.target.value, variable, keepViewPort);
 }
 
-function sliderSetValue(value, formula, opt, keepViewPort = true){
-    numbers[opt] = value;
-    let vector3 = formula(numbers[0], numbers[1], numbers[2]);
+function updateLungModel(keepViewPort = true){
+    let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
     setLungScale(vector3);
 
     loadScene({
@@ -95,7 +119,28 @@ function sliderSetValue(value, formula, opt, keepViewPort = true){
             'models/surface_6.json',
         ],
     }, surfaceUniforms, Math.random(), keepViewPort);
+}
 
+function sliderSetValue(value, variable, keepViewPort = true){
+    sliderVariables[variable] = value;
+    if(globalAutoFill){
+        autoSetVariables();
+    }
+    //let vector3 = testFormulaEI(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc, sliderVariables.dlco, sliderVariables.rvtlc);
+    updateLungModel(keepViewPort);
+
+}
+
+function autoSetVariables(){
+    let len = optionalSliders.length;
+    for(let i = 0; i < len; i++){
+        let slider = optionalSliders[i].slider;
+        let variable = optionalSliders[i].variable;
+        let span = optionalSliders[i].span;
+        autoFormula(variable);
+        setSliderValue(sliderVariables[variable], slider, span);
+    }
+    updateLungModel();
 }
 
 function setLungScale(vector3){
@@ -118,4 +163,92 @@ function dumbFormula(value){
 
 function dummyFormula(age, fev1, tlc){
     return [1 + dumbFormula(age), 1 + dumbFormula(fev1), 1 + dumbFormula(tlc)];
+}
+
+function testFormulaEI(age, bmi, fvc, dlco, rvtlc){
+    let m1 = 1.38 + (-0.04 * age) + (0.38 * fvc) + (-0.04 * dlco);
+    let m2 = 3.49 + (-0.16 * bmi) + 0.02 * rvtlc;
+    let m3 = 4.90 + (-0.02 * age) + (-0.45 * rvtlc);//this line is wrong!!!
+    return [m1, m2, m3];
+}
+
+function testFormulaEE(){
+    
+}
+
+
+function autoFormula(variable){
+    switch(variable){
+        case 'fvc':
+            sliderVariables[variable] = formulaFvc(sliderVariables.age, sliderVariables.height, sliderVariables.gender);
+            break;
+        case 'rvtlc':
+            sliderVariables[variable] = formulaRvtlc(sliderVariables.age, sliderVariables.gender);
+            break;
+        case 'dlco':
+            sliderVariables[variable] = formulaDlco(sliderVariables.height, sliderVariables.age, sliderVariables.gender);
+            break;
+        default:
+            console.log("Something wrong in autoFormula")
+            //do nothing, send notice in console. This should not be reached.
+    }
+}
+
+function formulaRvtlc(age, male){
+    if(male){
+        return (age * 0.29125) + 14.7;
+    } else{
+        return (age * 0.3424) + 16.4;
+    }
+}
+
+//(height = cm, weight = kg)
+function formulaDlco(height, age, male){
+    if(male){
+        return ((0.1217 * height) - (0.057 * age) - 8.05) * 2.986;
+    } else{
+        return ((0.0911 * height) - (0.043 * age) - 4.93) * 2.986;
+    }
+}
+
+function formulaFvc(age, height, male){
+    if(male){
+        return - 4.38775 - 0.01184 * age + 0.05547 * height;
+    } else{
+        return - 3.09063 + 0.003904 * age + 0.038694 * height;
+    }
+}
+
+function autoSet(value, slider){
+    let event = new Event('input', {
+        target: {value: value}
+    });
+    slider.value = value;
+    slider.dispatchEvent(event);
+}
+
+function toggleSliders(disabled){
+    let len = optionalSliders.length;
+    for(let i = 0; i < len; i++){
+        optionalSliders[i].slider.disabled = disabled;
+    }
+}
+
+function toggleAutoButton(button, init = false){
+    let toggled;//true = auto & disabled. false = manual & enabled
+    if(init){
+        toggled = globalAutoFill;
+    } else{
+        toggled = !globalAutoFill;//flip state
+    }
+    
+    globalAutoFill = toggled;
+
+    toggleSliders(toggled);
+
+    if(toggled){
+        button.innerText = "ON";
+    } else{
+        button.innerText = "OFF";
+    }
 }

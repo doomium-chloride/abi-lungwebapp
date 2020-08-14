@@ -63,8 +63,20 @@ var lungScale = {
 
 var numbers = [1,1,1,0];
 
+var sliderVariables = {
+    age: 100,
+    gender: 0,
+    height: 100,
+    bmi: 100,
+    fvc: 100,
+    dlco: 100,
+    rvtlc: 100
+};
+
 var globalScene = null;
 
 var currentViewPort = null;
 
 var viewPortListenerAdded = false;
+
+var globalAutoFill = false;
