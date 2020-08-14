@@ -248,6 +248,7 @@ function toggleAutoButton(button, init = false){
 
     if(toggled){
         button.innerText = "ON";
+        autoSetVariables();
     } else{
         button.innerText = "OFF";
     }
