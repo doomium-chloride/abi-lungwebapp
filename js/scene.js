@@ -247,25 +247,25 @@ function toBufferGeometry(geometry) {
 		positions[index*9 + 5] = geometry.vertices[face.b].z * zmult;
 		positions[index*9 + 8] = geometry.vertices[face.c].z * zmult;
 
-		normals[index*9 + 0] = face.vertexNormals[0].x * xmult;
-		normals[index*9 + 1] = face.vertexNormals[0].y * ymult;
-		normals[index*9 + 2] = face.vertexNormals[0].z * zmult;
-		normals[index*9 + 3] = face.vertexNormals[1].x * xmult;
-		normals[index*9 + 4] = face.vertexNormals[1].y * ymult;
-		normals[index*9 + 5] = face.vertexNormals[1].z * zmult;
-		normals[index*9 + 6] = face.vertexNormals[2].x * xmult;
-		normals[index*9 + 7] = face.vertexNormals[2].y * ymult;
-        normals[index*9 + 8] = face.vertexNormals[2].z * zmult;
+		// normals[index*9 + 0] = face.vertexNormals[0].x * xmult;
+		// normals[index*9 + 1] = face.vertexNormals[0].y * ymult;
+		// normals[index*9 + 2] = face.vertexNormals[0].z * zmult;
+		// normals[index*9 + 3] = face.vertexNormals[1].x * xmult;
+		// normals[index*9 + 4] = face.vertexNormals[1].y * ymult;
+		// normals[index*9 + 5] = face.vertexNormals[1].z * zmult;
+		// normals[index*9 + 6] = face.vertexNormals[2].x * xmult;
+		// normals[index*9 + 7] = face.vertexNormals[2].y * ymult;
+        // normals[index*9 + 8] = face.vertexNormals[2].z * zmult;
         
-        // normals[index*9 + 0] = face.vertexNormals[0].x;
-		// normals[index*9 + 1] = face.vertexNormals[0].y;
-		// normals[index*9 + 2] = face.vertexNormals[0].z;
-		// normals[index*9 + 3] = face.vertexNormals[1].x;
-		// normals[index*9 + 4] = face.vertexNormals[1].y;
-		// normals[index*9 + 5] = face.vertexNormals[1].z;
-		// normals[index*9 + 6] = face.vertexNormals[2].x;
-		// normals[index*9 + 7] = face.vertexNormals[2].y;
-		// normals[index*9 + 8] = face.vertexNormals[2].z;
+        normals[index*9 + 0] = face.vertexNormals[0].x;
+		normals[index*9 + 1] = face.vertexNormals[0].y;
+		normals[index*9 + 2] = face.vertexNormals[0].z;
+		normals[index*9 + 3] = face.vertexNormals[1].x;
+		normals[index*9 + 4] = face.vertexNormals[1].y;
+		normals[index*9 + 5] = face.vertexNormals[1].z;
+		normals[index*9 + 6] = face.vertexNormals[2].x;
+		normals[index*9 + 7] = face.vertexNormals[2].y;
+		normals[index*9 + 8] = face.vertexNormals[2].z;
 
 		if (hasColors) {
 			let cis = [face.a, face.b, face.c];

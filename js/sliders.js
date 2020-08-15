@@ -5,12 +5,13 @@ let renderer;
 let optionalSliders = [];
 
 function setSliderValue(value, slider, span){
-    span.innerText = value + "";
+    span.innerText = round2(value) + "";
     slider.value = value;
 }
 
 function saveViewPort(){
     currentViewPort = globalScene.getZincCameraControls().getCurrentViewport();
+    //console.log(globalScene.getZincCameraControls().getCurrentViewport().upVector);
 }
 
 function initScene(){
@@ -72,7 +73,8 @@ function initSliders(){
     initSliderCombo('dlco', true);
 
     sliders.addEventListener('mousedown', saveViewPort);
-    saveViewPort();
+
+    updateLungModel(false)
 }
 
 function initSliderCombo(variable, optional = false){
@@ -252,4 +254,8 @@ function toggleAutoButton(button, init = false){
     } else{
         button.innerText = "OFF";
     }
+}
+
+function round2(number){
+    return Math.round(number * 100) / 100
 }
