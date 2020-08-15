@@ -1,3 +1,4 @@
+
 var showSliders = false;
 
 let renderer;
@@ -9,18 +10,8 @@ function setSliderValue(value, slider, span){
     slider.value = value;
 }
 
-function saveViewPort(){
-    currentViewPort = globalScene.getZincCameraControls().getCurrentViewport();
-    //console.log(globalScene.getZincCameraControls().getCurrentViewport().upVector);
-}
-
 function initScene(){
 
-
-    // if(!viewPortListenerAdded){
-    //     document.addEventListener('mouseup', saveViewPort);
-    //     viewPortListenerAdded = true;
-    // }
 
     loadScene({
         vs: 'shaders/surface.vs',
@@ -42,7 +33,6 @@ function initSliders(){
     optionalSliders = [];
 
     initScene();
-    saveViewPort();
 
     let sliders = document.getElementById('slider-section');
 
@@ -71,8 +61,6 @@ function initSliders(){
 
     //dlco
     initSliderCombo('dlco', true);
-
-    sliders.addEventListener('mousedown', saveViewPort);
 
     updateLungModel(false)
 }
@@ -108,19 +96,24 @@ function updateLungModel(keepViewPort = true){
     let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
     setLungScale(vector3);
 
-    loadScene({
-        vs: 'shaders/surface.vs',
-        fs: 'shaders/surface.fs',
-        view: 'models/surface_view.json',
-        models: [
-            'models/surface_1.json',
-            'models/surface_2.json',
-            'models/surface_3.json',
-            'models/surface_4.json',
-            'models/surface_5.json',
-            'models/surface_6.json',
-        ],
-    }, surfaceUniforms, Math.random(), keepViewPort);
+    if(keepViewPort){
+        reloadModels();
+    } else{
+        loadScene({
+            vs: 'shaders/surface.vs',
+            fs: 'shaders/surface.fs',
+            view: 'models/surface_view.json',
+            models: [
+                'models/surface_1.json',
+                'models/surface_2.json',
+                'models/surface_3.json',
+                'models/surface_4.json',
+                'models/surface_5.json',
+                'models/surface_6.json',
+            ],
+        }, surfaceUniforms, Math.random());
+    }
+    
 }
 
 function sliderSetValue(value, variable, keepViewPort = true){

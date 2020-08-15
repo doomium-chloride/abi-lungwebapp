@@ -104,13 +104,13 @@ const setScene = function (name, scene, material) {
 
 // vs and fs are shader files
 
-const loadScene = function(data, uniforms, pca = null, keepViewPort = false) {
+const loadScene = function(data, uniforms, rng = null) {
 	if (!zincRenderer) {
 		console.error('zinc not loaded');
 		return;
 	}
 
-    let name = (JSON.stringify(data) + pca + "").hashCode();
+    let name = (JSON.stringify(data) + rng + "").hashCode();
 
 	if (name in scenes) {
 		setScene(name, scenes[name], materials[name]);
@@ -123,11 +123,7 @@ const loadScene = function(data, uniforms, pca = null, keepViewPort = false) {
 	Zinc.loadExternalFiles([data.vs, data.fs], function (shaderText) {
         
         
-        if(keepViewPort){
-            scene.getZincCameraControls().setCurrentCameraSettings(currentViewPort);
-        } else{
-            scene.loadViewURL(data.view);
-        }
+        scene.loadViewURL(data.view);
             
 		const material = new THREE.ShaderMaterial({
 			vertexShader: shaderText[0],
@@ -176,6 +172,10 @@ const loadModels = function (name, scene, data, material) {
         setLoadingText((loadedSize / totalSize * 100).toFixed(0) + '%');
     };
 
+    globalModels = [];
+    globalScene = scene;
+    globalMaterial = material;
+
     let n = 0;
     for (let i = 0; i < data.models.length; i++) {
         n++;
@@ -195,7 +195,7 @@ const loadModels = function (name, scene, data, material) {
                 let json = JSON.parse(text);
                 let object = (new THREE.JSONLoader()).parse(json, 'path');
                 object.geometry.morphColors = json.morphColors;
-
+                globalModels.push(object);
                 let bufferGeometry = toBufferGeometry(object.geometry);
                 scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, material);
                 n--;
@@ -297,4 +297,21 @@ function toBufferGeometry(geometry) {
 		bufferGeometry.addAttribute('color2', new THREE.BufferAttribute(colors2, 3));
 	}
 	return bufferGeometry;
+}
+
+function reloadModels(){
+    //fetch global variables
+    let scene = globalScene;
+    let material = globalMaterial;
+
+    scene.clearAll();
+
+    let n = 0;
+    for (let i = 0; i < globalModels.length; i++){
+        n++;
+        let object = globalModels[i];
+        let bufferGeometry = toBufferGeometry(object.geometry);
+        scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, material);
+        n--;
+    }
 }

@@ -82,3 +82,5 @@ var viewPortListenerAdded = false;
 var globalAutoFill = false;
 
 var globalModels = null;
+
+var globalMaterial = null;
