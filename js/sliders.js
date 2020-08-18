@@ -54,13 +54,13 @@ function initSliders(){
     initGenderSlider();
 
     //fvc
-    initSliderCombo('fvc', "", true);
+    initSliderCombo('fvc', "", true, true);
 
     //rv/tlc
-    initSliderCombo('rvtlc', "", true);
+    initSliderCombo('rvtlc', "", true, true);
 
     //dlco
-    initSliderCombo('dlco', "", true);
+    initSliderCombo('dlco', "", true, true);
 
     updateLungModel(false)
 }
@@ -89,13 +89,13 @@ function initGenderSlider(){//gender is an exception, and not optional
     showGenderValue(sliderVariables[variable], span);
 }
 
-function initSliderCombo(variable, units = "", optional = false){
+function initSliderCombo(variable, units = "", optional = false, info = false){
     let sliderID = 'slider-' + variable;
     let spanID = 'show-' + variable;
-    initSliderPart(sliderID, spanID, variable, units, optional);
+    initSliderPart(sliderID, spanID, variable, units, optional, info);
 }
 
-function initSliderPart(sliderID, spanID, variable, units, optional = false){
+function initSliderPart(sliderID, spanID, variable, units, optional = false, info = false){
     let slider = document.getElementById(sliderID);
     let span = document.getElementById(spanID);
     slider.addEventListener('input', (event) => sliderListener(event, variable));
@@ -104,6 +104,12 @@ function initSliderPart(sliderID, spanID, variable, units, optional = false){
     setSliderValue(sliderVariables[variable], slider, span, units);
     if(optional){
         optionalSliders.push({slider: slider, variable: variable, span: span});
+    }
+    if(info){
+        let infoButton = document.getElementById('info-' + variable);
+        let infoText = document.getElementById('info-text-' + variable);
+
+        infoButton.addEventListener('click', () => toggleInfo(infoText));
     }
 }
 
@@ -247,9 +253,15 @@ function autoSet(value, slider){
 }
 
 function toggleSliders(disabled){
+    const locked = "locked";
     let len = optionalSliders.length;
     for(let i = 0; i < len; i++){
         optionalSliders[i].slider.disabled = disabled;
+        if(disabled){
+            optionalSliders[i].slider.classList.add(locked);
+        } else{
+            optionalSliders[i].slider.classList.remove(locked);
+        }
     }
 }
 
@@ -275,4 +287,22 @@ function toggleAutoButton(button, init = false){
 
 function round2(number){
     return Math.round(number * 100) / 100
+}
+
+
+function toggleInfo(info){
+    const hidden = "hidden";
+    const visible = "visible";
+    let classList = info.classList;
+
+    if(classList.contains(hidden)){
+        classList.remove(hidden);
+        classList.add(visible);
+    } else if(classList.contains(visible)) {
+        classList.remove(visible);
+        classList.add(hidden);
+    } else{
+        console.log("problem in toggleInfo function");
+        //should not reach here.
+    }
 }

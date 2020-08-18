@@ -31,6 +31,29 @@
     cursor: pointer;
 }
 
-.toggle-button {
+.slider.locked {
+    background: darkgrey;
+}
+
+.center-text {
+    float: center;
+    text-align: center;
+}
+
+span.right {
+    float: right;
     text-align: right;
+}
+
+span.left {
+    float: left;
+    text-align: left;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
 }
