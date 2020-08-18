@@ -51,7 +51,7 @@ function initSliders(){
     initSliderCombo('bmi');
 
     //sex gender
-    initSliderCombo('gender');
+    initGenderSlider();
 
     //fvc
     initSliderCombo('fvc', true);
@@ -63,6 +63,30 @@ function initSliders(){
     initSliderCombo('dlco', true);
 
     updateLungModel(false)
+}
+
+function initGenderSlider(){//gender is an exception, and not optional
+    const variable = "gender";
+
+    const sliderID = 'slider-' + variable;
+    const spanID = 'show-' + variable;
+
+    const slider = document.getElementById(sliderID);
+    const span = document.getElementById(spanID);
+
+    function showGenderValue(value, span){
+        const male = value;
+        if(male){
+            span.innerText = "Male";
+        } else {
+            span.innerText = "Female";
+        }
+    }
+
+    slider.addEventListener('input', (event) => sliderListener(event, variable));
+    slider.addEventListener('input', (event) => showGenderValue(event.target.value, span));
+    sliderSetValue(sliderVariables[variable], variable, false)
+    showGenderValue(sliderVariables[variable], span);
 }
 
 function initSliderCombo(variable, optional = false){
@@ -117,7 +141,7 @@ function updateLungModel(keepViewPort = true){
 }
 
 function sliderSetValue(value, variable, keepViewPort = true){
-    sliderVariables[variable] = value;
+    sliderVariables[variable] = parseFloat(value);
     if(globalAutoFill){
         autoSetVariables();
     }
