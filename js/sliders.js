@@ -5,8 +5,8 @@ let renderer;
 
 let optionalSliders = [];
 
-function setSliderValue(value, slider, span){
-    span.innerText = round2(value) + "";
+function setSliderValue(value, slider, span, units = ""){
+    span.innerText = round2(value)  + " " + units;
     slider.value = value;
 }
 
@@ -42,25 +42,25 @@ function initSliders(){
     toggleAutoButton(toggleButton, true);
 
     //age
-    initSliderCombo('age');
+    initSliderCombo('age', " years");
 
     //height
-    initSliderCombo('height');
+    initSliderCombo('height', "cm");
 
     //bmi
-    initSliderCombo('bmi');
+    initSliderCombo('bmi', "kg/m2");
 
     //sex gender
     initGenderSlider();
 
     //fvc
-    initSliderCombo('fvc', true);
+    initSliderCombo('fvc', "", true);
 
     //rv/tlc
-    initSliderCombo('rvtlc', true);
+    initSliderCombo('rvtlc', "", true);
 
     //dlco
-    initSliderCombo('dlco', true);
+    initSliderCombo('dlco', "", true);
 
     updateLungModel(false)
 }
@@ -89,27 +89,27 @@ function initGenderSlider(){//gender is an exception, and not optional
     showGenderValue(sliderVariables[variable], span);
 }
 
-function initSliderCombo(variable, optional = false){
+function initSliderCombo(variable, units = "", optional = false){
     let sliderID = 'slider-' + variable;
     let spanID = 'show-' + variable;
-    initSliderPart(sliderID, spanID, variable, optional);
+    initSliderPart(sliderID, spanID, variable, units, optional);
 }
 
-function initSliderPart(sliderID, spanID, variable, optional = false){
+function initSliderPart(sliderID, spanID, variable, units, optional = false){
     let slider = document.getElementById(sliderID);
     let span = document.getElementById(spanID);
     slider.addEventListener('input', (event) => sliderListener(event, variable));
-    slider.addEventListener('input', (event) => showValue(event, span));
+    slider.addEventListener('input', (event) => showValue(event, span, units));
     sliderSetValue(sliderVariables[variable], variable, false)
-    setSliderValue(sliderVariables[variable], slider, span);
+    setSliderValue(sliderVariables[variable], slider, span, units);
     if(optional){
         optionalSliders.push({slider: slider, variable: variable, span: span});
     }
 }
 
-function showValue(event, span){
+function showValue(event, span, units = ""){
     let value = event.target.value;
-    span.innerText = value + "";
+    span.innerText = value  + " " + units;
 }
 
 function sliderListener(event, variable, keepViewPort = true){
