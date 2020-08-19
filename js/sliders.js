@@ -5,6 +5,21 @@ let renderer;
 
 let optionalSliders = [];
 
+let staticScale = {
+    x: 1,
+    y: 1,
+    z: 1,
+}
+
+let dynamicScale = lungScale;
+
+let saveData = {
+    scale: [],
+    materials: [],
+    models: [],
+    scene: null
+}
+
 function setSliderValue(value, slider, span, units = ""){
     span.innerText = round2(value)  + " " + units;
     slider.value = value;
@@ -12,27 +27,83 @@ function setSliderValue(value, slider, span, units = ""){
 
 function initScene(){
 
+    let models = [
+        'models/surface_1.json',
+        'models/surface_2.json',
+        'models/surface_3.json',
+        'models/surface_4.json',
+        'models/surface_5.json',
+        'models/surface_6.json',
 
-    loadScene({
+        'models/surface_1.json',
+        'models/surface_2.json',
+        'models/surface_3.json',
+        'models/surface_4.json',
+        'models/surface_5.json',
+        'models/surface_6.json',
+    ]
+
+    let uniforms = [
+        surfaceUniforms,
+        surfaceUniforms,
+        surfaceUniforms,
+        surfaceUniforms,
+        surfaceUniforms,
+        surfaceUniforms,
+
+        dynamicUniforms,
+        dynamicUniforms,
+        dynamicUniforms,
+        dynamicUniforms,
+        dynamicUniforms,
+        dynamicUniforms,
+    ]
+
+    saveData.scale = [
+        noScale,
+        noScale,
+        noScale,
+        noScale,
+        noScale,
+        noScale,
+
+        lungScale,
+        lungScale,
+        lungScale,
+        lungScale,
+        lungScale,
+        lungScale,
+    ]
+
+    loadMultiScene({
         vs: 'shaders/surface.vs',
         fs: 'shaders/surface.fs',
         view: 'models/surface_view.json',
-        models: [
-            'models/surface_1.json',
-            'models/surface_2.json',
-            'models/surface_3.json',
-            'models/surface_4.json',
-            'models/surface_5.json',
-            'models/surface_6.json',
-        ],
-    }, surfaceUniforms);
+        models: models,
+    }, uniforms, saveData);
 }
+
+// function initScene(){
+//     loadScene({
+//         vs: 'shaders/surface.vs',
+//         fs: 'shaders/surface.fs',
+//         view: 'models/surface_view.json',
+//         models: [
+//             'models/surface_1.json',
+//             'models/surface_2.json',
+//             'models/surface_3.json',
+//             'models/surface_4.json',
+//             'models/surface_5.json',
+//             'models/surface_6.json',
+//         ]
+//     }, surfaceUniforms)
+// }
 
 function initSliders(){
 
     optionalSliders = [];
 
-    //initScene();
+    initScene();
 
     let sliders = document.getElementById('slider-section');
 
@@ -125,25 +196,15 @@ function sliderListener(event, variable, keepViewPort = true){
 function updateLungModel(keepViewPort = true){
     let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
     setLungScale(vector3);
-    surfaceUniforms['opacity']['value'] = sliderVariables.dlco/200
+    dynamicUniforms['opacity']['value'] = sliderVariables.dlco/200
 
     if(keepViewPort){
-        reloadModels();
-    } else{
-        loadScene({
-            vs: 'shaders/surface.vs',
-            fs: 'shaders/surface.fs',
-            view: 'models/surface_view.json',
-            models: [
-                'models/surface_1.json',
-                'models/surface_2.json',
-                'models/surface_3.json',
-                'models/surface_4.json',
-                'models/surface_5.json',
-                'models/surface_6.json',
-            ],
-        }, surfaceUniforms, Math.random());
+        reloadMultiModels(saveData);
+    } else {
+        initScene();
     }
+
+    
     
 }
 
