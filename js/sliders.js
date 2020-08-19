@@ -32,7 +32,7 @@ function initSliders(){
 
     optionalSliders = [];
 
-    initScene();
+    //initScene();
 
     let sliders = document.getElementById('slider-section');
 
@@ -125,6 +125,7 @@ function sliderListener(event, variable, keepViewPort = true){
 function updateLungModel(keepViewPort = true){
     let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
     setLungScale(vector3);
+    surfaceUniforms['opacity']['value'] = sliderVariables.dlco/200
 
     if(keepViewPort){
         reloadModels();
