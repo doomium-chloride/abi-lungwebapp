@@ -20,8 +20,15 @@ function updateFrame(zincRenderer) {
 			return;
 		}
 
-		let light = zincRenderer.getCurrentScene().directionalLight;
-        currentUniforms['directionalLightDirection'].value.set(light.position.x, light.position.y, light.position.z);
+        let light = zincRenderer.getCurrentScene().directionalLight;
+        if(Array.isArray(currentUniforms)){
+            let uniLen = currentUniforms.length;
+            for(let i = 0; i < uniLen; i++){
+                currentUniforms[i]['directionalLightDirection'].value.set(light.position.x, light.position.y, light.position.z);
+            }
+        } else {
+            currentUniforms['directionalLightDirection'].value.set(light.position.x, light.position.y, light.position.z);
+        }
 
 		let sceneTime = 0.0;
 		if (playing) {
@@ -38,8 +45,16 @@ function updateFrame(zincRenderer) {
 			t = Math.sin(t*Math.PI/2.0)
 		} else {
 			t = 1.0-Math.sin((t-1.0)*Math.PI/2.0)
-		}
-		currentUniforms['t'].value = t;
+        }
+        if(Array.isArray(currentUniforms)){
+            let uniLen = currentUniforms.length;
+            for(let i = 0; i < uniLen; i++){
+                currentUniforms[i]['t'].value = t;
+            }
+        } else {
+            currentUniforms['t'].value = t;
+        }
+		
 	};
 }
 
@@ -86,8 +101,17 @@ if (!WEBGL.isWebGLAvailable()) {
 const scenes = {};
 const materials = {};
 const setScene = function (name, scene, material) {
-	zincRenderer.setCurrentScene(scene);
-	currentUniforms = material.uniforms;
+    zincRenderer.setCurrentScene(scene);
+    if(Array.isArray(material)){
+        currentUniforms = [];
+        let matLen = material.length;
+        for(let i = 0; i< matLen; i++){
+            currentUniforms.push(material[i].uniforms);
+        }
+    } else {
+        currentUniforms = material.uniforms;
+    }
+	
 };
 
 // data = {vs: 'shaders/surface.vs',
@@ -248,8 +272,8 @@ const loadMultiModels = function (name, scene, data, material, saveData) {
                 n--;
                 if (n == 0) {
                     scenes[name] = scene;
-                    materials[name] = material[i];
-                    setScene(name, scene, material[i]);
+                    materials[name] = material;
+                    setScene(name, scene, material);
                     stopLoading();
                 }
             }, function (xhr) {
