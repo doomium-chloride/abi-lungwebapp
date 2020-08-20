@@ -459,7 +459,7 @@ function reloadModels(){
     let n = 0;
     for (let i = 0; i < globalModels.length; i++){
         n++;
-        let object = globalModels[i];
+        let object = globalModels;
         let bufferGeometry = toBufferGeometry(object.geometry, lungScale);
         scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, material);
         n--;
@@ -471,13 +471,14 @@ function reloadMultiModels(saveData){
     let models = saveData.models;
     let materials = saveData.materials;
     let scene = saveData.scene;
-    let scale = saveData.scale;console.log(lungScale)
+    let scale = saveData.scale;
 
     scene.clearAll();
 
     for (let i = 0; i < models.length; i++){
-        let object = models[i];
+        let object = models[i];console.log(scale[i])
         let bufferGeometry = toBufferGeometry(object.geometry, scale[i]);
         scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, materials[i]);
     }
+    setScene(null, scene, materials);
 }
