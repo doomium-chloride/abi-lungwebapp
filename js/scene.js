@@ -248,8 +248,8 @@ const loadMultiModels = function (name, scene, data, material, saveData) {
                 n--;
                 if (n == 0) {
                     scenes[name] = scene;
-                    materials[name] = material;
-                    setScene(name, scene, material);
+                    materials[name] = material[i];
+                    setScene(name, scene, material[i]);
                     stopLoading();
                 }
             }, function (xhr) {
@@ -323,12 +323,12 @@ const loadModels = function (name, scene, data, material) {
                 object.geometry.morphColors = json.morphColors;
                 globalModels.push(object);
                 let bufferGeometry = toBufferGeometry(object.geometry, saveData.scale[i]);
-                scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, material);
+                scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, material[i]);
                 n--;
                 if (n == 0) {
                     scenes[name] = scene;
-                    materials[name] = material;
-                    setScene(name, scene, material);
+                    materials[name] = material[i];
+                    setScene(name, scene, material[i]);
                     stopLoading();
                 }
             }, function (xhr) {
@@ -447,7 +447,7 @@ function reloadMultiModels(saveData){
     let models = saveData.models;
     let materials = saveData.materials;
     let scene = saveData.scene;
-    let scale = saveData.scale;console.log(saveData)
+    let scale = saveData.scale;console.log(lungScale)
 
     scene.clearAll();
 
