@@ -1,0 +1,16 @@
+article.center {
+	position: absolute;
+    top: 50%;
+    transform: translate(100%, -50%);
+	width: 30vw;
+    margin: 1vw;
+}
+
+.center-text{
+    text-align: center;
+}
+
+.middle {
+    top: 50%;
+    transform: translate(0 , -50%);
+}
