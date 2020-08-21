@@ -14,3 +14,15 @@ article.center {
     top: 50%;
     transform: translate(0 , -50%);
 }
+
+.lung-pic {
+    width: 50%;
+}
+
+.hidden {
+    display: none;
+}
+
+.active {
+    display: inline-block;
+}

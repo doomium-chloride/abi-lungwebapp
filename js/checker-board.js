@@ -11,6 +11,6 @@ function toggleMenu(menu){
 function initCheckerBoard(){
     let menu = document.getElementById('dropdown-menu');
     let menuButton = document.getElementById('dropdown-menu-button');
-    document.addEventListener('click', () => toggleMenu(menu));
+    menuButton.addEventListener('click', () => toggleMenu(menu));
 }
 
