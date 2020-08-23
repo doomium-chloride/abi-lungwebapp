@@ -1,7 +1,5 @@
 
-let images = [];
-
-function hideAllImages(){
+function hideAllImages(images){
     let len = images.length;
     for(let i = 0; i < len; i++){
         let image = images[i];
@@ -10,8 +8,8 @@ function hideAllImages(){
     }
 }
 
-function makeImageActive(image){
-    hideAllImages();
+function makeImageActive(image, images){
+    hideAllImages(images);
     image.classList.add('active');
 }
 
@@ -25,10 +23,20 @@ function initSlice(){
     let lungPicMid = document.getElementById('lung-pic-mid');
     let lungPicBot = document.getElementById('lung-pic-bot');
 
-    images = [lungPicTop, lungPicMid, lungPicBot];
+    let lungPics = [lungPicTop, lungPicMid, lungPicBot];
 
-    buttonTop.addEventListener('click', () => makeImageActive(lungPicTop));
-    buttonMid.addEventListener('click', () => makeImageActive(lungPicMid));
-    buttonBot.addEventListener('click', () => makeImageActive(lungPicBot));
+    let slicePicTop = document.getElementById('lung-slice-top');
+    let slicePicMid = document.getElementById('lung-slice-mid');
+    let slicePicBot = document.getElementById('lung-slice-bot');
+
+    let slicePics = [slicePicTop, slicePicMid, slicePicBot];
+
+    buttonTop.addEventListener('click', () => makeImageActive(lungPicTop, lungPics));
+    buttonMid.addEventListener('click', () => makeImageActive(lungPicMid, lungPics));
+    buttonBot.addEventListener('click', () => makeImageActive(lungPicBot, lungPics));
+
+    buttonTop.addEventListener('click', () => makeImageActive(slicePicTop, slicePics));
+    buttonMid.addEventListener('click', () => makeImageActive(slicePicMid, slicePics));
+    buttonBot.addEventListener('click', () => makeImageActive(slicePicBot, slicePics));
 
 }
