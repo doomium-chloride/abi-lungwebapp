@@ -39,3 +39,14 @@ article.center {
     margin: 4px 2px;
     border-radius: 50%;
   }
+
+body[data-page="quadtree"] #top-buttons,
+body[data-page="quadtree"] #navigation,
+body[data-page="quadtree-checker"] #top-buttons,
+body[data-page="quadtree-checker"] #navigation,
+body[data-page="quadtree-slice"] #top-buttons,
+body[data-page="quadtree-slice"] #navigation,
+body[data-page="quadtree-stack"] #top-buttons,
+body[data-page="quadtree-stack"] #navigation {
+    display: none;
+}
