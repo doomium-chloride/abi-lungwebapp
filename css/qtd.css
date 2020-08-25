@@ -56,3 +56,11 @@ body[data-page="quadtree-stack"] #top-buttons,
 body[data-page="quadtree-stack"] #navigation {
     display: none;
 }
+
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    height: 50vh;
+    background:transparent;
+}
