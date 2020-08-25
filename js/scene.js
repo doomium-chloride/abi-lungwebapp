@@ -143,7 +143,7 @@ const loadMultiScene = function(data, uniforms, saveData) {
     
     function makeMaterials(shaderText, uniforms, len){
 
-        let materials = [];console.log(len)
+        let materials = [];
 
         for(let i = 0; i < len; i++){
             let material = new THREE.ShaderMaterial({
@@ -275,6 +275,7 @@ const loadMultiModels = function (name, scene, data, material, saveData) {
                     materials[name] = material;
                     setScene(name, scene, material);
                     stopLoading();
+                    saveData.models = tempModels;
                 }
             }, function (xhr) {
                 updateLoader(i, xhr.loaded);
@@ -286,7 +287,7 @@ const loadMultiModels = function (name, scene, data, material, saveData) {
             }
         );
     }
-    saveData.models = tempModels;
+    
 };
 
 const loadModels = function (name, scene, data, material) {
@@ -476,7 +477,7 @@ function reloadMultiModels(saveData){
     scene.clearAll();
 
     for (let i = 0; i < models.length; i++){
-        let object = models[i];console.log(scale[i])
+        let object = models[i];
         let bufferGeometry = toBufferGeometry(object.geometry, scale[i]);
         scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, materials[i]);
     }
