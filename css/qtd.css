@@ -15,7 +15,8 @@ article.center {
     transform: translate(0 , -50%);
 }
 
-.lung-pic {
+.lung-pic,
+.lung-pic img {
     width: 50%;
 }
 
@@ -38,7 +39,12 @@ article.center {
     font-size: 16px;
     margin: 4px 2px;
     border-radius: 50%;
-  }
+}
+
+.top-text {
+    position: absolute;
+    bottom: 100%;
+}
 
 body[data-page="quadtree"] #top-buttons,
 body[data-page="quadtree"] #navigation,
