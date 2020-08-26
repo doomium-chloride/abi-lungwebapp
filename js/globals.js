@@ -35,7 +35,7 @@ const dynamicUniforms = THREE.UniformsUtils.merge([{
 	't': { type: 'f', value: 0.0 },
 	'tidalVolumeRatio': { type: 'f', value: 0.4 },
 	'severity': { type: 'f', value: 0.0 },
-	'opacity': { type: 'f', value: 1.0 },
+	'opacity': { type: 'f', value: 0.5 },
 }]);
 
 const airwaysUniforms = THREE.UniformsUtils.merge([{
