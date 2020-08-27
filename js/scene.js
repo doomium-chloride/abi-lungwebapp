@@ -202,9 +202,7 @@ const loadScene = function(data, uniforms, rng = null) {
 			uniforms: uniforms,
             onBeforeCompile: function(){}, // fix bug in ThreeJS
             side: THREE.DoubleSide,
-            transparent: true,
-            depthWrite: false,
-            depthTest: false
+            transparent: true
 		});
 
     loadModels(name, scene, data, material);
@@ -348,13 +346,13 @@ const loadModels = function (name, scene, data, material) {
                 let object = (new THREE.JSONLoader()).parse(json, 'path');
                 object.geometry.morphColors = json.morphColors;
                 globalModels.push(object);
-                let bufferGeometry = toBufferGeometry(object.geometry, saveData.scale[i]);
-                scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, material[i]);
+                let bufferGeometry = toBufferGeometry(object.geometry);
+                scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, material);
                 n--;
                 if (n == 0) {
                     scenes[name] = scene;
-                    materials[name] = material[i];
-                    setScene(name, scene, material[i]);
+                    materials[name] = material;
+                    setScene(name, scene, material);
                     stopLoading();
                 }
             }, function (xhr) {
