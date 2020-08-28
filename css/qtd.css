@@ -64,3 +64,9 @@ input[type=range][orient=vertical]
     height: 50vh;
     background:transparent;
 }
+.center-head {
+    position: absolute;
+    top: 5%;
+    width: 100%;
+    text-align: center;
+}
