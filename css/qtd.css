@@ -76,9 +76,10 @@ input[type=range][orient=vertical]
     height: 200px;
     width: 1px;
     background-color: blue;
-    left: 0;
+    right: 0;
 }
 
 .sliding-graph {
     width: 100%;;
+    border: white 1px solid;
 }
