@@ -72,7 +72,13 @@ input[type=range][orient=vertical]
 }
 
 .line {
+    position: absolute;
     height: 200px;
     width: 1px;
     background-color: blue;
+    left: 0;
+}
+
+.sliding-graph {
+    width: 100%;;
 }
