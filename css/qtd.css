@@ -70,3 +70,9 @@ input[type=range][orient=vertical]
     width: 100%;
     text-align: center;
 }
+
+.line {
+    height: 200px;
+    width: 1px;
+    background-color: blue;
+}
