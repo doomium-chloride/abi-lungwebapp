@@ -70,7 +70,7 @@ function initStack(){
 
     verticalSlider.addEventListener('input', (e) => gHandler(e.target.value));
 
-    window.addEventListener('resize', gHandler(verticalSlider.value));
+    window.addEventListener('resize', () => gHandler(verticalSlider.value));
 
     gHandler(verticalSlider.value);
 

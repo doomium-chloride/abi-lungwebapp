@@ -62,7 +62,6 @@ input[type=range][orient=vertical]
     writing-mode: bt-lr; /* IE */
     -webkit-appearance: slider-vertical; /* WebKit */
     height: 50vh;
-    background:transparent;
 }
 .center-head {
     position: absolute;
@@ -82,4 +81,31 @@ input[type=range][orient=vertical]
 .sliding-graph {
     width: 100%;;
     border: white 1px solid;
+}
+
+.vertical-slider {
+    width: 20px;
+    border: 5px solid gray;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.vertical-slider:hover {
+    opacity: 1;
+}
+
+.vertical-slider::-webkit-slider-thumb,
+.vertical-slider::-moz-range-thumb {
+    width: 40px;
+    height: 10px;
+    background: coral;
+    border: 3px solid seashell;
+    cursor: pointer;
+}
+
+.vertical-slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
 }
