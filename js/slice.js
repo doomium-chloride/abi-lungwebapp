@@ -68,7 +68,7 @@ function initSlice(){
     // buttonBot.addEventListener('click', () => makeImageActive(slicePicBot, slicePics));
 
     function vHandler(key){
-        verticalHandler(key, map, lungPicMap, slicePicMap, verticalValueSpan)
+        verticalHandler(key, map, lungPicMap, slicePicMap, verticalValueSpan);
     }
 
     verticalSlider.addEventListener('input', (event) => vHandler(event.target.value));

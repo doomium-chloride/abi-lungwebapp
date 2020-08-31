@@ -3,7 +3,7 @@ function translateX(value, units = "px"){
     return "translateX(" + value + units + ")";
 }
 
-function verticalHandler(value, span, slider){
+function graphHandler(value, span, slider){
     span.innerText = value;
     slider.style.transform = translateX(value * 300, "%");
 }
@@ -14,7 +14,7 @@ function initStack(){
     let verticalSlider = document.getElementById('vertical-slider');
     let verticalSpan = document.getElementById('vertical-value');
 
-    verticalSlider.addEventListener('input', (e) => verticalHandler(e.target.value, verticalSpan, graphSlider));
+    verticalSlider.addEventListener('input', (e) => graphHandler(e.target.value, verticalSpan, graphSlider));
 
     let ctx = document.getElementById('stack-chart').getContext('2d');
     console.log(ctx)
@@ -25,7 +25,7 @@ function initStack(){
     
         // The data for our dataset
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: [0, 1, 2, 3, 4, 5, 6],
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
