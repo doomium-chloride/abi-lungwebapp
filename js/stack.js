@@ -12,7 +12,7 @@ function graphHandler(value, span, slider, container, chart){
     let width = container.offsetWidth;
     slider.style.height = container.offsetHeight + "px";
     value = parseInt(value);
-    let percent = adjustLine(value, -100, (width+20) / width * 100);
+    let percent = adjustLine(value, -100, 100);
     slider.style.transform = translateX(percent * width, "px");
     console.log(chart.options.scales.yAxes[0])
 }
@@ -49,11 +49,17 @@ function initStack(){
             scales: {
                 yAxes: [{
                     ticks: {
-                        major: {
-                            beginAtZero: true
-                        }
+                        mirror: true
                     }
                 }]
+            },
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
             }
         }
     });
@@ -64,6 +70,8 @@ function initStack(){
 
     verticalSlider.addEventListener('input', (e) => gHandler(e.target.value));
 
-    
+    window.addEventListener('resize', gHandler(verticalSlider.value));
+
+    gHandler(verticalSlider.value);
 
 }
