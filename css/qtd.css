@@ -109,3 +109,8 @@ input[type=range][orient=vertical]
     -webkit-appearance: none;
     appearance: none;
 }
+
+.back-button {
+    width: 5%;
+    margin: 1%;
+}
