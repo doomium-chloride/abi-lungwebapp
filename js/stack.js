@@ -9,12 +9,17 @@ function adjustLine(value, offset, maxLen){
 
 function graphHandler(value, span, slider, container, chart){
     span.innerText = value;
-    let width = container.offsetWidth;
+
     slider.style.height = container.offsetHeight + "px";
     value = parseInt(value);
-    let percent = adjustLine(value, -100, 100);
-    slider.style.transform = translateX(percent * width, "px");
-    console.log(chart.options.scales.yAxes[0])
+
+    let left = chart.chartArea.left;
+    let right = chart.chartArea.right;
+    let innerWidth = right - left;
+
+    let percent = adjustLine(value, 0, 100);
+    
+    slider.style.transform = translateX(percent * innerWidth + left, "px");
 }
 
 
@@ -49,7 +54,7 @@ function initStack(){
             scales: {
                 yAxes: [{
                     ticks: {
-                        mirror: true
+                        mirror: false
                     }
                 }]
             },
