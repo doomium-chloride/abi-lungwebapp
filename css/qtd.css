@@ -9,8 +9,9 @@ article.center {
 .center-article {
     position: absolute;
     transform: translate(100%, 0);
-	width: 30vw;
-    margin: 1vw;
+    width: 30vw;
+    margin-left: 5vw;
+    margin-bottom: 1%;
 }
 
 .center-text{
@@ -134,5 +135,12 @@ input[type=range][orient=vertical]
 }
 
 .bottom {
-    bottom: 10%;
+    bottom: 5%;
+}
+.box {
+    border: whitesmoke 1px solid;
+}
+
+.small-button {
+    height: 5vh;
 }

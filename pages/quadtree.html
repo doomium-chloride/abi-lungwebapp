@@ -1,45 +1,63 @@
 <section id="page-qtd">
+
+    
+
     <img src="images/back.svg" id="back-button" onclick="window.history.back()" class="clickable back-button"/>
-    <div class="center-head"><h2>Quadtree</h2></div>
+    
+
+    <div class="center-head">
+        <img src="images/back.svg" class="small-button clickable" id="qtd-back">
+        <h1 style="display: inline;">Quadtree</h1>
+        <img src="images/forward.svg" class="small-button clickable" id="qtd-forward">
+    </div>
     <div class="center-main center-text">
+
+
         <p id="qtd-background-1" class="visible">
             Quadtree decomposition has been used to study lung tissue heterogeneity.
         </p>
 
-        <p id="qtd-background-2" class="hidden">
-            Heterogeneity in tissue density can be quantified using two methods: 
-        </p>
+        <div id="qtd-background-2" class="hidden">
+            <p>
+                Heterogeneity in tissue density can be quantified using two methods: 
+            </p>
+    
+            <p>
+                1) Calculating the fractal dimension calculated by fitting a straight line to the log-log relationship between coefficient of variation (CoV) and sampling window size
+            </p>
+        </div>
+        
 
-        <p id="qtd-background-3" class="hidden">
-            1) Calculating the fractal dimension calculated by fitting a straight line to the log-log relationship between coefficient of variation (CoV) and sampling window size
-        </p>
+        <div id="qtd-background-3" class="hidden">
+            <p>
+                2) Quadtree decomposition (QtD) accounts for the spatial clustering of tissue with similar tissue density.
+            </p>
+    
+            <p>
+                QtD algorithm recursively divides an image into quadrants that are considered regions of homogeneous tissue if the pixel intensity values within that quadrant are within a certain range.
+            </p>
+
+            <p>
+                If the pixel intensity range is greater than the threshold, the quadrant is further decomposed. Thus the number of quadrants, or boxes, resulting from this technique serves to indicate how heterogeneous an image is. 
+            </p>
+        </div>   
 
         <p id="qtd-background-4" class="hidden">
-            2) Quadtree decomposition (QtD) accounts for the spatial clustering of tissue with similar tissue density.
-        </p>
-
-        <p id="qtd-background-5" class="hidden">
-            QtD algorithm recursively divides an image into quadrants that are considered regions of homogeneous tissue if the pixel intensity values within that quadrant are within a certain range.
-        </p>
-
-        <p id="qtd-background-6" class="hidden">
-            If the pixel intensity range is greater than the threshold, the quadrant is further decomposed. Thus the number of quadrants, or boxes, resulting from this technique serves to indicate how heterogeneous an image is. 
-        </p>
-
-        <p id="qtd-background-7" class="hidden">
             Citation: Subramaniam K, Clark AR, Hoffman EA, Tawhai MH. Metrics of lung tissue heterogeneity depend on BMI but not age. J Appl Physiol (1985). 2018;125(2):328-339. doi:10.1152/japplphysiol.00510.2016
         </p>
-
-        <img src="images/back.svg" class="back-button clickable" id="qtd-back">
-        <img src="images/forward.svg" class="back-button clickable" id="qtd-forward">
     </div>
     <article class="left center-text bottom">
-        <a href="#/quadtree-checker"><img class="lung-pic" src="images/checker-pattern.png"></a>
+        <h4>Checker pattern</h4>
+        <a href="#/quadtree-checker">
+            <img class="lung-pic" src="images/checker-pattern.png">
+        </a>
     </article>
 	<article class="center-article center-text bottom">
+        <h4>Lung slices</h4>
         <a href="#/quadtree-slice"><img class="lung-pic" src="images/slice.png"></a>
 	</article>
-	<article class="right bottom">
+	<article class="right center-text bottom">
+        <h4>Stack</h4>
         <a href="#/quadtree-stack"><img class="lung-pic" src="images/full-stack.png"></a>
 	</article>
 </section>
