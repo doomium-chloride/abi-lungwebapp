@@ -486,3 +486,11 @@ body[data-page="index"] #navigation {
     stroke: red;
     stroke-width: 5;
 }
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10vw;
+}
