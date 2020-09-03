@@ -23,9 +23,21 @@ function graphHandler(value, span, slider, container, chart){
     let right = chart.chartArea.right;
     let innerWidth = right - left;
 
-    let percent = adjustLine(value, 0, 100);
+    let percent = adjustLine(value, -20, 60);// 80 - 20 = 60
     
     slider.style.transform = translateX(percent * innerWidth + left, "px");
+}
+
+function getNearestIndex(array, value){
+    let smallest = 0;
+    for(let i = 0; i < array.length; i++){
+        let test = Math.abs(value - array[i]);
+        let current = Math.abs(value - array[smallest]);
+        if (test < current){
+            smallest = i;
+        }
+    }
+    return smallest;
 }
 
 
@@ -39,10 +51,14 @@ function initStack(){
     const qtdFilename = 'average_qtd.json';
 
     qtdObj = loadQtdFile(qtdFilename);
+
+    let lowest = getNearestIndex(qtdObj.labels, 20);
+    let highest = getNearestIndex(qtdObj.labels, 80) + 1;
+
     // label and qtd
 
     let ctx = document.getElementById('stack-chart').getContext('2d');
-    console.log(ctx)
+
 
     let chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -50,11 +66,11 @@ function initStack(){
     
         // The data for our dataset
         data: {
-            labels: qtdObj.labels,
+            labels: qtdObj.labels.slice(lowest, highest),
             datasets: [{
                 label: 'Population average',
                 borderColor: 'rgb(255, 99, 132)',
-                data: qtdObj.qtd
+                data: qtdObj.qtd.slice(lowest, highest)
             }]
         },
     
