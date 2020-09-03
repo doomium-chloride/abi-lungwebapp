@@ -6,6 +6,13 @@ article.center {
     margin: 1vw;
 }
 
+.center-article {
+    position: absolute;
+    transform: translate(100%, 0);
+	width: 30vw;
+    margin: 1vw;
+}
+
 .center-text{
     text-align: center;
 }
@@ -26,6 +33,10 @@ article.center {
 
 .active {
     display: inline-block;
+}
+
+.visible {
+    display: block;
 }
 
 .qtd-button {
@@ -66,6 +77,13 @@ input[type=range][orient=vertical]
 .center-head {
     position: absolute;
     top: 5%;
+    width: 100%;
+    text-align: center;
+}
+
+.center-main {
+    position: absolute;
+    top: 10%;
     width: 100%;
     text-align: center;
 }
@@ -113,4 +131,8 @@ input[type=range][orient=vertical]
 .back-button {
     width: 5%;
     margin: 1%;
+}
+
+.bottom {
+    bottom: 10%;
 }
