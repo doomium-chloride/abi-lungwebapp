@@ -5,6 +5,10 @@ let renderer;
 
 let optionalSliders = [];
 
+let infoState = {
+    pca: 1
+}
+
 function setSliderValue(value, slider, span, units = ""){
     span.innerText = round2(value)  + " " + units;
     slider.value = value;
@@ -36,6 +40,9 @@ function initSliders(){
 
     let sliders = document.getElementById('slider-section');
 
+    //info button
+    initPCAinfo();
+
     //toggle button
     let toggleButton = document.getElementById('auto-fill-toggle');
     toggleButton.addEventListener('click', () => toggleAutoButton(toggleButton));
@@ -63,6 +70,44 @@ function initSliders(){
     initSliderCombo('dlco', "", true, true);
 
     updateLungModel(false)
+}
+
+function longInfoHanlder(baseStr, info, forward){
+    let current = infoState[info];
+    let newNum;
+    if(forward){
+        newNum = current + 1;
+    } else{
+        newNum = current - 1;
+    }
+    let element = document.getElementById(baseStr + "-" + newNum);
+    if(element !== null){
+        let oldE = document.getElementById(baseStr + "-" + current);
+
+        const hidden = "hidden";
+        const visible = "visible";
+
+        oldE.classList.replace(visible, hidden);
+        element.classList.replace(hidden, visible);
+
+        infoState[info] = newNum;
+    }
+}
+
+function initPCAinfo(){
+    let infoPCAtext = document.getElementById('info-text-pca');
+    let infoButton = document.getElementById('info-pca');
+    infoButton.addEventListener('click', () => toggleInfo(infoPCAtext));
+
+    let baseStr = "info-text-pca";
+    let info = 'pca';
+
+    let pcaBack = document.getElementById('pca-back');
+    pcaBack.addEventListener('click', () => longInfoHanlder(baseStr, info, false));
+
+    let pcaForward = document.getElementById('pca-forward');
+    pcaForward.addEventListener('click', () => longInfoHanlder(baseStr, info, true));
+    
 }
 
 function initGenderSlider(){//gender is an exception, and not optional
@@ -296,11 +341,9 @@ function toggleInfo(info){
     let classList = info.classList;
 
     if(classList.contains(hidden)){
-        classList.remove(hidden);
-        classList.add(visible);
+        classList.replace(hidden, visible);
     } else if(classList.contains(visible)) {
-        classList.remove(visible);
-        classList.add(hidden);
+        classList.replace(visible, hidden);
     } else{
         console.log("problem in toggleInfo function");
         //should not reach here.
