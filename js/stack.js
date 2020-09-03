@@ -1,3 +1,9 @@
+function loadQtdFile(qtdFile){
+    let req = new XMLHttpRequest();
+    req.open('GET', "graphdata/" + qtdFile, false);
+    req.send(null);
+    return JSON.parse(req.responseText);
+}
 
 function translateX(value, units = "px"){
     return "translateX(" + value + units + ")";
@@ -30,7 +36,10 @@ function initStack(){
     let graphContainer = document.getElementById('graph');
 
     
+    const qtdFilename = 'average_qtd.json';
 
+    qtdObj = loadQtdFile(qtdFilename);
+    // label and qtd
 
     let ctx = document.getElementById('stack-chart').getContext('2d');
     console.log(ctx)
@@ -41,11 +50,11 @@ function initStack(){
     
         // The data for our dataset
         data: {
-            labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            labels: qtdObj.labels,
             datasets: [{
-                label: 'Dummy dataset',
+                label: 'Population average',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45, 30, 25, 8, 10, 40]
+                data: qtdObj.qtd
             }]
         },
     
