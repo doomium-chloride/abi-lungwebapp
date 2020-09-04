@@ -97,9 +97,17 @@ input[type=range][orient=vertical]
     left: 0;
 }
 
+.horizontal-line {
+    position: absolute;
+    height: 1px;
+    width: 50%;
+    background-color: gold;
+    left: 25%;
+    bottom: 0;
+}
+
 .sliding-graph {
     width: 100%;;
-    border: white 1px solid;
 }
 
 .vertical-slider {

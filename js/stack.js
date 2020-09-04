@@ -9,6 +9,10 @@ function translateX(value, units = "px"){
     return "translateX(" + value + units + ")";
 }
 
+function translateY(value, units = "px"){
+    return "translateY(" + value + units + ")";
+}
+
 function adjustLine(value, offset, maxLen){
     return (value + offset) / (maxLen);
 }
@@ -31,9 +35,9 @@ function rounds(value, dp = 0){
     return numStr;
 }
 
-function graphHandler(value, span, slider, container, chart, qtdSpan){
+function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, hLine){
     span.innerText = value;
-
+    // set slider span
     slider.style.height = container.offsetHeight + "px";
     value = parseInt(value);
 
@@ -42,15 +46,22 @@ function graphHandler(value, span, slider, container, chart, qtdSpan){
     let innerWidth = right - left;
 
     let percent = adjustLine(value, -20, 60);// 80 - 20 = 60
-    
+    // move graph line
     slider.style.transform = translateX(percent * innerWidth + left, "px");
 
     let labels = chart.data.labels;
     let data = chart.data.datasets[0].data;
-
+    // display QtD score
     let nearestIndex = getNearestIndex(labels, value);
     let qtdValue = rounds(data[nearestIndex], 4);
     qtdSpan.innerText = qtdValue;
+
+    // horizontal line
+    let height = lungPic.offsetHeight;
+
+    let hLineTranslation = value/100 * -height;
+
+    hLine.style.transform = translateY(hLineTranslation, "px");
 }
 
 function getNearestIndex(array, value){
@@ -121,8 +132,11 @@ function initStack(){
 
     let qtdSpan = document.getElementById('qtd-value');
 
+    let hLine = document.getElementById('h-line');
+    let lungPic = document.getElementById('lung-pic');
+
     function gHandler(value){
-        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan);
+        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine);
     }
 
     verticalSlider.addEventListener('input', (e) => gHandler(e.target.value));
