@@ -13,7 +13,25 @@ function adjustLine(value, offset, maxLen){
     return (value + offset) / (maxLen);
 }
 
-function graphHandler(value, span, slider, container, chart){
+function updateSpan(span, text){
+    span.innerText = text;
+}
+
+function rounds(value, dp = 0){
+    const mult = Math.pow(10, dp);
+    let numStr = Math.round(value * mult) / mult + "";
+    if(dp <= 0){
+        return numStr;
+    }
+    let afterDot = numStr.substr(numStr.indexOf('.'));
+    if(afterDot.length <= dp){
+        let zeros = dp - afterDot.length + 1
+        numStr += "0".repeat(zeros);
+    }
+    return numStr;
+}
+
+function graphHandler(value, span, slider, container, chart, qtdSpan){
     span.innerText = value;
 
     slider.style.height = container.offsetHeight + "px";
@@ -26,6 +44,13 @@ function graphHandler(value, span, slider, container, chart){
     let percent = adjustLine(value, -20, 60);// 80 - 20 = 60
     
     slider.style.transform = translateX(percent * innerWidth + left, "px");
+
+    let labels = chart.data.labels;
+    let data = chart.data.datasets[0].data;
+
+    let nearestIndex = getNearestIndex(labels, value);
+    let qtdValue = rounds(data[nearestIndex], 4);
+    qtdSpan.innerText = qtdValue;
 }
 
 function getNearestIndex(array, value){
@@ -94,8 +119,10 @@ function initStack(){
         }
     });
 
+    let qtdSpan = document.getElementById('qtd-value');
+
     function gHandler(value){
-        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart)
+        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan);
     }
 
     verticalSlider.addEventListener('input', (e) => gHandler(e.target.value));
