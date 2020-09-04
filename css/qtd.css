@@ -119,6 +119,7 @@ input[type=range][orient=vertical]
     transition: opacity .2s;
 }
 
+
 .vertical-slider:hover {
     opacity: 1;
 }
@@ -151,4 +152,11 @@ input[type=range][orient=vertical]
 
 .small-button {
     height: 5vh;
+}
+
+
+.range-slider {
+    position: fixed;
+    right: 5%;
+    top: 0;
 }

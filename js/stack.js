@@ -13,6 +13,10 @@ function translateY(value, units = "px"){
     return "translateY(" + value + units + ")";
 }
 
+function scaleY(value){
+    return "scaleY(" + value + ")";
+}
+
 function adjustLine(value, offset, maxLen){
     return (value + offset) / (maxLen);
 }
@@ -35,7 +39,7 @@ function rounds(value, dp = 0){
     return numStr;
 }
 
-function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, hLine){
+function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, hLine, hLineScale){
     span.innerText = value;
     // set slider span
     slider.style.height = container.offsetHeight + "px";
@@ -61,7 +65,9 @@ function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, h
 
     let hLineTranslation = value/100 * -height;
 
-    hLine.style.transform = translateY(hLineTranslation, "px");
+    let hScale = Math.max(hLineScale/100 * height, 1);
+
+    hLine.style.transform = translateY(hLineTranslation, "px") + " " + scaleY(hScale);
 }
 
 function getNearestIndex(array, value){
@@ -75,7 +81,6 @@ function getNearestIndex(array, value){
     }
     return smallest;
 }
-
 
 function initStack(){
     let graphSlider = document.getElementById('graph-slider');
@@ -135,13 +140,23 @@ function initStack(){
     let hLine = document.getElementById('h-line');
     let lungPic = document.getElementById('lung-pic');
 
+    let rangeSlider = document.getElementById('range-slider');
+    rangeSlider.value = 1;
+
+
     function gHandler(value){
-        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine);
+        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, rangeSlider.value);
+    }
+
+    function sHandler(value){
+        graphHandler(verticalSlider.value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, value);
     }
 
     verticalSlider.addEventListener('input', (e) => gHandler(e.target.value));
 
     window.addEventListener('resize', () => gHandler(verticalSlider.value));
+
+    rangeSlider.addEventListener('input', (e) => sHandler(e.target.value))
 
     gHandler(verticalSlider.value);
 

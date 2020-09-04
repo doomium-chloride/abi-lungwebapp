@@ -18,7 +18,7 @@ function updateFrame(zincRenderer) {
 	return function () {
 		if (!currentUniforms) {
 			return;
-		}
+		}   
 
 		let light = zincRenderer.getCurrentScene().directionalLight;
         currentUniforms['directionalLightDirection'].value.set(light.position.x, light.position.y, light.position.z);
