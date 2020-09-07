@@ -17,6 +17,11 @@ function scaleY(value){
     return "scaleY(" + value + ")";
 }
 
+function scaleX(value){
+    return "scaleX(" + value + ")";
+}
+
+
 function adjustLine(value, offset, maxLen){
     return (value + offset) / (maxLen);
 }
@@ -39,8 +44,55 @@ function rounds(value, dp = 0){
     return numStr;
 }
 
+function getAverage(data, start = null, end = null){
+
+    if(start === null && end === null){
+        let total = 0;
+        let len = data.length;
+        for(let i = 0; i < len; i++){
+            total += data[i];
+        }
+        return total/len;
+    }
+
+    end = Math.min(end+1, data.length);//include end
+    
+    let dataSlice = data.slice(start, end);
+
+    return getAverage(dataSlice);
+}
+
+function getAverageBetween(labels, data, lower, upper){
+    let start = getNearestIndex(labels, lower);
+    let end = getNearestIndex(labels, upper);
+
+    if(start === end){
+        return data[end];
+    } else{
+        return getAverage(data, start, end);
+    }
+}
+
+function add(num1, num2){
+    return parseFloat(num1) + parseFloat(num2);
+}
+
 function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, hLine, hLineScale){
-    span.innerText = value;
+    const maxValue = 80;
+    const hRange = 60;//80 - 20
+
+    const labels = chart.data.labels;
+    const data = chart.data.datasets[0].data;
+
+    let value2 = Math.min(add(value,hLineScale), maxValue);
+
+    let qtdScore = getAverageBetween(labels, data, value, value2);
+
+    if(value == value2){
+        span.innerText = value;
+    } else {
+        span.innerText = value + "-" + value2;
+    }
     // set slider span
     slider.style.height = container.offsetHeight + "px";
     value = parseInt(value);
@@ -50,24 +102,35 @@ function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, h
     let innerWidth = right - left;
 
     let percent = adjustLine(value, -20, 60);// 80 - 20 = 60
-    // move graph line
-    slider.style.transform = translateX(percent * innerWidth + left, "px");
+    let xTransform = percent * innerWidth + left;
 
-    let labels = chart.data.labels;
-    let data = chart.data.datasets[0].data;
+    let wScale = hLineScale/hRange * innerWidth
+    wScale = Math.min(wScale, right - xTransform);
+    wScale = Math.max(wScale, 0);
+
+    // move graph line
+    slider.style.transform = translateX(xTransform, "px");
+    slider.style.width = wScale + "px";
+
+    
     // display QtD score
-    let nearestIndex = getNearestIndex(labels, value);
-    let qtdValue = rounds(data[nearestIndex], 4);
+
+    let qtdValue = rounds(qtdScore, 4);
     qtdSpan.innerText = qtdValue;
 
     // horizontal line
     let height = lungPic.offsetHeight;
 
-    let hLineTranslation = value/100 * -height;
+    let hLineTranslation = (value)/100 * -height;
 
-    let hScale = Math.max(hLineScale/100 * height, 1);
+    let hScale = Math.min(hLineScale/100 * height, (maxValue - value)/100 * height);
 
-    hLine.style.transform = translateY(hLineTranslation, "px") + " " + scaleY(hScale);
+
+    hScale = Math.max(hScale, 1);
+
+    
+    hLine.style.transform = translateY(hLineTranslation, "px");
+    hLine.style.height = hScale + "px";
 }
 
 function getNearestIndex(array, value){

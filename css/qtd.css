@@ -92,8 +92,9 @@ input[type=range][orient=vertical]
 .line {
     position: absolute;
     height: 200px;
-    width: 1px;
-    background-color: blue;
+    border-color: blue;
+    border-width: 1px;
+    border-style: solid;
     left: 0;
 }
 
