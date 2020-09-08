@@ -105,6 +105,7 @@ input[type=range][orient=vertical]
     background-color: gold;
     left: 25%;
     bottom: 0;
+    opacity: 0.6;
 }
 
 .sliding-graph {
