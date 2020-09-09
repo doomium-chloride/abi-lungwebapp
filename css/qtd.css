@@ -162,3 +162,9 @@ input[type=range][orient=vertical]
     right: 5%;
     top: 0;
 }
+
+.pattern-menu button{
+    display: block;
+    margin: 10% auto;
+    align-self: center;
+}
