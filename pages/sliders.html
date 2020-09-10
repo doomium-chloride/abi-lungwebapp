@@ -4,6 +4,27 @@
             What does <i>your</i> lung look like?
         </h1>
 
+        <div id="info-text-pca" class="hidden">
+
+            <h4>PCA</h4>
+
+            <p id="info-text-pca-1" class="visible">
+                Principal Component Analysis or PCA, simplifies the complex patterns of shape variation into independent variables (principal components), providing easily interpretable metrics of shape. PCA is based on sound mathematical concepts. 
+            </p>
+
+            <p id="info-text-pca-2" class="hidden">
+                We employed CT images from a cohort of healthy adult volunteers aged 20-93 years of age.  We quantified average lung shape (left lung + right lung + lobe fissures) using a PCA to derive a statistical shape average model and its principal modes of shape variation. 
+            </p>
+
+            <p id="info-text-pca-3" class="hidden">
+                We found that lung shape associated with age, sex, height weight, and also lung function measurements. This interesting finding implies that if we know demographical information and lung function, we could back calculate lung shape within reasonable precision.
+            </p>
+
+            <img src="images/back.svg" id="pca-back" class="info-button clickable">
+            <img src="images/forward.svg" id="pca-forward" class="info-button clickable">
+
+        </div>
+
         <div id="info-parameters">
             <div id="info-text-fvc" class="hidden">
 
@@ -41,6 +62,11 @@
         <div class="center-text">
             Autofill parameters:
             <button id="auto-fill-toggle">OFF</button>
+            <span class="right" id="info-pca">&#9432</span>
+        </div>
+        <div class="center-text">
+            Toggle inner lung:
+            <button id="show-average-lung">SHOW</button>
         </div>
         
         <div id="demographics-section-slider">

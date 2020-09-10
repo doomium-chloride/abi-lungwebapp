@@ -57,3 +57,7 @@ span.left {
 .visible {
     display: block;
 }
+
+.info-button {
+    width: 10%;
+}
