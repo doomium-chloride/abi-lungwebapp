@@ -152,9 +152,13 @@ function initStack(){
     let graphContainer = document.getElementById('graph');
 
     
-    const qtdFilename = 'average_qtd.json';
+    const qtdFilename = 'COPD_qtd.json';
 
     qtdObj = loadQtdFile(qtdFilename);
+
+    agingQtd = loadQtdFile('aging_qtd.json');
+
+    ipfQtd = loadQtdFile('ipf_qtd.json');
 
     let lowest = getNearestIndex(qtdObj.labels, 20);
     let highest = getNearestIndex(qtdObj.labels, 80) + 1;
@@ -172,9 +176,29 @@ function initStack(){
         data: {
             labels: qtdObj.labels.slice(lowest, highest),
             datasets: [{
-                label: 'Population average',
-                borderColor: 'rgb(255, 99, 132)',
-                data: qtdObj.qtd.slice(lowest, highest)
+                label: 'Sample',
+                borderColor: 'blue',
+                data: qtdObj.average.slice(lowest, highest)
+            },{
+                label: 'Low normal',
+                borderColor: 'green',
+                data: agingQtd.min.slice(lowest, highest),
+                fill: '+1',
+                backgroundColor: 'rgba(0,200,0,0.2)'
+            }, {
+                label: 'High normal',
+                borderColor: 'green',
+                data: agingQtd.max.slice(lowest, highest)
+            }, {
+                label: 'Low IPF',
+                borderColor: 'red',
+                data: ipfQtd.min.slice(lowest, highest),
+                fill: '+1',
+                backgroundColor: 'rgba(200,0,0,0.2)'
+            }, {
+                label: 'High IPF',
+                borderColor: 'red',
+                data: ipfQtd.max.slice(lowest, highest)
             }]
         },
     
