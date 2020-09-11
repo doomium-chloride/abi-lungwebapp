@@ -249,6 +249,12 @@ function initStack(){
         stackBlock.src = stackBlockPath;
     }
 
+    function preloadImages(){
+        for(let num = 20; num <= 80; num++){
+            setSliceImages(num);
+        }
+    }
+
     function gHandler(value){
         graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, rangeSlider.value, setSliceImages);
     }
@@ -261,7 +267,9 @@ function initStack(){
 
     window.addEventListener('resize', () => gHandler(verticalSlider.value));
 
-    rangeSlider.addEventListener('input', (e) => sHandler(e.target.value))
+    rangeSlider.addEventListener('input', (e) => sHandler(e.target.value));
+
+    preloadImages();
 
     gHandler(verticalSlider.value);
 
