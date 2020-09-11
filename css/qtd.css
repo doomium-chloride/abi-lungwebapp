@@ -84,7 +84,7 @@ input[type=range][orient=vertical]
 
 .center-main {
     position: absolute;
-    top: 10%;
+    top: 20vh;
     width: 100%;
     text-align: center;
 }
@@ -195,7 +195,7 @@ input[type=range][orient=vertical]
 .tooltip span {
     visibility: hidden;
     width: 10em;
-    background-color: #000;
+    background-color: #294532;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -207,6 +207,7 @@ input[type=range][orient=vertical]
     margin-left:1em;
     opacity: 0;
     transition: opacity 1s;
+    font-size: 1vw;
 }
 .tooltip span::after {
     content: "";
@@ -216,7 +217,7 @@ input[type=range][orient=vertical]
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent black transparent transparent;
+    border-color: transparent #294532 transparent transparent;
 }
 .tooltip input {
     display:none;
@@ -224,4 +225,51 @@ input[type=range][orient=vertical]
 .tooltip input:checked+span {
     visibility: visible;
     opacity: 1;
+}
+
+span.left {
+    position: absolute;
+    left: 10vw;
+}
+
+.circle-large,
+.circle{
+    border-radius: 100%;
+}
+
+.circle-large{
+    background-color: #106673;
+    width: 12vw;
+    height: 12vw;
+    text-align: center;
+    padding-top: 3.5vw;
+    font-size: 1.5vw;
+}
+
+span.center{
+    position: absolute;
+    left: 15vw;
+}
+
+.box-back{
+    background-color: #7aa658;
+    height: 10vw;
+    width: 70vw;
+    margin-top: 1vw;
+}
+
+.info-container{
+    height: 12vw;
+    width: 70vw;
+    padding-top: 2vw;
+}
+
+.info-bit {
+    float: right;
+    background-color: #307683;
+    width: 8vw;
+    height: 8vw;
+    padding-top: 2.7vw;
+    font-size: 1.5vw;
+    margin-right: 6vw;
 }

@@ -6,17 +6,54 @@
     
 
     <div class="center-head">
-        <img src="images/back.svg" class="small-button clickable" id="qtd-back">
         <h1 style="display: inline;">Quadtree</h1>
-        <img src="images/forward.svg" class="small-button clickable" id="qtd-forward">
     </div>
     <div class="center-main center-text">
 
+        <span class="box-back center"></span>
+        <span class="circle-large left">
+            Quadtree Decomposition
+        </span>
 
+        <span class="info-container center center-text">
+            <span class="info-bit circle">
+                <label class="tooltip clickable">More info<input type="checkbox"><span>
+                    Citation: 
+                    <p>
+                        Subramaniam K, Clark AR, Hoffman EA, Tawhai MH, Metrics of lung tissue heterogeneity depend on BMI but not age.
+                    </p>
+                    <p>
+                        J Appl Physiol (1985). 2018; 125(2): 328-339. Doi: 10.11.52/japplphysiol.00510.2016
+                    </p>
+                </span></label>
+            </span>
+            <span class="info-bit circle">
+                <label class="tooltip clickable">How?<input type="checkbox"><span>
+                    <p>
+                        QtD accounts for spatial clustering of tissue with similar tissue density. 
+                    </p>
+                    <p>
+                        Pixel intensity ranges are used to recursively subdivide the image. Number of blocks accounts the tissue heterogeneity.
+                    </p>
+                    <p>
+                        Number of blocks accounts the tissue heterogeneity.
+                    </p>
+                </span></label>
+            </span>
+            <span class="info-bit circle">
+                <label class="tooltip clickable">Why?<input type="checkbox"><span>
+                    Quadtree decomposition has been used to study lung tissue heterogeneity
+                </span></label>
+            </span>
+            <span class="info-bit circle">
+                <label class="tooltip clickable">What?<input type="checkbox"><span>
+                    An analysis technique that involves subdividing an image into blocks that are more homogeneous than the image itself.
+                </span></label>
+            </span>
+        </span>
         <p id="qtd-background-1" class="visible">
-            Quadtree decomposition has been used to study lung tissue heterogeneity.
-            <label class="tooltip clickable">world<input type="checkbox"><span>and this is the tooltip text displayed on click.</span>
-                <label class="tooltip clickable">za world<input type="checkbox"><span>toki yo tomare</span>
+            
+            
         </p>
 
         <div id="qtd-background-2" class="hidden">
@@ -68,37 +105,5 @@
 <script>
 
 clearScene();
-
-let infoState = {
-    qtd: 1
-}
-
-function longInfoHanlder(baseStr, info, forward){
-    let current = infoState[info];
-    let newNum;
-    if(forward){
-        newNum = current + 1;
-    } else{
-        newNum = current - 1;
-    }
-    let element = document.getElementById(baseStr + "-" + newNum);
-    if(element !== null){
-        let oldE = document.getElementById(baseStr + "-" + current);
-
-        const hidden = "hidden";
-        const visible = "visible";
-
-        oldE.classList.replace(visible, hidden);
-        element.classList.replace(hidden, visible);
-
-        infoState[info] = newNum;
-    }
-}
-
-const baseStr = 'qtd-background';
-let qtdVar = "qtd";
-
-document.getElementById('qtd-back').addEventListener('click', () => longInfoHanlder(baseStr, qtdVar, false));
-document.getElementById('qtd-forward').addEventListener('click', () => longInfoHanlder(baseStr, qtdVar, true));
 
 </script>
