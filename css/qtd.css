@@ -168,3 +168,22 @@ input[type=range][orient=vertical]
     margin: 10% auto;
     align-self: center;
 }
+
+.right-small {
+	position: absolute;
+	right: 0;
+	width: 20vw;
+	margin: 1vw;
+}
+
+.center-large {
+	position: absolute;
+    top: 50%;
+    transform: translate(80%, -50%);
+	width: 40vw;
+    margin: 1vw;
+}
+
+.side-pic {
+    width: 40%;
+}
