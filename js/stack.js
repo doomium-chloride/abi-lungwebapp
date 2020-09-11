@@ -1,3 +1,7 @@
+const imageStackPath = "images/stack/";
+const imgStackFormat = ".jpg";
+
+
 function loadQtdFile(qtdFile){
     let req = new XMLHttpRequest();
     req.open('GET', "graphdata/" + qtdFile, false);
@@ -77,7 +81,7 @@ function add(num1, num2){
     return parseFloat(num1) + parseFloat(num2);
 }
 
-function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, hLine, hLineScale){
+function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, hLine, hLineScale, callBack){
     const maxValue = 80;
     const hRange = 60;//80 - 20
 
@@ -131,6 +135,9 @@ function graphHandler(value, span, slider, container, chart, qtdSpan, lungPic, h
     
     hLine.style.transform = translateY(hLineTranslation, "px");
     hLine.style.height = hScale + "px";
+
+    // callBack
+    callBack(value);
 }
 
 function getNearestIndex(array, value){
@@ -228,15 +235,26 @@ function initStack(){
     let lungPic = document.getElementById('lung-pic');
 
     let rangeSlider = document.getElementById('range-slider');
-    rangeSlider.value = 1;
+    rangeSlider.value = 0;
 
+    let stackImage = document.getElementById('stack-image');
+    let stackBlock = document.getElementById('stack-block');
+
+    function setSliceImages(value){
+        let number = qtdObj.image[value];
+        let stackImagePath = imageStackPath + "image" + number + imgStackFormat;
+        let stackBlockPath = imageStackPath + "block" + number + imgStackFormat;
+
+        stackImage.src = stackImagePath;
+        stackBlock.src = stackBlockPath;
+    }
 
     function gHandler(value){
-        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, rangeSlider.value);
+        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, rangeSlider.value, setSliceImages);
     }
 
     function sHandler(value){
-        graphHandler(verticalSlider.value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, value);
+        graphHandler(verticalSlider.value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, value, setSliceImages);
     }
 
     verticalSlider.addEventListener('input', (e) => gHandler(e.target.value));
