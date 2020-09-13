@@ -273,3 +273,10 @@ span.center{
     font-size: 1.5vw;
     margin-right: 6vw;
 }
+
+.slider-description {
+    position: fixed;
+    right: 0;
+    font-size: 1vw;
+    top: -5vh;
+}
