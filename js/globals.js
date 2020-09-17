@@ -87,10 +87,10 @@ var sliderVariables = {
     gender: 0,
     height: 100,
     bmi: 20,
-    fvc: 100,
-    dlco: 100,
-    rvtlc: 100,
-    tlc: 100
+    fvc: 1,
+    dlco: 1,
+    rvtlc: 1,
+    tlc: 1
 };
 
 var globalScene = null;
