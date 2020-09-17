@@ -128,6 +128,32 @@ const setScene = function (name, scene, material) {
 
 // vs and fs are shader files
 
+
+function loadMeshFile(filename){
+    let req = new XMLHttpRequest();
+    req.open('GET', "models/" + filename, false);
+    req.send(null);
+    return JSON.parse(req.responseText);
+}
+
+function loadMeshGeometry(data){
+    let object = (new THREE.JSONLoader()).parse(data, 'path');
+    return object; //this is the geometry file. No colours needed
+}
+
+function getMeshGeometry(filename){
+    const data = loadMeshFile(filename);
+    return loadMeshGeometry(data);
+}
+
+const pca = [
+    getMeshGeometry('cmgui_w1_1.json'),
+    getMeshGeometry('cmgui_w2_1.json'),
+    getMeshGeometry('cmgui_w3_1.json')
+]
+
+console.log(pca)
+
 const loadMultiScene = function(data, uniforms, saveData) {
 	if (!zincRenderer) {
 		console.error('zinc not loaded');
@@ -266,7 +292,7 @@ const loadMultiModels = function (name, scene, data, material, saveData) {
                 let object = (new THREE.JSONLoader()).parse(json, 'path');
                 object.geometry.morphColors = json.morphColors;
                 tempModels[i] = object;
-                let bufferGeometry = toBufferGeometry(object.geometry, saveData.scale[i]);
+                let bufferGeometry = toBufferGeometry(object.geometry, saveData.weights[i]);
                 scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, material[i]);
                 n--;
                 if (n == 0) {
@@ -367,7 +393,16 @@ const loadModels = function (name, scene, data, material) {
     }
 };
 
-function toBufferGeometry(geometry, scale = noScale) {
+function pcaLinear(geometry, pca, index, side, weights){
+    const base = geometry.vertices[index][side]
+    const d1 = pca[0].geometry.vertices[index][side] - base;
+    const d2 = pca[1].geometry.vertices[index][side] - base;
+    const d3 = pca[2].geometry.vertices[index][side] - base;
+    return base;
+    //return base + (d1 * weights[0]) + (d2 * weights[1]) + (d3 * weights[2]);
+}
+
+function toBufferGeometry(geometry, weights = noScale) {
 	let arrayLength = geometry.faces.length * 3 * 3;
 	let positions = new Float32Array(arrayLength);
 	let normals = new Float32Array(arrayLength);
@@ -380,22 +415,29 @@ function toBufferGeometry(geometry, scale = noScale) {
 
 	geometry.faces.forEach(function (face, index) {
 
-        //size scale
-        let xmult = scale.x;//width
-        let ymult = scale.y;//depth
-        let zmult = scale.z;//height
+        positions[index*9 + 0] = pcaLinear(geometry, pca, face.a, 'x', weights);
+        positions[index*9 + 3] = pcaLinear(geometry, pca, face.b, 'x', weights);
+        positions[index*9 + 6] = pcaLinear(geometry, pca, face.c, 'x', weights);
 
-        positions[index*9 + 0] = geometry.vertices[face.a].x * xmult;
-        positions[index*9 + 3] = geometry.vertices[face.b].x * xmult;
-        positions[index*9 + 6] = geometry.vertices[face.c].x * xmult;
+        positions[index*9 + 1] = pcaLinear(geometry, pca, face.a, 'y', weights);
+        positions[index*9 + 4] = pcaLinear(geometry, pca, face.b, 'y', weights);
+        positions[index*9 + 7] = pcaLinear(geometry, pca, face.c, 'y', weights);
 
-        positions[index*9 + 1] = geometry.vertices[face.a].y * ymult;
-        positions[index*9 + 4] = geometry.vertices[face.b].y * ymult;
-        positions[index*9 + 7] = geometry.vertices[face.c].y * ymult;
+		positions[index*9 + 2] = pcaLinear(geometry, pca, face.a, 'z', weights);
+		positions[index*9 + 5] = pcaLinear(geometry, pca, face.b, 'z', weights);
+		positions[index*9 + 8] = pcaLinear(geometry, pca, face.c, 'z', weights);
 
-		positions[index*9 + 2] = geometry.vertices[face.a].z * zmult;
-		positions[index*9 + 5] = geometry.vertices[face.b].z * zmult;
-		positions[index*9 + 8] = geometry.vertices[face.c].z * zmult;
+        // positions[index*9 + 0] = geometry.vertices[face.a].x * xmult;
+        // positions[index*9 + 3] = geometry.vertices[face.b].x * xmult;
+        // positions[index*9 + 6] = geometry.vertices[face.c].x * xmult;
+
+        // positions[index*9 + 1] = geometry.vertices[face.a].y * ymult;
+        // positions[index*9 + 4] = geometry.vertices[face.b].y * ymult;
+        // positions[index*9 + 7] = geometry.vertices[face.c].y * ymult;
+
+		// positions[index*9 + 2] = geometry.vertices[face.a].z * zmult;
+		// positions[index*9 + 5] = geometry.vertices[face.b].z * zmult;
+        // positions[index*9 + 8] = geometry.vertices[face.c].z * zmult;
 
 		// normals[index*9 + 0] = face.vertexNormals[0].x * xmult;
 		// normals[index*9 + 1] = face.vertexNormals[0].y * ymult;

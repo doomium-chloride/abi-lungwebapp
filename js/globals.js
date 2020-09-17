@@ -76,6 +76,10 @@ var lungScale = {
     z : 1//height
 }
 
+const staticWeights = [0,0,0];
+
+var lungWeights = [0,0,0];
+
 var numbers = [1,1,1,0];
 
 var sliderVariables = {

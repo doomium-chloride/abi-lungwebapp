@@ -34,57 +34,33 @@ function setSliderValue(value, slider, span, units = ""){
 function initScene(){
 
     let models = [
-        'models/surface_1.json',
-        'models/surface_2.json',
-        'models/surface_3.json',
-        'models/surface_4.json',
-        'models/surface_5.json',
-        'models/surface_6.json',
+        'models/cmgui_w0_1.json',
 
-        'models/surface_1.json',
-        'models/surface_2.json',
-        'models/surface_3.json',
-        'models/surface_4.json',
-        'models/surface_5.json',
-        'models/surface_6.json',
+        'models/cmgui_w0_1.json',
     ]
 
     let uniforms = [
         surfaceUniforms,
-        surfaceUniforms,
-        surfaceUniforms,
-        surfaceUniforms,
-        surfaceUniforms,
-        surfaceUniforms,
 
-        dynamicUniforms,
-        dynamicUniforms,
-        dynamicUniforms,
-        dynamicUniforms,
-        dynamicUniforms,
         dynamicUniforms,
     ]
 
     saveData.scale = [
         noScale,
-        noScale,
-        noScale,
-        noScale,
-        noScale,
-        noScale,
 
         lungScale,
-        lungScale,
-        lungScale,
-        lungScale,
-        lungScale,
-        lungScale,
+    ]
+
+    saveData.weights = [
+        staticWeights,
+
+        lungWeights,
     ]
 
     loadMultiScene({
         vs: 'shaders/surface.vs',
         fs: 'shaders/surface.fs',
-        view: 'models/surface_view.json',
+        view: 'models/lung_view.json',
         models: models,
     }, uniforms, saveData);
 }
@@ -248,9 +224,12 @@ function sliderListener(event, variable, keepViewPort = true){
 }
 
 function updateLungModel(keepViewPort = true){
-    let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
-    //let vector3 = formulaObj(sliderVariables);
-    setLungScale(vector3);
+    //let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
+    let vector3 = formulaObj(sliderVariables);
+    console.log(vector3)
+    //setLungScale(vector3);
+    lungWeights = vector3;
+    saveData.weights = vector3;
     //dynamicUniforms['opacity']['value'] = sliderVariables.dlco/200
 
     if(keepViewPort){
