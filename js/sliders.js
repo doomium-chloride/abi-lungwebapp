@@ -146,6 +146,9 @@ function initSliders(){
     //dlco
     initSliderCombo('dlco', "", true, true);
 
+    //tlc
+    initSliderCombo('tlc', "", true, true);
+
     updateLungModel(false)
 }
 

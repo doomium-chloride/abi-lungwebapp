@@ -85,7 +85,8 @@ var sliderVariables = {
     bmi: 20,
     fvc: 100,
     dlco: 100,
-    rvtlc: 100
+    rvtlc: 100,
+    tlc: 100
 };
 
 var globalScene = null;
