@@ -229,7 +229,6 @@ function updateLungModel(keepViewPort = true){
     console.log(vector3)
     //setLungScale(vector3);
     lungWeights = vector3;
-    saveData.weights = vector3;
     //dynamicUniforms['opacity']['value'] = sliderVariables.dlco/200
 
     if(keepViewPort){
@@ -433,7 +432,7 @@ function toggleShowLung(button){
         for(let i = 0; i < len/2; i++){
             materials[i].visible = false;
         }
-        dynamicUniforms['opacity']['value'] = 1;
+        dynamicUniforms['opacity']['value'] = 0.5;
         button.innerText = "HIDE";
     }
 }

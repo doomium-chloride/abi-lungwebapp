@@ -398,8 +398,9 @@ function pcaLinear(geometry, pca, index, side, weights){
     const d1 = pca[0].geometry.vertices[index][side] - base;
     const d2 = pca[1].geometry.vertices[index][side] - base;
     const d3 = pca[2].geometry.vertices[index][side] - base;
-    return base;
-    //return base + (d1 * weights[0]) + (d2 * weights[1]) + (d3 * weights[2]);
+    //return base;
+    //console.log(weights[1])
+    return base + (d1 * weights[0]) + (d2 * weights[1]) + (d3 * weights[2]);
 }
 
 function toBufferGeometry(geometry, weights = noScale) {
@@ -411,8 +412,9 @@ function toBufferGeometry(geometry, weights = noScale) {
 	let colors1 = new Float32Array(arrayLength);
 	let colors2 = new Float32Array(arrayLength);
 
-	let hasColors = !!geometry.morphColors;
-
+    let hasColors = !!geometry.morphColors;
+    console.log("weights")
+    console.log(weights)
 	geometry.faces.forEach(function (face, index) {
 
         positions[index*9 + 0] = pcaLinear(geometry, pca, face.a, 'x', weights);
@@ -513,13 +515,13 @@ function reloadMultiModels(saveData){
     let models = saveData.models;
     let materials = saveData.materials;
     let scene = saveData.scene;
-    let scale = saveData.scale;
+    let weights = saveData.weights;
 
     scene.clearAll();
 
     for (let i = 0; i < models.length; i++){
         let object = models[i];
-        let bufferGeometry = toBufferGeometry(object.geometry, scale[i]);
+        let bufferGeometry = toBufferGeometry(object.geometry, weights[i]);
         scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, materials[i]);
     }
     setScene(null, scene, materials);
