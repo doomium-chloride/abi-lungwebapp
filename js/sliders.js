@@ -249,6 +249,7 @@ function sliderListener(event, variable, keepViewPort = true){
 
 function updateLungModel(keepViewPort = true){
     let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
+    //let vector3 = formulaObj(sliderVariables);
     setLungScale(vector3);
     //dynamicUniforms['opacity']['value'] = sliderVariables.dlco/200
 
@@ -306,15 +307,30 @@ function dummyFormula(age, fev1, tlc){
     return [1 + dumbFormula(age), 1 + dumbFormula(fev1), 1 + dumbFormula(tlc)];
 }
 
-function testFormulaEI(age, bmi, fvc, dlco, rvtlc){
-    let m1 = 1.38 + (-0.04 * age) + (0.38 * fvc) + (-0.04 * dlco);
-    let m2 = 3.49 + (-0.16 * bmi) + 0.02 * rvtlc;
-    let m3 = 4.90 + (-0.02 * age) + (-0.45 * rvtlc);//this line is wrong!!!
+function weights1(age, fvc, dlco){
+    const b = [1.3773, -0.0364, 0.3754, -0.0409];
+    return b[0] + (b[1] * age) + (b[2] * fvc) + (b[3] * dlco);
+}
+
+function weights2(bmi, rvtlc){
+    const b = [3.4902, -0.1642, 0.0167];
+    return b[0] + (b[1] * bmi) + (b[2] * rvtlc);
+}
+
+function weights3(age, tlc, dlco){
+    const b = [4.8953, -0.018, -0.4557, -0.0506];
+    return b[0] + (b[1] * age) + (b[2] * tlc) + (b[3] * dlco)
+}
+
+function formulaEI(age, bmi, fvc, dlco, rvtlc, tlc){
+    let m1 = weights1(age, fvc, dlco);
+    let m2 = weights2(bmi, rvtlc);
+    let m3 = weights3(age, tlc, dlco);
     return [m1, m2, m3];
 }
 
-function testFormulaEE(){
-    
+function formulaObj(obj){
+    return formulaEI(obj.age, obj.bmi, obj.fvc, obj.dlco, obj.rvtlc, obj.tlc);
 }
 
 
