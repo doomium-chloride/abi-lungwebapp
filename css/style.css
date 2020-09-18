@@ -492,5 +492,5 @@ body[data-page="index"] #navigation {
     position: fixed;
     top: 0;
     right: 0;
-    width: 10vw;
+    height: 10vh;
 }
