@@ -49,7 +49,7 @@ function updateFrame(zincRenderer) {
         if(Array.isArray(currentUniforms)){
             let uniLen = currentUniforms.length;
             for(let i = 0; i < uniLen; i++){
-                currentUniforms[i]['t'].value = t;
+                currentUniforms[i]['t'].value = 0;
             }
         } else {
             currentUniforms['t'].value = t;
