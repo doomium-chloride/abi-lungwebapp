@@ -403,7 +403,7 @@ function pcaLinear(geometry, pca, index, side, weights){
     return base + (d1 * weights[0]) + (d2 * weights[1]) + (d3 * weights[2]);
 }
 
-function toBufferGeometry(geometry, weights = noScale) {
+function toBufferGeometry(geometry, weights = staticWeights) {
 	let arrayLength = geometry.faces.length * 3 * 3;
 	let positions = new Float32Array(arrayLength);
 	let normals = new Float32Array(arrayLength);
