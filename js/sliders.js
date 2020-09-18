@@ -26,6 +26,8 @@ let saveData = {
     dynamic: 0
 }
 
+let infoArray = [];
+
 let showAverageLung = true;
 
 function setSliderValue(value, slider, span, units = ""){
@@ -172,6 +174,8 @@ function initPCAinfo(){
     let pcaForward = document.getElementById('pca-forward');
     pcaForward.addEventListener('click', () => longInfoHanlder(baseStr, info, true));
 
+    infoArray.push(infoPCAtext)
+
 }
 
 function initGenderSlider(){//gender is an exception, and not optional
@@ -219,6 +223,8 @@ function initSliderPart(sliderID, spanID, variable, units, optional = false, inf
         let infoText = document.getElementById('info-text-' + variable);
 
         infoButton.addEventListener('click', () => toggleInfo(infoText));
+
+        infoArray.push(infoText);
     }
 }
 
@@ -424,11 +430,27 @@ function round2(number){
     return Math.round(number * 100) / 100
 }
 
+function hideAll(array, except = null){
+    const hidden = "hidden";
+    const visible = "visible";
+
+    const len = array.length;
+
+    for(let i = 0; i < len; i++){
+        let element = array[i];
+        if(except != element){
+            element.classList.replace(visible, hidden);
+        }
+    }
+}
 
 function toggleInfo(info){
     const hidden = "hidden";
     const visible = "visible";
+    
     let classList = info.classList;
+
+    hideAll(infoArray, info)
 
     if(classList.contains(hidden)){
         classList.replace(hidden, visible);
