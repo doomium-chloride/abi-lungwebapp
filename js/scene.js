@@ -413,8 +413,8 @@ function toBufferGeometry(geometry, weights = noScale) {
 	let colors2 = new Float32Array(arrayLength);
 
     let hasColors = !!geometry.morphColors;
-    console.log("weights")
-    console.log(weights)
+
+
 	geometry.faces.forEach(function (face, index) {
 
         positions[index*9 + 0] = pcaLinear(geometry, pca, face.a, 'x', weights);
@@ -516,6 +516,12 @@ function reloadMultiModels(saveData){
     let materials = saveData.materials;
     let scene = saveData.scene;
     let weights = saveData.weights;
+
+    console.log("weight 1")
+    console.log(weights[0])
+    console.log("weight 2")
+    console.log(weights[1])
+
 
     scene.clearAll();
 

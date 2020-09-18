@@ -21,7 +21,9 @@ let saveData = {
     scale: [],
     materials: [],
     models: [],
-    scene: null
+    scene: null,
+    weights: [],
+    dynamic: 0
 }
 
 let showAverageLung = true;
@@ -57,12 +59,18 @@ function initScene(){
         lungWeights,
     ]
 
+    saveData.dynamic = [
+        false,
+        true
+    ]
+
     loadMultiScene({
         vs: 'shaders/surface.vs',
         fs: 'shaders/surface.fs',
         view: 'models/lung_view.json',
         models: models,
     }, uniforms, saveData);
+    console.log(saveData)
 }
 
 // function initScene(){
@@ -223,14 +231,31 @@ function sliderListener(event, variable, keepViewPort = true){
     sliderSetValue(event.target.value, variable, keepViewPort);
 }
 
+function updateArray(array, newData){
+    const len = array.len;
+    for(let i = 0; i < len; i++){
+        array[i] = newData[i];
+    }
+}
+
+function updateWeights(saveData, newData){
+    const len = saveData.dynamic.length;
+    for(let i = 0; i < len; i++){
+        if(saveData.dynamic[i]){
+            saveData.weights[i] = newData;
+        }
+    }
+}
+
 function updateLungModel(keepViewPort = true){
     //let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
     let vector3 = formulaObj(sliderVariables);
+    console.log("vector3")
     console.log(vector3)
     //setLungScale(vector3);
-    lungWeights = vector3;
+    updateWeights(saveData, vector3);
     //dynamicUniforms['opacity']['value'] = sliderVariables.dlco/200
-
+    console.log(saveData)
     if(keepViewPort){
         reloadMultiModels(saveData);
     } else {
