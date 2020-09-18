@@ -479,7 +479,7 @@ function toggleShowLung(button){
         for(let i = 0; i < len/2; i++){
             materials[i].visible = false;
         }
-        dynamicUniforms['opacity']['value'] = 0.5;
+        dynamicUniforms['opacity']['value'] = 1;
         button.innerText = "HIDE";
     }
 }
