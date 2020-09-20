@@ -68,3 +68,7 @@ span.left {
     left: 0;
     bottom: 0;
 }
+
+body[data-page="sliders"] #play {
+    display: none;
+}
