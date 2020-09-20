@@ -187,23 +187,23 @@ function initStack(){
                 borderColor: 'blue',
                 data: qtdObj.average.slice(lowest, highest)
             },{
-                label: 'Low normal',
+                label: 'Normal',
                 borderColor: 'green',
                 data: agingQtd.min.slice(lowest, highest),
                 fill: '+1',
                 backgroundColor: 'rgba(0,200,0,0.2)'
             }, {
-                label: 'High normal',
+                label: 'Normal upperbound',
                 borderColor: 'green',
                 data: agingQtd.max.slice(lowest, highest)
             }, {
-                label: 'Low IPF',
+                label: 'IPF',
                 borderColor: 'red',
                 data: ipfQtd.min.slice(lowest, highest),
                 fill: '+1',
                 backgroundColor: 'rgba(200,0,0,0.2)'
             }, {
-                label: 'High IPF',
+                label: 'IPF upperbound',
                 borderColor: 'red',
                 data: ipfQtd.max.slice(lowest, highest)
             }]
@@ -224,6 +224,14 @@ function initStack(){
                     right: 0,
                     top: 0,
                     bottom: 0
+                }
+            },
+            legend: {
+                labels: {
+                    filter: function(item, chart) {
+                        // Logic to remove a particular legend item goes here
+                        return !item.text.includes('upperbound');
+                    }
                 }
             }
         }
