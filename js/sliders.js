@@ -115,6 +115,9 @@ function initSliders(){
 
     initOpacitySliders();
 
+    //colour input
+    initColourHandlers()
+
     //info button
     initPCAinfo();
 
@@ -568,4 +571,32 @@ function initOpacitySlider(name, uniforms, mult, init){
     }
     slider.addEventListener('input', handler);
     handler1(init);
+}
+
+function colourHandler(uniforms ,value){
+    uniforms['diffuse']['value'] = new THREE.Color( value );
+}
+
+function initColourHandler(uniforms, name){
+    let selectorID = "selector-" + name + "-colour";
+    let spanID = name + "-colour";
+
+    let selector = document.getElementById(selectorID);
+    let span = document.getElementById(spanID);
+
+    let handler1 = (value) => {
+        colourHandler(uniforms, value);
+        span.innerText = value;
+    }
+
+    let handler = (e) => {
+        let value = e.target.value
+        handler1(value);
+    }
+    selector.addEventListener('input', handler);
+}
+
+function initColourHandlers(){
+    initColourHandler(staticUniforms, 'average');
+    initColourHandler(dynamicUniforms, 'custom');
 }
