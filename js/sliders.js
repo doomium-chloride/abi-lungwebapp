@@ -141,12 +141,23 @@ function initSliders(){
 function longInfoHanlder(baseStr, info, forward){
     let current = infoState[info];
     let newNum;
+    
     if(forward){
         newNum = current + 1;
     } else{
         newNum = current - 1;
     }
+
+    let beforeNum = newNum - 1;
+    let afterNum = newNum + 1;
+
     let element = document.getElementById(baseStr + "-" + newNum);
+    let beforeElement = document.getElementById(baseStr + "-" + beforeNum);
+    let afterElement = document.getElementById(baseStr + "-" + afterNum)
+
+    let pcaBack = document.getElementById('pca-back');
+    let pcaForward = document.getElementById('pca-forward');
+
     if(element !== null){
         let oldE = document.getElementById(baseStr + "-" + current);
 
@@ -157,6 +168,15 @@ function longInfoHanlder(baseStr, info, forward){
         element.classList.replace(hidden, visible);
 
         infoState[info] = newNum;
+
+        pcaBack.classList.replace('gray', 'clickable');
+        pcaForward.classList.replace('gray', 'clickable');
+    }
+    if(beforeElement == null){
+        pcaBack.classList.replace('clickable', 'gray');
+    }
+    if(afterElement == null){
+        pcaForward.classList.replace('clickable', 'gray');
     }
 }
 
