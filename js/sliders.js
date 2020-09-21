@@ -46,7 +46,7 @@ function initScene(){
     ]
 
     let uniforms = [
-        surfaceUniforms,
+        staticUniforms,
 
         dynamicUniforms,
     ]
@@ -538,7 +538,7 @@ function toggleLungMenu(button){
 
 function initOpacitySliders(){
     const mult = 1/100;
-    initOpacitySlider('average', surfaceUniforms, mult, 50);
+    initOpacitySlider('average', staticUniforms, mult, 50);
     initOpacitySlider('custom', dynamicUniforms, mult, 100);
 }
 

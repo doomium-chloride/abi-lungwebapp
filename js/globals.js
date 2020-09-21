@@ -20,7 +20,22 @@ const surfaceUniforms = THREE.UniformsUtils.merge([{
 	't': { type: 'f', value: 0.0 },
 	'tidalVolumeRatio': { type: 'f', value: 0.4 },
 	'severity': { type: 'f', value: 0.0 },
-	'opacity': { type: 'f', value: 1.0 },
+    'opacity': { type: 'f', value: 1.0 },
+}]);
+
+const staticUniforms = THREE.UniformsUtils.merge([{
+	'ambient'  : { type: 'c', value: new THREE.Color( 0xffffff ) },
+	'emissive' : { type: 'c', value: new THREE.Color( 0x000000 ) },
+	'specular' : { type: 'c', value: new THREE.Color( 0x111111 ) },
+	'shininess': { type: 'f', value: 30 },
+	'diffuse': { type: 'c', value: new THREE.Color( 0xbd11a6 ) },
+	'ambientLightColor': { type: 'c', value: new THREE.Color( 0x444444 ) },
+	'directionalLightColor': { type: 'c', value: new THREE.Color( 0x888888 ) },
+	'directionalLightDirection': { type: 'v3', value: new THREE.Vector3()  },
+	't': { type: 'f', value: 0.0 },
+	'tidalVolumeRatio': { type: 'f', value: 0.4 },
+	'severity': { type: 'f', value: 0.0 },
+    'opacity': { type: 'f', value: 1.0 },
 }]);
 
 const dynamicUniforms = THREE.UniformsUtils.merge([{
@@ -35,7 +50,7 @@ const dynamicUniforms = THREE.UniformsUtils.merge([{
 	't': { type: 'f', value: 0.0 },
 	'tidalVolumeRatio': { type: 'f', value: 0.4 },
 	'severity': { type: 'f', value: 0.0 },
-	'opacity': { type: 'f', value: 0.5 },
+    'opacity': { type: 'f', value: 0.5 },
 }]);
 
 const airwaysUniforms = THREE.UniformsUtils.merge([{

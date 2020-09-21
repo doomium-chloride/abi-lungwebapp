@@ -182,6 +182,7 @@ uniform	vec3 directionalLightDirection;
 uniform float severity;
 uniform float opacity;
 uniform sampler2D texture;
+uniform vec4 mainColour;
 
 vec3 colorScale(vec2 seed) {
 	float tar = seed.x * severity;
