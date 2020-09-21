@@ -538,28 +538,30 @@ function toggleLungMenu(button){
 
 function initOpacitySliders(){
     const mult = 1/100;
-    initOpacitySlider('average', surfaceUniforms, mult);
-    initOpacitySlider('custom', dynamicUniforms, mult);
+    initOpacitySlider('average', surfaceUniforms, mult, 50);
+    initOpacitySlider('custom', dynamicUniforms, mult, 100);
 }
 
 function opacityHandler(uniforms, value){
     uniforms['opacity']['value'] = value;
 }
 
-function initOpacitySlider(name, uniforms, mult){
+function initOpacitySlider(name, uniforms, mult, init){
     let sliderID = "slider-" + name + "-opacity";
-    let spanID = name + "-opactiy";
+    let spanID = name + "-opacity";
 
     let slider = document.getElementById(sliderID);
     let span = document.getElementById(spanID);
-    console.log(slider)
-    console.log(span)
+
+    let handler1 = (value) => {
+        opacityHandler(uniforms, value * mult);
+        span.innerText = value;
+    }
 
     let handler = (e) => {
         let value = e.target.value
-        opacityHandler(uniforms, value * mult);
-        //span.innerText = value;
+        handler1(value);
     }
     slider.addEventListener('input', handler);
-    
+    handler1(init);
 }
