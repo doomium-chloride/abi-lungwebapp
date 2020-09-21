@@ -28,7 +28,7 @@ const staticUniforms = THREE.UniformsUtils.merge([{
 	'emissive' : { type: 'c', value: new THREE.Color( 0x000000 ) },
 	'specular' : { type: 'c', value: new THREE.Color( 0x111111 ) },
 	'shininess': { type: 'f', value: 30 },
-	'diffuse': { type: 'c', value: new THREE.Color( 0xbd11a6 ) },
+	'diffuse': { type: 'c', value: new THREE.Color( 0xeecaa2 ) },
 	'ambientLightColor': { type: 'c', value: new THREE.Color( 0x444444 ) },
 	'directionalLightColor': { type: 'c', value: new THREE.Color( 0x888888 ) },
 	'directionalLightDirection': { type: 'v3', value: new THREE.Vector3()  },

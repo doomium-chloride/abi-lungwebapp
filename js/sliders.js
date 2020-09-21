@@ -28,7 +28,7 @@ let saveData = {
 
 let infoArray = [];
 
-let compareMode = false;
+let compareMode = true;
 
 let sliderMenu = true;
 
@@ -46,26 +46,28 @@ function initScene(){
     ]
 
     let uniforms = [
+        
+        dynamicUniforms,
+
         staticUniforms,
 
-        dynamicUniforms,
-    ]
-
-    saveData.scale = [
-        noScale,
-
-        lungScale,
     ]
 
     saveData.weights = [
-        staticWeights,
 
         lungWeights,
+
+        staticWeights,
+
+        
     ]
 
     saveData.dynamic = [
+
+        true,
+
         false,
-        true
+        
     ]
 
     loadMultiScene({
@@ -145,7 +147,7 @@ function initSliders(){
     //tlc
     initSliderCombo('tlc', "", true, true);
 
-    updateLungModel(false)
+    updateLungModel(true);
 }
 
 function longInfoHanlder(baseStr, info, forward){
@@ -286,12 +288,11 @@ function updateWeights(saveData, newData){
 function updateLungModel(keepViewPort = true){
     //let vector3 = dummyFormula(sliderVariables.age, sliderVariables.bmi, sliderVariables.fvc);//temporary
     let vector3 = formulaObj(sliderVariables);
-    console.log("vector3")
-    console.log(vector3)
+
     //setLungScale(vector3);
     updateWeights(saveData, vector3);
     //dynamicUniforms['opacity']['value'] = sliderVariables.dlco/200
-    console.log(saveData)
+
     if(keepViewPort){
         reloadMultiModels(saveData);
     } else {
@@ -495,18 +496,21 @@ function toggleInfo(info){
 function toggleCompareMode(button){
     compareMode = !compareMode;
 
-    let materials = saveData.materials
+    let materials = saveData.materials;
+    let dynamic = saveData.dynamic;
     let len = materials.length;
-
+    
     if(compareMode){
-        for(let i = 0; i < len/2; i++){
-            materials[i].visible = true;
+        for(let i = 0; i < len; i++){
+            if(!dynamic[i])
+                materials[i].visible = true;
         }
         button.innerText = "ON";
 
     } else {
-        for(let i = 0; i < len/2; i++){
-            materials[i].visible = false;
+        for(let i = 0; i < len; i++){
+            if(!dynamic[i])
+                materials[i].visible = false;
         }
         dynamicUniforms['opacity']['value'] = 1;
         button.innerText = "OFF";
