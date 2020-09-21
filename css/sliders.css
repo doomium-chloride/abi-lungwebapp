@@ -76,3 +76,7 @@ body[data-page="sliders"] #play {
 img.gray {
     filter: grayscale(100%);
 }
+
+.bigger{
+    font-size: xx-large;
+}
