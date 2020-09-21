@@ -28,7 +28,9 @@ let saveData = {
 
 let infoArray = [];
 
-let showAverageLung = true;
+let compareMode = false;
+
+let sliderMenu = true;
 
 function setSliderValue(value, slider, span, units = ""){
     span.innerText = round2(value)  + " " + units;
@@ -99,9 +101,17 @@ function initSliders(){
 
     let sliders = document.getElementById('slider-section');
 
+    //toggle lung menu
+    let menuButton = document.getElementById('compare-menu-button');
+    menuButton.addEventListener('click', () => toggleLungMenu(menuButton));
+
     //toggle lung
-    let lungButton = document.getElementById('show-average-lung');
-    lungButton.addEventListener('click', () => toggleShowLung(lungButton));
+    let lungButton = document.getElementById('compare-mode-button');
+    lungButton.addEventListener('click', () => toggleCompareMode(lungButton));
+
+    //opacity slicers
+
+    initOpacitySliders();
 
     //info button
     initPCAinfo();
@@ -482,24 +492,74 @@ function toggleInfo(info){
     }
 }
 
-function toggleShowLung(button){
-    showAverageLung = !showAverageLung;
+function toggleCompareMode(button){
+    compareMode = !compareMode;
 
     let materials = saveData.materials
     let len = materials.length;
 
-    if(showAverageLung){
+    if(compareMode){
         for(let i = 0; i < len/2; i++){
             materials[i].visible = true;
         }
-        dynamicUniforms['opacity']['value'] = 0.5;
-        button.innerText = "SHOW";
+        button.innerText = "ON";
 
     } else {
         for(let i = 0; i < len/2; i++){
             materials[i].visible = false;
         }
         dynamicUniforms['opacity']['value'] = 1;
-        button.innerText = "HIDE";
+        button.innerText = "OFF";
     }
+}
+
+function toggleLungMenu(button){
+    sliderMenu = !sliderMenu;
+
+    const hidden = "hidden";
+    const visible = "visible";
+
+    const mode = ['Sliders', 'Compare'];
+
+    let lungSection = document.getElementById('lung-section');
+    let compareSection = document.getElementById('compare-section');
+
+    if(sliderMenu){
+        lungSection.classList.replace(hidden, visible);
+        compareSection.classList.replace(visible, hidden);
+        button.innerText = mode[0];
+    } else{
+        lungSection.classList.replace(visible, hidden);
+        compareSection.classList.replace(hidden, visible);
+
+        button.innerText = mode[1];
+    }
+}
+
+function initOpacitySliders(){
+    const mult = 1/100;
+    initOpacitySlider('average', surfaceUniforms, mult);
+    initOpacitySlider('custom', dynamicUniforms, mult);
+}
+
+function opacityHandler(uniforms, value){
+    uniforms['opacity']['value'] = value;
+}
+
+function initOpacitySlider(name, uniforms, mult){
+    let sliderID = "slider-" + name + "-opacity";
+    let spanID = name + "-opactiy";
+
+    let slider = document.getElementById(sliderID);
+    let span = document.getElementById(spanID);
+    console.log(slider)
+    console.log(span)
+
+    let handler = (e) => {
+        let value = e.target.value
+        opacityHandler(uniforms, value * mult);
+        //span.innerText = value;
+    }
+    slider.addEventListener('input', handler);
+    
 }
