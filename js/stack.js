@@ -187,7 +187,7 @@ function initStack(){
                 borderColor: 'blue',
                 data: qtdObj.average.slice(lowest, highest)
             },{
-                label: 'Normal',
+                label: 'Healthy controls',
                 borderColor: 'green',
                 data: agingQtd.min.slice(lowest, highest),
                 fill: '+1',
@@ -197,7 +197,7 @@ function initStack(){
                 borderColor: 'green',
                 data: agingQtd.max.slice(lowest, highest)
             }, {
-                label: 'IPF',
+                label: 'IPF cohort',
                 borderColor: 'red',
                 data: ipfQtd.min.slice(lowest, highest),
                 fill: '+1',
@@ -214,7 +214,13 @@ function initStack(){
             scales: {
                 yAxes: [{
                     ticks: {
-                        mirror: false
+                        mirror: false,
+                        fontColor: "white"
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white"
                     }
                 }]
             },
@@ -228,6 +234,7 @@ function initStack(){
             },
             legend: {
                 labels: {
+                    fontColor: "white",
                     filter: function(item, chart) {
                         // Logic to remove a particular legend item goes here
                         return !item.text.includes('upperbound');
