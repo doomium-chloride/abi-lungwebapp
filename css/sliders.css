@@ -64,9 +64,15 @@ span.left {
 
 .logo-sliders{
     position: fixed;
-    height: 15vh;
+    height: 10vh;
     left: 0;
     bottom: 0;
+}
+.logo-medtech{
+    position: fixed;
+    height: 10vh;
+    left: 0;
+    bottom: 10vh;
 }
 
 body[data-page="sliders"] #play {
@@ -79,4 +85,15 @@ img.gray {
 
 .bigger{
     font-size: xx-large;
+}
+
+#pca-logos{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+#pca-logos img{
+    position: relative;
+    height: 10vh;
 }
