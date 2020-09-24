@@ -6,6 +6,14 @@ article.center {
     margin: 1vw;
 }
 
+.center-stack {
+    position: absolute;
+    top: 50%;
+    transform: translate(20%, -50%);
+	width: 45vw;
+    margin: 1vw;
+}
+
 .center-article {
     position: absolute;
     transform: translate(100%, 0);
@@ -109,7 +117,8 @@ input[type=range][orient=vertical]
 }
 
 .sliding-graph {
-    width: 100%;;
+    width: 100%;
+    height: 80%;
 }
 
 .vertical-slider {
@@ -279,4 +288,12 @@ span.center{
     right: 0;
     font-size: 1vw;
     top: -5vh;
+}
+
+.left-stack {
+
+    position: absolute;
+    width: 30vw;
+    margin: 1vw;
+
 }
