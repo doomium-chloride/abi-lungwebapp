@@ -1,0 +1,32 @@
+<section id="page-test" class='clickable'>
+    <div id="select" style="font-family:sans-serif">
+        <h3>NIFTI-Reader-JS &mdash; JavaScript NIFTI Reader</h3>
+        <h4><a href="https://github.com/rii-mango/NIFTI-Reader-JS">https://github.com/rii-mango/NIFTI-Reader-JS</a></h4>
+        <p>Select a file: <input type="file" id="file" name="files" /></p>
+        <p>Select a mask: <input type="file" id="mask" name="files" /></p>
+        <hr />
+        <button id="applymask">apply mask</button>
+    </div>
+    <p id="showarray">
+
+    </p>
+    
+
+</section>
+
+
+
+<script type="text/javascript">
+    document.getElementById('file').addEventListener('change', (e) => handleFileSelect(e, 'main'), false);
+    document.getElementById('mask').addEventListener('change', (e) => handleFileSelect(e, 'mask'), false);
+    let showarray = document.getElementById('showarray');
+    document.getElementById('applymask').addEventListener('click', () => {
+        let mainArray = saveNifti.main.qtd
+        let maskArray = saveNifti.mask.qtd
+        let result = mask3d(mainArray, maskArray);
+        result = computeQtD(result)
+        console.log(result);
+        showarray.innerText = result;
+        return result;
+    });
+</script>
