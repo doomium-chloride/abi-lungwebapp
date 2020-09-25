@@ -471,5 +471,5 @@ function processQtdBins(bins){
 function processNifti(qtd){
     let bins = makeQtdBins(qtd);
     let data = processQtdBins(bins);
-    // put data into graph;
+    return data;
 }

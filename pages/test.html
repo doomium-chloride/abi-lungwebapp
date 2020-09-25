@@ -25,8 +25,13 @@
         let maskArray = saveNifti.mask.qtd
         let result = mask3d(mainArray, maskArray);
         result = computeQtD(result)
+        result = processNifti(result);
         console.log(result);
-        showarray.innerText = result;
+        let text = "";
+        for(const x in result){
+            text += x + "=" + result[x] + "<br>"
+        }
+        showarray.innerHTML = text;
         return result;
     });
 </script>
