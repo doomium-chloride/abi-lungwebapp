@@ -199,7 +199,7 @@ function quadTree(img, f, x=0, y=0){
         return [{size: size, x: x, y: y}];
     }
 
-    let mid = size/2;
+    let mid = Math.floor(size/2);
     let ret = [];
     extendArray(ret, quadTree(img.slice(0,mid).slice(0,mid), f, x, y));
     extendArray(ret, quadTree(img.slice(mid).slice(0,mid), f, x + mid, y));
@@ -246,7 +246,9 @@ function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
     if(mask && false){
         let morph = new Morph(rows, cols, dataSlice);
         let erosion = new StructuringElement(5);
-        morph.erodeWithElement(erosion);
+        //morph.erodeWithElement(erosion);
+        morph.erodeWithElement();
+        console.log(morph);
         dataSlice = morph.data;
     }
     
@@ -286,8 +288,9 @@ function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
 
 function calcQtD(slice){
     let qtd = quadTree(slice, qtCond);
-    console.log(qtd);
+    console.log(qtd.length);
     let n = countNonZero2d(slice);
+    console.log(qtd[0])
     if(n == 0){
         return 0;
     }
