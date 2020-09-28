@@ -152,6 +152,8 @@ function getNearestIndex(array, value){
     return smallest;
 }
 
+let stackChart = null;
+
 function initStack(){
     let graphSlider = document.getElementById('graph-slider');
     let verticalSlider = document.getElementById('vertical-slider');
@@ -243,6 +245,8 @@ function initStack(){
             }
         }
     });
+
+    stackChart = chart;
 
     let qtdSpan = document.getElementById('qtd-value');
 

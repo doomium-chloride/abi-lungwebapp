@@ -4,6 +4,12 @@
         <h5>Height from bottom</h5>
         <h4><span id="vertical-value"></span>%</h4>
         <input id="vertical-slider" class="clickable vertical-slider" type="range" orient="vertical" min="20" max="80" value="50" />
+        <div id="select" class="clickable" style="font-family:sans-serif">
+            <p>Select a file: <input type="file" id="file" name="files" /></p>
+            <p>Select a mask: <input type="file" id="mask" name="files" /></p>
+            <hr />
+            <button id="applymask">apply mask</button>
+        </div>
     </article>
 	<article class="center-stack center-text">
 
@@ -41,5 +47,22 @@
 </section>
 
 <script>
-initStack()
+initStack();
+document.getElementById('file').addEventListener('change', (e) => handleFileSelect(e, 'main'), false);
+    document.getElementById('mask').addEventListener('change', (e) => handleFileSelect(e, 'mask'), false);
+    //let showarray = document.getElementById('showarray');
+    document.getElementById('applymask').addEventListener('click', () => {
+        let mainArray = saveNifti.main.qtd
+        let maskArray = saveNifti.mask.qtd
+        let result = mask3d(mainArray, maskArray);
+        result = computeQtD(result)
+        result = processNifti(result);
+        console.log(result);
+        let arr = [];
+        for(const x in result){
+            arr.push(result[x]);
+        }
+        stackChart.data.datasets[0].data = arr;
+        return result;
+    });
 </script>
