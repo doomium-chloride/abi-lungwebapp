@@ -62,7 +62,9 @@ document.getElementById('file').addEventListener('change', (e) => handleFileSele
         for(const x in result){
             arr.push(result[x]);
         }
-        stackChart.data.datasets[0].data = arr;
-        return result;
+        stackChart.data.datasets[0].data = arr.slice(stackLimits.lower, stackLimits.upper);
+		console.log(arr)
+		console.log(arr.slice(stackLimits.lower, stackLimits.upper))
+        return arr;
     });
 </script>

@@ -153,6 +153,10 @@ function getNearestIndex(array, value){
 }
 
 let stackChart = null;
+let stackLimits ={
+    lower: 0,
+    upper: 0
+}
 
 function initStack(){
     let graphSlider = document.getElementById('graph-slider');
@@ -171,6 +175,9 @@ function initStack(){
 
     let lowest = getNearestIndex(qtdObj.labels, 20);
     let highest = getNearestIndex(qtdObj.labels, 80) + 1;
+
+    stackLimits.lower = lowest;
+    stackLimits.upper = highest;
 
     // label and qtd
 
