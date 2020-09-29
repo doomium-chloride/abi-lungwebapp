@@ -17,21 +17,21 @@
 
 
 <script type="text/javascript">
-    document.getElementById('file').addEventListener('change', (e) => handleFileSelect(e, 'main'), false);
-    document.getElementById('mask').addEventListener('change', (e) => handleFileSelect(e, 'mask'), false);
-    let showarray = document.getElementById('showarray');
-    document.getElementById('applymask').addEventListener('click', () => {
-        let mainArray = saveNifti.main.qtd
-        let maskArray = saveNifti.mask.qtd
-        let result = mask3d(mainArray, maskArray);
-        result = computeQtD(result)
-        result = processNifti(result);
-        console.log(result);
-        let text = "";
-        for(const x in result){
-            text += x + "=" + result[x] + "<br>"
-        }
-        showarray.innerHTML = text;
-        return result;
-    });
+document.getElementById('file').addEventListener('change', (e) => handleFileSelect(e, 'main'), false);
+document.getElementById('mask').addEventListener('change', (e) => handleFileSelect(e, 'mask'), false);
+let showarray = document.getElementById('showarray');
+document.getElementById('applymask').addEventListener('click', () => {
+    let mainArray = saveNifti.main.qtd
+    let maskArray = saveNifti.mask.qtd
+    let result = mask3d(mainArray, maskArray);
+    result = computeQtD(result)
+    result = processNifti(result);
+    console.log(result);
+    let text = "";
+    for(const x in result){
+        text += x + "=" + result[x] + "<br>"
+    }
+    showarray.innerHTML = text;
+    return result;
+});
 </script>

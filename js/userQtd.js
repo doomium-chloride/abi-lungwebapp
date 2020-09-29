@@ -8,6 +8,10 @@ let userData = {
     labels: [],
     qtd: []
 }
+let userFiles = {
+    main: null,
+    mask: null
+}
 
 //let nifti = require("nifti-js");
 function readNIFTI(name, data, mask = false) {
@@ -201,10 +205,10 @@ function quadTree(img, f, x=0, y=0){
 
     let mid = Math.floor(size/2);
     let ret = [];
-    extendArray(ret, quadTree(img.slice(0,mid).slice(0,mid), f, x, y));
-    extendArray(ret, quadTree(img.slice(mid).slice(0,mid), f, x + mid, y));
-    extendArray(ret, quadTree(img.slice(0,mid).slice(mid), f, x, y + mid));
-    extendArray(ret, quadTree(img.slice(mid).slice(mid), f, x + mid, y + mid));
+    extendArray(ret, quadTree(img.slice(mid).slice(mid), f, x, y));
+    extendArray(ret, quadTree(img.slice(0,mid).slice(mid), f, x + mid, y));
+    extendArray(ret, quadTree(img.slice(mid).slice(0,mid), f, x, y + mid));
+    extendArray(ret, quadTree(img.slice(0,mid).slice(0,mid), f, x + mid, y + mid));
     return ret;
 }
 
@@ -306,87 +310,6 @@ function computeQtD(array3d){
     return qtd;
 }
 
-function drawCanvas(canvas, slice, niftiHeader, niftiImage) {
-    // get nifti dimensions
-    var cols = niftiHeader.dims[1];
-    var rows = niftiHeader.dims[2];
-
-    // set canvas dimensions to nifti slice dimensions
-    canvas.width = cols;
-    canvas.height = rows;
-
-    // make canvas image data
-    var ctx = canvas.getContext("2d");
-    var canvasImageData = ctx.createImageData(canvas.width, canvas.height);
-
-    // convert raw data to typed array based on nifti datatype
-    var typedData;
-
-    if (niftiHeader.datatypeCode === nifti.NIFTI1.TYPE_UINT8) {
-        typedData = new Uint8Array(niftiImage);
-    } else if (niftiHeader.datatypeCode === nifti.NIFTI1.TYPE_INT16) {
-        typedData = new Int16Array(niftiImage);
-    } else if (niftiHeader.datatypeCode === nifti.NIFTI1.TYPE_INT32) {
-        typedData = new Int32Array(niftiImage);
-    } else if (niftiHeader.datatypeCode === nifti.NIFTI1.TYPE_FLOAT32) {
-        typedData = new Float32Array(niftiImage);
-    } else if (niftiHeader.datatypeCode === nifti.NIFTI1.TYPE_FLOAT64) {
-        typedData = new Float64Array(niftiImage);
-    } else if (niftiHeader.datatypeCode === nifti.NIFTI1.TYPE_INT8) {
-        typedData = new Int8Array(niftiImage);
-    } else if (niftiHeader.datatypeCode === nifti.NIFTI1.TYPE_UINT16) {
-        typedData = new Uint16Array(niftiImage);
-    } else if (niftiHeader.datatypeCode === nifti.NIFTI1.TYPE_UINT32) {
-        typedData = new Uint32Array(niftiImage);
-    } else {
-        return;
-    }
-
-    // offset to specified slice
-    var sliceSize = cols * rows;
-    var sliceOffset = sliceSize * slice;
-    let display = [];
-
-    
-    let output = new Array(rows);
-    // draw pixels
-    for (var row = 0; row < rows; row++) {
-        var rowOffset = row * cols;
-        let colArray = new Array(cols);
-        for (var col = 0; col < cols; col++) {
-            var offset = sliceOffset + rowOffset + col;
-            var value = typedData[offset];
-
-            /* 
-                Assumes data is 8-bit, otherwise you would need to first convert 
-                to 0-255 range based on datatype range, data range (iterate through
-                data to find), or display range (cal_min/max).
-                
-                Other things to take into consideration:
-                    - data scale: scl_slope and scl_inter, apply to raw value before 
-                    applying display range
-                    - orientation: displays in raw orientation, see nifti orientation 
-                    info for how to orient data
-                    - assumes voxel shape (pixDims) is isometric, if not, you'll need 
-                    to apply transform to the canvas
-                    - byte order: see littleEndian flag
-            */
-            colArray[col] = value;
-            value = to255(value, -32768, 32767)
-            display.push(value & 0xFF)
-            
-            canvasImageData.data[(rowOffset + col) * 4] = value & 0xFF;
-            canvasImageData.data[(rowOffset + col) * 4 + 1] = value & 0xFF;
-            canvasImageData.data[(rowOffset + col) * 4 + 2] = value & 0xFF;
-            canvasImageData.data[(rowOffset + col) * 4 + 3] = 0xFF;
-        }
-        output[row] = colArray;
-    }
-    console.log(display)
-    console.log(output);
-    ctx.putImageData(canvasImageData, 0, 0);
-}
-
 function makeSlice(file, start, length) {
     var fileType = (typeof File);
 
@@ -428,7 +351,11 @@ function readFile(file, target) {
 
 function handleFileSelect(evt, target = null) {
     var files = evt.target.files;
-    readFile(files[0], target);
+    userFiles[target] = files[0];
+}
+
+function loadUserFile(target){
+    readFile(userFiles[target], target);
 }
 
 function getWithinC(num){
