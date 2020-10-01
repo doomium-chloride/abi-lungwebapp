@@ -2,7 +2,12 @@
     <img src="images/back.svg" id="back-button" onclick="window.history.back()" class="clickable back-button"/>
     
     <div class="center-head">
-        <h2 style="display: inline;">Checker pattern</h2>
+        <h2 style="display: inline;">
+            Checker pattern
+        </h2>
+        <label class="tooltip clickable">&#x1F6C8<input type="checkbox"><span>
+            Info about checker pattern
+        </span></label>
     </div>
 
     <article class="left middle center-text" style="width: 10vw;">
@@ -13,11 +18,18 @@
         </div>
     </article>
 	<article class="center-stack center-text">
+        <p id="checker-info-text">
+            Please select a pattern on the left
+        </p>
         <img id="checker-pic-1" src="images/checker/pattern1.png" class="lung-pic hidden">
         <img id="checker-pic-2" src="images/checker/pattern2.png" class="lung-pic hidden">
         <img id="checker-pic-3" src="images/checker/pattern3.png" class="lung-pic hidden">
 	</article>
-	<article class="right middle" style="width: 45vw;">
+    <article class="right middle" style="width: 45vw;">
+        <p id="checker-info-text-2">
+            Explore how the quadtree algorithm calculates the QtD value of 
+            different shapes
+        </p>
         <div id="checker-score-1" class="hidden">
             <h6 class="top-text">QtD score = 0.0259</h6>
             <img class="lung-pic" src="images/checker/map1.jpg">
