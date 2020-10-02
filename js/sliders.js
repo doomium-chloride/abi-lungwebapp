@@ -388,6 +388,8 @@ function autoFormula(variable){
         case 'dlco':
             sliderVariables[variable] = formulaDlco(sliderVariables.height, sliderVariables.age, sliderVariables.gender);
             break;
+        case 'tlc':
+            sliderVariables[variable] = formulaTlc(sliderVariables.height, sliderVariables.bmi);
         default:
             console.log("Something wrong in autoFormula")
             //do nothing, send notice in console. This should not be reached.
@@ -417,6 +419,12 @@ function formulaFvc(age, height, male){
     } else{
         return - 3.09063 + 0.003904 * age + 0.038694 * height;
     }
+}
+
+function formulaTlc(height, bmi){
+    const meters = height / 100;//convert to meters
+    const mass = bmi * meters * meters;// bmi x height ^ 2
+    return -0.0282 + (0.0162 * height) + (-0.0013 * mass);
 }
 
 function autoSet(value, slider){
