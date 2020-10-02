@@ -185,7 +185,7 @@ function countNonZero2d(img){
     let len2 = img[0].length;
     for(let i = 0; i < len1; i++){
         for(let j = 0; j < len2; j++){
-            if(img[i][j] != 0){
+            if(img[i][j] > 0){// set 0 as threshold
                 count++;
             }
         }
@@ -388,11 +388,21 @@ const median = arr => {
     return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
 };
 
+function mean(arr){
+    let total = 0;
+    let len = arr.length;
+    for(let i = 0; i < len; i++){
+        total += arr[i];
+    }
+    return total / len;
+}
+
 function processQtdBins(bins){
     let data = {};
     for(const bin in bins){
         let array = bins[bin];
-        let qtd = median(array);
+        console.log(array)
+        let qtd = mean(array);
         data[bin] = qtd;
     }
     return data;
