@@ -1,0 +1,110 @@
+<section id="page-qtd">
+
+    
+
+    <img src="images/back.svg" id="back-button" onclick="window.history.back()" class="clickable back-button"/>
+    
+
+    <div class="center-head">
+        <h1 style="display: inline;">Quadtree</h1>
+    </div>
+    <div class="center-main center-text">
+
+        <span class="box-back center"></span>
+        <span class="circle-large left">
+            Quadtree Decomposition
+        </span>
+
+        <span class="info-container center center-text">
+            <span class="info-bit circle">
+                <label class="tooltip clickable">More info<input type="checkbox"><span>
+                    Citation: 
+                    <p>
+                        Subramaniam K, Clark AR, Hoffman EA, Tawhai MH, Metrics of lung tissue heterogeneity depend on BMI but not age.
+                    </p>
+                    <p>
+                        J Appl Physiol (1985). 2018; 125(2): 328-339. Doi: 10.11.52/japplphysiol.00510.2016
+                    </p>
+                </span></label>
+            </span>
+            <span class="info-bit circle">
+                <label class="tooltip clickable">How?<input type="checkbox"><span>
+                    <p>
+                        QtD accounts for spatial clustering of tissue with similar tissue density. 
+                    </p>
+                    <p>
+                        Pixel intensity ranges are used to recursively subdivide the image. Number of blocks accounts the tissue heterogeneity.
+                    </p>
+                    <p>
+                        Number of blocks accounts the tissue heterogeneity.
+                    </p>
+                </span></label>
+            </span>
+            <span class="info-bit circle">
+                <label class="tooltip clickable">Why?<input type="checkbox"><span>
+                    Quadtree decomposition has been used to study lung tissue heterogeneity
+                </span></label>
+            </span>
+            <span class="info-bit circle">
+                <label class="tooltip clickable">What?<input type="checkbox"><span>
+                    An analysis technique that involves subdividing an image into blocks that are more homogeneous than the image itself.
+                </span></label>
+            </span>
+        </span>
+        <p id="qtd-background-1" class="visible">
+            
+            
+        </p>
+
+        <div id="qtd-background-2" class="hidden">
+            <p>
+                Heterogeneity in tissue density can be quantified using two methods: 
+            </p>
+    
+            <p>
+                1) Calculating the fractal dimension calculated by fitting a straight line to the log-log relationship between coefficient of variation (CoV) and sampling window size
+            </p>
+        </div>
+        
+
+        <div id="qtd-background-3" class="hidden">
+            <p>
+                2) Quadtree decomposition (QtD) accounts for the spatial clustering of tissue with similar tissue density.
+            </p>
+    
+            <p>
+                QtD algorithm recursively divides an image into quadrants that are considered regions of homogeneous tissue if the pixel intensity values within that quadrant are within a certain range.
+            </p>
+
+            <p>
+                If the pixel intensity range is greater than the threshold, the quadrant is further decomposed. Thus the number of quadrants, or boxes, resulting from this technique serves to indicate how heterogeneous an image is. 
+            </p>
+        </div>   
+
+        <p id="qtd-background-4" class="hidden">
+            Citation: Subramaniam K, Clark AR, Hoffman EA, Tawhai MH. Metrics of lung tissue heterogeneity depend on BMI but not age. J Appl Physiol (1985). 2018;125(2):328-339. doi:10.1152/japplphysiol.00510.2016
+        </p>
+    </div>
+    <article class="left center-text bottom">
+        <h4>Checker pattern</h4>
+        <a href="#/quadtree-checker">
+            <img class="lung-pic" src="images/checker-pattern.png">
+        </a>
+    </article>
+	<article class="center-article center-text bottom">
+        <h4>Lung slices</h4>
+        <a href="#/quadtree-slice"><img class="lung-pic" src="images/slice.png"></a>
+	</article>
+	<article class="right center-text bottom">
+        <h4>Stack</h4>
+        <a href="#/quadtree-stack"><img class="lung-pic" src="images/full-stack.png"></a>
+    </article>
+    <img src="images/abi-hc-rgb-new.png" class="overlay">
+    <img src="images/MedTech CoRE Logo.png" class="medtechlogo">
+</section>
+
+<script>
+
+clearScene();
+
+</script>

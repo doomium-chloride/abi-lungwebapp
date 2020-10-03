@@ -18,7 +18,7 @@ function updateFrame(zincRenderer) {
 	return function () {
 		if (!currentUniforms) {
 			return;
-		}
+		}   
 
         let light = zincRenderer.getCurrentScene().directionalLight;
         if(Array.isArray(currentUniforms)){
@@ -531,4 +531,7 @@ function reloadMultiModels(saveData){
         scene.addZincGeometry(bufferGeometry, 10001, undefined, undefined, false, false, true, undefined, materials[i]);
     }
     setScene(null, scene, materials);
+}
+function clearScene(){
+    zincRenderer.getCurrentScene().clearAll();
 }
