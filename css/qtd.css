@@ -66,6 +66,7 @@ article.center {
     bottom: 100%;
 }
 
+body[data-page="launch-page"] #top-buttons,
 body[data-page="quadtree"] #top-buttons,
 body[data-page="quadtree"] #navigation,
 body[data-page="quadtree-checker"] #top-buttons,
@@ -304,4 +305,9 @@ span.center{
     left: 10vw;
     right: 0;
     height: 10vh;
+}
+
+a.nostyle {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
 }
