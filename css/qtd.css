@@ -236,6 +236,7 @@ input[type=range][orient=vertical]
     opacity: 1;
 }
 
+.left-circle,
 span.left {
     position: absolute;
     left: 10vw;
