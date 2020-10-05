@@ -49,6 +49,12 @@
 
 <script>
 initStack();
+function showDims(array){
+    let len1 = array.length;
+    let len2 = array[0].length;
+    let len3 = array[0][0].length;
+    console.log(`dims=${len1}-${len2}-${len3}`);
+}
 document.getElementById('file').addEventListener('change', (e) => {
     handleFileSelect(e, 'main');
     loadUserFile('main');
@@ -58,6 +64,7 @@ document.getElementById('mask').addEventListener('change', (e) => {
     loadUserFile('mask');
 }, false);
 //let showarray = document.getElementById('showarray');
+
 document.getElementById('applymask').addEventListener('click', () => {
     if(userFiles.main == null || userFiles.mask == null){
         alert("Please select both files");
@@ -65,17 +72,22 @@ document.getElementById('applymask').addEventListener('click', () => {
     }
     let mainArray = saveNifti.main.qtd
     let maskArray = saveNifti.mask.qtd
+    showDims(mainArray);
+    showDims(maskArray);
     let result = mask3d(mainArray, maskArray);
-    result = computeQtD(result)
+    result = computeQtD(result);
     result = processNifti(result);
     console.log(result);
+    let labels = Object.keys(result);
+    let lower = getNearestIndex(labels, 20);
+    let upper = getNearestIndex(labels, 80) + 1;
     let arr = [];
     for(const x in result){
         arr.push(result[x]);
     }
-    stackChart.data.datasets[0].data = arr.slice(stackLimits.lower, stackLimits.upper);
+    stackChart.data.datasets[0].data = arr.slice(lower, upper);
     console.log(arr);
-    console.log(arr.slice(stackLimits.lower, stackLimits.upper));
+    console.log(arr.slice(lower, upper));
     stackChart.update();
     return arr;
 });

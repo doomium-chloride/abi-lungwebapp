@@ -292,9 +292,9 @@ function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
 
 function calcQtD(slice){
     let qtd = quadTree(slice, qtCond);
-    console.log(qtd.length);
+    console.log("len="+qtd.length);
     let n = countNonZero2d(slice);
-    console.log(qtd[0])
+    console.log("n="+n);
     if(n == 0){
         return 0;
     }
@@ -371,6 +371,7 @@ function getWithinC(num){
 function makeQtdBins(qtd){
     let data = {}
     let size = qtd.length;
+    console.log("sizeb4bin="+size)
     for(let i = 0; i < size; i++){
         let num = getWithinC(i * 100 / (size+1));
         let key = num + "";
@@ -401,6 +402,7 @@ function processQtdBins(bins){
     let data = {};
     for(const bin in bins){
         let array = bins[bin];
+        console.log("bin=" + bin);
         console.log(array)
         let qtd = mean(array);
         data[bin] = qtd;

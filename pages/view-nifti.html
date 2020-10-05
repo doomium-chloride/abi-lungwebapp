@@ -89,8 +89,8 @@
             var sliceSize = cols * rows;
             var sliceOffset = sliceSize * slice;
             let display = [];
-            let lowest = 100000;
-            let highest = -100000;
+            let lowest = arrMin(typedData)
+            let highest = arrMax(typedData)
             
             let output = new Array(rows);
             // draw pixels
@@ -119,7 +119,7 @@
                     if(viewMask){
                         value = to255(value, 0, 1);
                     } else{
-                        value = to255(value, -32768, 32767)
+                        value = to255(value, lowest, highest)
                     }
                     
                     display.push(value & 0xFF)
