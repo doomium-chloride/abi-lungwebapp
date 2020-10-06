@@ -183,13 +183,15 @@ function countNonZero2d(img){
     let count = 0;
     let len1 = img.length;
     let len2 = img[0].length;
+    
     for(let i = 0; i < len1; i++){
         for(let j = 0; j < len2; j++){
-            if(img[i][j] > 0){// set 0 as threshold
+            if(img[i][j] != 0){// set 0 as threshold
                 count++;
             }
         }
     }
+
     return count;
 }
 
@@ -205,11 +207,69 @@ function quadTree(img, f, x=0, y=0){
 
     let mid = Math.floor(size/2);
     let ret = [];
-    extendArray(ret, quadTree(img.slice(mid).slice(mid), f, x, y));
-    extendArray(ret, quadTree(img.slice(0,mid).slice(mid), f, x + mid, y));
-    extendArray(ret, quadTree(img.slice(mid).slice(0,mid), f, x, y + mid));
-    extendArray(ret, quadTree(img.slice(0,mid).slice(0,mid), f, x + mid, y + mid));
+    extendArray(ret, quadTree(sliceAxis2(img.slice(mid), mid), f, x, y));
+    extendArray(ret, quadTree(sliceAxis2(img.slice(0,mid), mid), f, x + mid, y));
+    extendArray(ret, quadTree(sliceAxis2(img.slice(mid), 0, mid), f, x, y + mid));
+    extendArray(ret, quadTree(sliceAxis2(img.slice(0,mid), 0, mid), f, x + mid, y + mid));
     return ret;
+}
+
+function sliceAxis2(arr2d, start, end = null){
+    const len = arr2d.length;
+    let output = [];
+    for(let i = 0; i < len; i++){
+        let array = arr2d[i];
+        let sliced;
+        if(end == null){
+            sliced = array.slice(start);
+        } else {
+            sliced = array.slice(start, end);
+        }
+        output.push(sliced);
+    }
+    return output;
+}
+
+function checkPixel(arr2d, radius, x, y){
+    const len1 = arr2d.length;//x
+    const len2 = arr2d[0].length;//y
+    if(x < radius){
+        return 0;
+    }
+    if(y < radius){
+        return 0;
+    }
+    if(x >= (len1 - radius)){
+        return 0;
+    }
+    if(y >= (len2 - radius)){
+        return 0;
+    }
+    for(let i = -radius; i <= radius; i++){
+        for(let j = -radius; j <= radius; j++){
+            if(arr2d[x+i][y+j] == 0){
+                return 0;
+            }
+        }
+    }
+    return arr2d[x][y];
+}
+
+function binaryErosion(arr2d, radius){
+    const len1 = arr2d.length;
+    const len2 = arr2d[0].length;
+    if(radius <= 0){
+        return arr2d;
+    }
+    let output = [];
+    for(let x = 0; x < len1; x++){
+        let temp = [];
+        for(let y = 0; y < len2; y++){
+            temp.push(checkPixel(arr2d, radius,x ,y));
+        }
+        output.push(temp);
+    }
+    return output;
 }
 
 function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
@@ -250,9 +310,9 @@ function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
     if(mask && false){
         let morph = new Morph(rows, cols, dataSlice);
         let erosion = new StructuringElement(5);
-        //morph.erodeWithElement(erosion);
-        morph.erodeWithElement();
-        console.log(morph);
+        morph.erodeWithElement(erosion);
+        //morph.erodeWithElement();
+        //console.log(morph);
         dataSlice = morph.data;
     }
     
@@ -287,14 +347,18 @@ function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
         }
         output[row] = colArray;
     }
+
+    if(mask){
+        output = binaryErosion(output, 2);
+    }
     return output;
 }
 
 function calcQtD(slice){
     let qtd = quadTree(slice, qtCond);
-    console.log("len="+qtd.length);
+
     let n = countNonZero2d(slice);
-    console.log("n="+n);
+    console.log(`qtd=${qtd.length};n=${n}`);
     if(n == 0){
         return 0;
     }
