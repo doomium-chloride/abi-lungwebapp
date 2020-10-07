@@ -100,7 +100,7 @@ input[type=range][orient=vertical]
 .line {
     position: absolute;
     height: 200px;
-    border-color: #0000ff;
+    border-color: gold;
     border-width: 1px;
     border-style: solid;
     background-color: gold;
