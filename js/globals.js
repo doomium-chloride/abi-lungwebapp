@@ -34,7 +34,7 @@ const staticUniforms = THREE.UniformsUtils.merge([{
 	'directionalLightDirection': { type: 'v3', value: new THREE.Vector3()  },
 	't': { type: 'f', value: 0.0 },
 	'tidalVolumeRatio': { type: 'f', value: 0.4 },
-	'severity': { type: 'f', value: 0.0 },
+	'severity': { type: 'f', value: -10.0 },
     'opacity': { type: 'f', value: 1.0 },
 }]);
 

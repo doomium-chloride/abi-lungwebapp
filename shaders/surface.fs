@@ -185,6 +185,9 @@ uniform sampler2D texture;
 uniform vec4 mainColour;
 
 vec3 colorScale(vec2 seed) {
+	if(severity < 0.0){
+		return vec3(1.0, 1.0, 1.0);
+	}
 	float tar = seed.x * severity;
 	float scaling = 1.0 - 0.7 * tar;
 	scaling *= 0.7 + 0.3 * (1.0-severity);
@@ -206,6 +209,9 @@ void main(void) {
 	if (n < 0.1) {
 		normalScaling.z = 0.1 + n * 9.0;
 		adjustDiffuse = vec3(0.78, 0.51, 0.51);
+		if(severity < 0.0){
+			adjustDiffuse = vec3(1.0 , 1.0, 1.0);
+		}
 	}
 	vec3 normal = normalize(v_normal);
 	normal = normalize(vec3(normal.x * normalScaling.x, normal.y * normalScaling.y, normal.z * normalScaling.z));
@@ -247,4 +253,7 @@ void main(void) {
     if (gl_FragColor.y > gl_FragColor.x)
     	gl_FragColor.x = gl_FragColor.y;
     gl_FragColor.a = opacity;
+	if(severity < 0.0){
+		gl_FragColor = vec4(1.0, 1.0, 1.0, opacity);
+	}
 }
