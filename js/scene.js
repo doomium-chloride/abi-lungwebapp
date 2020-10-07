@@ -154,7 +154,7 @@ const pca = [
 
 console.log(pca)
 
-const loadMultiScene = function(data, uniforms, saveData) {
+const loadMultiScene = function(data, uniforms, saveData, callBack = null) {
 	if (!zincRenderer) {
 		console.error('zinc not loaded');
 		return;
@@ -197,7 +197,7 @@ const loadMultiScene = function(data, uniforms, saveData) {
             
 		let materials = makeMaterials(shaderText, uniforms, data.models.length);
 
-        loadMultiModels(name, scene, data, materials, saveData);
+        loadMultiModels(name, scene, data, materials, saveData, callBack);
     });
 };
 
@@ -235,7 +235,7 @@ const loadScene = function(data, uniforms, rng = null) {
     });
 };
 
-const loadMultiModels = function (name, scene, data, material, saveData) {
+const loadMultiModels = function (name, scene, data, material, saveData, callBack = null) {
     let loadedSizes = [];
     let totalSize = 0;
     for (let i = 0; i < data.models.length; i++) {
@@ -301,6 +301,9 @@ const loadMultiModels = function (name, scene, data, material, saveData) {
                     setScene(name, scene, material);
                     stopLoading();
                     saveData.models = tempModels;
+                    if(callBack){
+                        callBack();
+                    }
                 }
             }, function (xhr) {
                 updateLoader(i, xhr.loaded);
@@ -312,7 +315,6 @@ const loadMultiModels = function (name, scene, data, material, saveData) {
             }
         );
     }
-    
 };
 
 const loadModels = function (name, scene, data, material) {

@@ -37,7 +37,7 @@ function setSliderValue(value, slider, span, units = ""){
     slider.value = value;
 }
 
-function initScene(){
+function initScene(callBack = null){
 
     let models = [
         'models/cmgui_w0_1.json',
@@ -75,8 +75,7 @@ function initScene(){
         fs: 'shaders/surface.fs',
         view: 'models/lung_view.json',
         models: models,
-    }, uniforms, saveData);
-    console.log(saveData)
+    }, uniforms, saveData, callBack);
 }
 
 // function initScene(){
@@ -99,7 +98,7 @@ function initSliders(){
 
     optionalSliders = [];
 
-    initScene();
+    
 
     let sliders = document.getElementById('slider-section');
 
@@ -110,6 +109,11 @@ function initSliders(){
     //toggle lung
     let lungButton = document.getElementById('compare-mode-button');
     lungButton.addEventListener('click', () => toggleCompareMode(lungButton));
+
+    initScene(() => {
+        sliderSetValue(0, 'gender');// hot fix?
+        toggleCompareMode(lungButton, false);
+    });
 
     //opacity slicers
 
@@ -151,6 +155,7 @@ function initSliders(){
     initSliderCombo('tlc', "", true, true);
 
     updateLungModel(true);
+
 }
 
 function longInfoHanlder(baseStr, info, forward){
@@ -504,8 +509,12 @@ function toggleInfo(info){
     }
 }
 
-function toggleCompareMode(button){
-    compareMode = !compareMode;
+function toggleCompareMode(button, setTo = 'auto'){
+    if(setTo = 'auto'){
+        compareMode = !compareMode;
+    } else {
+        compareMode = setTo;
+    }
 
     let materials = saveData.materials;
     let dynamic = saveData.dynamic;
