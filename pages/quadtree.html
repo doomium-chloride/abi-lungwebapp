@@ -17,18 +17,15 @@
 
         <span class="info-container center center-text">
             <span class="info-bit circle">
-                <label class="tooltip clickable">More info<input type="checkbox"><span>
+                <label class="tooltip clickable">More info<input class="info-checkbox" type="checkbox"><span>
                     Citation: 
                     <p>
-                        Subramaniam K, Clark AR, Hoffman EA, Tawhai MH, Metrics of lung tissue heterogeneity depend on BMI but not age.
-                    </p>
-                    <p>
-                        J Appl Physiol (1985). 2018; 125(2): 328-339. Doi: 10.11.52/japplphysiol.00510.2016
+                        Subramaniam et al Metrics of lung tissue heterogeneity depend on BMI but not age, J Appl Physiol. 2018
                     </p>
                 </span></label>
             </span>
             <span class="info-bit circle">
-                <label class="tooltip clickable">How?<input type="checkbox"><span>
+                <label class="tooltip clickable">How?<input class="info-checkbox" type="checkbox"><span>
                     <p>
                         QtD accounts for spatial clustering of tissue with similar tissue density. 
                     </p>
@@ -41,12 +38,12 @@
                 </span></label>
             </span>
             <span class="info-bit circle">
-                <label class="tooltip clickable">Why?<input type="checkbox"><span>
+                <label class="tooltip clickable">Why?<input class="info-checkbox" type="checkbox"><span>
                     Quadtree decomposition has been used to study lung tissue heterogeneity
                 </span></label>
             </span>
             <span class="info-bit circle">
-                <label class="tooltip clickable">What?<input type="checkbox"><span>
+                <label class="tooltip clickable">What?<input class="info-checkbox" type="checkbox"><span>
                     An analysis technique that involves subdividing an image into blocks that are more homogeneous than the image itself.
                 </span></label>
             </span>
@@ -106,5 +103,22 @@
 <script>
 
 clearScene();
+
+let infoButtons = document.getElementsByClassName('info-checkbox');
+function hideOtherInfo(dontHide){
+    let len = infoButtons.length;
+    for(let i = 0; i < len; i++){
+        let button = infoButtons[i];
+        if(button != dontHide){
+            button.checked = false;
+        } else{
+            console.log(button)
+        }
+    }
+}
+console.log(infoButtons)
+for(let i = 0; i < infoButtons.length; i++){
+    infoButtons[i].addEventListener('click', (e) => hideOtherInfo(e.target));
+}
 
 </script>
