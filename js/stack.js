@@ -216,11 +216,21 @@ function initStack(){
                     ticks: {
                         mirror: false,
                         fontColor: "white"
+                    },
+                    scaleLabel : {
+                        display: true,
+                        labelString: 'QtD value',
+                        fontColor: 'white'
                     }
                 }],
                 xAxes: [{
                     ticks: {
                         fontColor: "white"
+                    },
+                    scaleLabel : {
+                        display: true,
+                        labelString: 'Height from base of lung',
+                        fontColor: 'white'
                     }
                 }]
             },
