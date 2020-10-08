@@ -81,7 +81,6 @@ input[type=range][orient=vertical]
 {
     writing-mode: bt-lr; /* IE */
     -webkit-appearance: slider-vertical; /* WebKit */
-    height: 50vh;
 }
 .center-head {
     position: absolute;
@@ -130,6 +129,7 @@ input[type=range][orient=vertical]
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
+    height: 50vh;
 }
 
 
@@ -305,4 +305,35 @@ span.center{
     left: 10vw;
     right: 0;
     height: 10vh;
+}
+
+.lung-slider {
+    width: 0;
+    top: 12%;
+    height: 66%;
+    position: absolute;
+}
+
+.lung-slider-div {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    bottom: 5%;
+    z-index: 10;
+}
+
+.lung-slider::-webkit-slider-thumb,
+.lung-slider::-moz-range-thumb {
+    width: 20vw;
+    height: 20vh;
+    cursor: pointer;
+    opacity: 1;
+    background-color: transparent;
+    border: none;
+    opacity: 0.6;
+}
+
+.lung-slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
 }
