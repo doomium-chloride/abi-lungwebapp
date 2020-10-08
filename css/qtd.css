@@ -172,6 +172,7 @@ input[type=range][orient=vertical]
     position: fixed;
     right: 5%;
     top: 0;
+    height: 50vh;
 }
 
 .pattern-menu button{
@@ -308,24 +309,27 @@ span.center{
 }
 
 .lung-slider {
-    width: 0;
+    width: 50%;
     top: 12%;
     height: 66%;
+    left: 25%;
     position: absolute;
+    background-color: transparent;
 }
 
 .lung-slider-div {
     position: absolute;
     height: 50%;
     width: 100%;
-    bottom: 5%;
+    bottom: 0%;
     z-index: 10;
+    background: none;
 }
 
 .lung-slider::-webkit-slider-thumb,
 .lung-slider::-moz-range-thumb {
     width: 20vw;
-    height: 20vh;
+    height: 1px;
     cursor: pointer;
     opacity: 1;
     background-color: transparent;
