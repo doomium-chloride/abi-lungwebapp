@@ -100,12 +100,12 @@ var numbers = [1,1,1,0];
 var sliderVariables = {
     age: 30,
     gender: 0,
-    height: 100,
+    height: 140,
     bmi: 20,
-    fvc: 1,
-    dlco: 1,
-    rvtlc: 1,
-    tlc: 1
+    fvc: 2,
+    dlco: 10,
+    rvtlc: 10,
+    tlc: 3
 };
 
 var globalScene = null;

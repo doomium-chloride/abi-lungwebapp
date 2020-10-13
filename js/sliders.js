@@ -229,15 +229,19 @@ function initGenderSlider(){//gender is an exception, and not optional
 
     function showGenderValue(value, span){
         const male = value;
-        if(male){
+        if(male == 1){
             span.innerText = "Male";
         } else {
             span.innerText = "Female";
         }
     }
 
-    slider.addEventListener('input', (event) => sliderListener(event, variable));
-    slider.addEventListener('input', (event) => showGenderValue(event.target.value, span));
+    slider.addEventListener('click', (event) => {
+        let newSex = sliderVariables.gender == 1 ? 0 : 1;
+        slider.value = newSex;
+        sliderSetValue(newSex, variable);
+        showGenderValue(newSex, span);
+    });
     sliderSetValue(sliderVariables[variable], variable, false)
     showGenderValue(sliderVariables[variable], span);
 }
@@ -402,7 +406,7 @@ function autoFormula(variable){
 }
 
 function formulaRvtlc(age, male){
-    if(male){
+    if(male == 1){
         return (age * 0.29125) + 14.7;
     } else{
         return (age * 0.3424) + 16.4;
@@ -411,7 +415,7 @@ function formulaRvtlc(age, male){
 
 //(height = cm, weight = kg)
 function formulaDlco(height, age, male){
-    if(male){
+    if(male == 1){
         return ((0.1217 * height) - (0.057 * age) - 8.05) * 2.986;
     } else{
         return ((0.0911 * height) - (0.043 * age) - 4.93) * 2.986;
@@ -419,7 +423,7 @@ function formulaDlco(height, age, male){
 }
 
 function formulaFvc(age, height, male){
-    if(male){
+    if(male == 1){
         return - 4.38775 - 0.01184 * age + 0.05547 * height;
     } else{
         return - 3.09063 + 0.003904 * age + 0.038694 * height;
