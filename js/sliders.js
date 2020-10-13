@@ -120,7 +120,7 @@ function initSliders(){
     initOpacitySliders();
 
     //colour input
-    initColourHandlers()
+    //initColourHandlers()
 
     //info button
     initPCAinfo();
