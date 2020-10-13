@@ -112,6 +112,7 @@ function initSliders(){
 
     initScene(() => {
         sliderSetValue(0, 'gender');// hot fix?
+        document.getElementById('slider-gender').value = 0;
         toggleCompareMode(lungButton, false);
     });
 

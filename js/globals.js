@@ -105,7 +105,7 @@ var sliderVariables = {
     fvc: 2,
     dlco: 10,
     rvtlc: 10,
-    tlc: 3
+    tlc: 2
 };
 
 var globalScene = null;
