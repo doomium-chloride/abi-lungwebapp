@@ -396,10 +396,13 @@ const loadModels = function (name, scene, data, material) {
 };
 
 function pcaLinear(geometry, pca, index, side, weights){
-    const base = geometry.vertices[index][side]
-    const d1 = pca[0].geometry.vertices[index][side] - base;
-    const d2 = pca[1].geometry.vertices[index][side] - base;
-    const d3 = pca[2].geometry.vertices[index][side] - base;
+
+    const tlc = Math.cbrt(sliderVariables.tlc / 2);
+
+    const base = geometry.vertices[index][side] * (tlc/baseVolume[0])
+    const d1 = pca[0].geometry.vertices[index][side] * (tlc/baseVolume[1]) - base;
+    const d2 = pca[1].geometry.vertices[index][side] * (tlc/baseVolume[2]) - base;
+    const d3 = pca[2].geometry.vertices[index][side] * (tlc/baseVolume[3]) - base;
     //return base;
     //console.log(weights[1])
     return base + (d1 * weights[0]) + (d2 * weights[1]) + (d3 * weights[2]);

@@ -95,7 +95,10 @@ const staticWeights = [0,0,0];
 
 var lungWeights = [0,0,0];
 
-var numbers = [1,1,1,0];
+var numbers = [1,1,1];
+
+const baseVolume = [Math.cbrt(2.5), Math.cbrt(2.87), 
+	Math.cbrt(2.34), Math.cbrt(2.99)]//000, 001, 010, 100
 
 var sliderVariables = {
     age: 30,
