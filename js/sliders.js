@@ -32,6 +32,8 @@ let compareMode = true;
 
 let sliderMenu = true;
 
+let heightSlider;
+
 function setSliderValue(value, slider, span, units = ""){
     span.innerText = round2(value)  + " " + units;
     slider.value = value;
@@ -78,29 +80,9 @@ function initScene(callBack = null){
     }, uniforms, saveData, callBack);
 }
 
-// function initScene(){
-//     loadScene({
-//         vs: 'shaders/surface.vs',
-//         fs: 'shaders/surface.fs',
-//         view: 'models/surface_view.json',
-//         models: [
-//             'models/surface_1.json',
-//             'models/surface_2.json',
-//             'models/surface_3.json',
-//             'models/surface_4.json',
-//             'models/surface_5.json',
-//             'models/surface_6.json',
-//         ]
-//     }, surfaceUniforms)
-// }
-
 function initSliders(){
 
     optionalSliders = [];
-
-    
-
-    let sliders = document.getElementById('slider-section');
 
     //toggle lung menu
     let menuButton = document.getElementById('compare-menu-button');
@@ -126,16 +108,11 @@ function initSliders(){
     //info button
     initPCAinfo();
 
-    //toggle button
-    let toggleButton = document.getElementById('auto-fill-toggle');
-    toggleButton.addEventListener('click', () => toggleAutoButton(toggleButton));
-    toggleAutoButton(toggleButton, true);
-
     //age
     initSliderCombo('age', " years");
 
     //height
-    initSliderCombo('height', "cm");
+    initHeightSlider();
 
     //bmi
     initSliderCombo('bmi', "kg/m2");
@@ -154,6 +131,11 @@ function initSliders(){
 
     //tlc
     initSliderCombo('tlc', "", true, true);
+
+    //toggle button
+    let toggleButton = document.getElementById('auto-fill-toggle');
+    toggleButton.addEventListener('click', () => toggleAutoButton(toggleButton));
+    toggleAutoButton(toggleButton, true);
 
     updateLungModel(true);
 
@@ -201,6 +183,7 @@ function longInfoHanlder(baseStr, info, forward){
     }
 }
 
+
 function initPCAinfo(){
     let infoPCAtext = document.getElementById('info-text-pca');
     let infoButton = document.getElementById('info-pca');
@@ -217,6 +200,22 @@ function initPCAinfo(){
 
     infoArray.push(infoPCAtext)
 
+}
+
+function initHeightSlider(){// height will freeze unless on autofill
+    const variable = 'height';
+    const sliderID = 'slider-' + variable;
+    const spanID = 'show-' + variable;
+    const units = 'cm';
+
+    const slider = document.getElementById(sliderID);
+    const span = document.getElementById(spanID);
+    heightSlider = slider
+
+    slider.addEventListener('input', (event) => sliderListener(event, variable));
+    slider.addEventListener('input', (event) => showValue(event, span, units));
+    sliderSetValue(sliderVariables[variable], variable, false)
+    setSliderValue(sliderVariables[variable], slider, span, units);
 }
 
 function initGenderSlider(){//gender is an exception, and not optional
@@ -469,12 +468,15 @@ function toggleAutoButton(button, init = false){
     globalAutoFill = toggled;
 
     toggleSliders(toggled);
+    heightSlider.disabled = !toggled;
 
     if(toggled){
         button.innerText = "ON";
         autoSetVariables();
+        heightSlider.classList.remove('locked');
     } else{
         button.innerText = "OFF";
+        heightSlider.classList.add('locked');
     }
 }
 
