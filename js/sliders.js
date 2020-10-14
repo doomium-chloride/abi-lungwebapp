@@ -433,7 +433,8 @@ function formulaFvc(age, height, male){
 function formulaTlc(height, bmi){
     const meters = height / 100;//convert to meters
     const mass = bmi * meters * meters;// bmi x height ^ 2
-    return -0.0282 + (0.0162 * height) + (-0.0013 * mass);
+    const root = -0.0282 + (0.0162 * height) + (-0.0013 * mass);
+    return root * root;
 }
 
 function autoSet(value, slider){
