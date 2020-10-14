@@ -405,7 +405,7 @@ function pcaLinear(geometry, pca, index, side, weights){
     const d3 = pca[2].geometry.vertices[index][side] * (tlc/baseVolume[3]) - base;
     //return base;
     //console.log(weights[1])
-    return base + (d1 * weights[0]) + (d2 * weights[1]) + (d3 * weights[2]);
+    return base + (d1 * weights[0] * 0) + (d2 * weights[1]) + (d3 * weights[2]);
 }
 
 function toBufferGeometry(geometry, weights = staticWeights) {

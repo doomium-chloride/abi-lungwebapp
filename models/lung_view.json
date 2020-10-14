@@ -3,14 +3,14 @@
     "farPlane": 1843.87943940535,
     "timeEnabled": [0,0,0,0,0], "morphColour" : [0,0,0,0,0],
     "eyePosition": [
-      190,
+      0,
       -320,
       180
     ],
     "targetPosition": [
-      180,
-      170,
-      -100
+      0,
+      0,
+      0
     ],
     "upVector": [
       0,
