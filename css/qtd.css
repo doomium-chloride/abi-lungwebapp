@@ -196,8 +196,25 @@ input[type=range][orient=vertical]
     margin: 1vw;
 }
 
-.side-pic {
-    width: 40%;
+span.side-pic {
+    display: inline-block;
+    height: 16vw;
+    width: 16vw;
+}
+
+
+img.side-pic {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
+
+span.crop-side-pic {
+    overflow: hidden;
+}
+
+img.crop-side-pic {
+    object-fit: cover;
 }
 
 .tooltip {
