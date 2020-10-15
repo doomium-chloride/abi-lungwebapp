@@ -108,3 +108,8 @@ img.gray {
 .slider-button:hover{
     opacity: 1;
 }
+
+input[type="range"].no-thumb::-webkit-slider-thumb,
+input[type="range"].no-thumb::-moz-range-thumb {
+    visibility: hidden;
+}

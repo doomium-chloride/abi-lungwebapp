@@ -475,9 +475,11 @@ function toggleAutoButton(button, init = false){
         button.innerText = "ON";
         autoSetVariables();
         heightSlider.classList.remove('locked');
+        heightSlider.classList.remove('no-thumb');
     } else{
         button.innerText = "OFF";
         heightSlider.classList.add('locked');
+        heightSlider.classList.add('no-thumb');
     }
 }
 
