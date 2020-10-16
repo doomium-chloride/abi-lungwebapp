@@ -387,3 +387,15 @@ span.center{
 .colour-bar-slice img {
     height: 70vh;
 }
+
+.colour-bar-stack {
+    position: absolute;
+    top: 45%;
+    width: 0;
+    height: 50%;
+    margin: 1vw;
+}
+
+.colour-bar-stack img {
+    height: 100%;
+}
