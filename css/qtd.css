@@ -14,6 +14,14 @@ article.center {
     margin: 1vw;
 }
 
+.center-slice {
+    position: absolute;
+    top: 50%;
+    transform: translate(40%, -50%);
+	width: 40vw;
+    margin: 1vw;
+}
+
 .center-article {
     position: absolute;
     transform: translate(100%, 0);
@@ -366,4 +374,16 @@ span.center{
 .lung-slider::-webkit-slider-thumb{
     -webkit-appearance: none;
     appearance: none;
+}
+
+.colour-bar-slice {
+    position: absolute;
+    top: 50%;
+    transform: translate(60vw, -50%);
+	width: 0;
+    margin: 1vw;
+}
+
+.colour-bar-slice img {
+    height: 70vh;
 }
