@@ -66,6 +66,15 @@ article.center {
     bottom: 100%;
 }
 
+.bottom-text {
+    position: absolute;
+    top: 100%;
+}
+
+.circle-pic {
+    border-radius: 50%;
+}
+
 body[data-page="quadtree"] #top-buttons,
 body[data-page="quadtree"] #navigation,
 body[data-page="quadtree-checker"] #top-buttons,
