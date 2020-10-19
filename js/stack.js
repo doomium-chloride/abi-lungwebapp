@@ -164,6 +164,8 @@ function initStack(){
     let verticalSpan = document.getElementById('vertical-value');
     let graphContainer = document.getElementById('graph');
 
+    let lungSlider = document.getElementById('lung-slider');
+
     
     const qtdFilename = 'COPD_qtd.json';
 
@@ -225,11 +227,21 @@ function initStack(){
                     ticks: {
                         mirror: false,
                         fontColor: "white"
+                    },
+                    scaleLabel : {
+                        display: true,
+                        labelString: 'QtD value',
+                        fontColor: 'white'
                     }
                 }],
                 xAxes: [{
                     ticks: {
                         fontColor: "white"
+                    },
+                    scaleLabel : {
+                        display: true,
+                        labelString: 'Height from base of lung',
+                        fontColor: 'white'
                     }
                 }]
             },
@@ -283,13 +295,21 @@ function initStack(){
 
     function gHandler(value){
         graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, rangeSlider.value, setSliceImages);
+        lungSlider.value = value;
     }
 
     function sHandler(value){
         graphHandler(verticalSlider.value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, value, setSliceImages);
     }
 
+    function lHandler(value){
+        graphHandler(value, verticalSpan, graphSlider, graphContainer, chart, qtdSpan, lungPic, hLine, rangeSlider.value, setSliceImages);
+        verticalSlider.value = value
+    }
+
     verticalSlider.addEventListener('input', (e) => gHandler(e.target.value));
+
+    lungSlider.addEventListener('input', (e) => lHandler(e.target.value));
 
     window.addEventListener('resize', () => gHandler(verticalSlider.value));
 

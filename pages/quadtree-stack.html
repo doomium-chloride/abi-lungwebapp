@@ -1,5 +1,19 @@
 <section id="page-qtd-stack">
     <img src="images/back.svg" id="back-button" onclick="window.history.back()" class="clickable back-button"/>
+    <div class="center-head">
+        <h2 style="display: inline;">Lung stack</h2>
+        <label class="tooltip clickable">&#x1F6C8<input type="checkbox"><span>
+            <p>
+                QtD values pooled from an IPF cohort are shown in red. 
+            </p>
+            <p>
+                QtD values pooled from a healthy older adult cohort are shown in green. 
+            </p>
+            <p>
+                Select the window size and lung height at which you want QtD value reported.
+            </p>
+        </span></label>
+    </div>
     <article class="left center-text" style="width: 10vw;">  
         <h5>Height from bottom</h5>
         <h4><span id="vertical-value"></span>%</h4>
@@ -31,12 +45,25 @@
         <label for="range-slider" class="slider-description">
             Selection range
         </label>
+        <span class="side-pic">
+            <img id="stack-block" class="side-pic crop-side-pic" src="images/stack/block300.jpg">
+        </span>
+        <span class="side-pic">
+            <img id="stack-image" class="side-pic" src="images/stack/image300.jpg">
+        </span>
 
-        <img id="stack-image" class="side-pic" src="images/stack/image300.jpg">
-        <img id="stack-block" class="side-pic" src="images/stack/block300.jpg">
+        <div class="colour-bar-stack">
+            <img src="images/colour-bar.png">
+        </div>
+
         <div class="center-text">
             <img id="lung-pic" src="images/base-lung.png" class="lung-pic">
-            <div id="h-line" class="horizontal-line"></div>
+            
+            <div class="lung-slider-div">
+                <div id="h-line" class="horizontal-line"></div>
+                <input id='lung-slider' class="clickable lung-slider" type="range" orient="vertical" min="20" max="80" value="50" />
+            </div>
+            
         </div>
         
         <input id="range-slider" class="clickable range-slider" type="range" orient="vertical" min="0" max="60" value="0" />

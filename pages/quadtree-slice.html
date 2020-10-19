@@ -1,27 +1,78 @@
 <section id="page-qtd-slice">
     <img src="images/back.svg" id="back-button" onclick="window.history.back()" class="clickable back-button"/>
-    <article class="left center-text">  
+    <div class="center-head">
+        <h2 style="display: inline;">Lung slices</h2>
+        <label class="tooltip clickable">&#x1F6C8<input type="checkbox"><span>
+            Info about lung slices
+        </span></label>
+    </div>
+    <article class="left center-text" style="width: 10vw;">  
         <h3>Height from bottom</h3>
         <h4><span id="vertical-value"></span>%</h4>
         <input id="vertical-slider" class="clickable vertical-slider" type="range" orient="vertical" min="0" max="2" />
     </article>
-	<article class="center-large">
+	<article class="center-slice center-text">
         <div id="lung-slice-top" class="hidden">
-            <h3 class="top-text">QtD score = 0.1876</h3>
-            <img class="side-pic" src="images/slice/slice-top.jpg">
-            <img class="side-pic" src="images/slice/image-top.png">
+            <h3 class="top-text">Healthy QtD score = 0.1876</h3>
+            <span class="side-pic">
+                <img class="side-pic" src="images/slice/image-top.png">
+            </span>
+            <span class="side-pic">
+                <img class="side-pic crop-side-pic" src="images/slice/healthy-block-top.jpg">
+            </span>
+            
+            <br>
+
+            <h3 class="bottom-text">IPF QtD score = 0.1934</h3>
+            <span class="side-pic">
+                <img class="side-pic circle-pic" src="images/slice/ipf-image-top.jpg">
+            </span>
+            <span class="side-pic">
+                <img class="side-pic crop-side-pic" src="images/slice/ipf-block-top.jpg">
+            </span>
         </div>
         <div id="lung-slice-mid" class="hidden">
-            <h3 class="top-text">QtD score = 0.1781</h3>
-            <img class="side-pic" src="images/slice/slice-mid.jpg">
-            <img class="side-pic" src="images/slice/image-mid.png">
+            <h3 class="top-text">Healthy QtD score = 0.1781</h3>
+            <span class="side-pic">
+                <img class="side-pic" src="images/slice/image-mid.png">
+            </span>
+            <span class="side-pic">
+                <img class="side-pic crop-side-pic" src="images/slice/healthy-block-mid.jpg">
+            </span>
+
+            <br>
+
+            <h3 class="bottom-text">IPF QtD score = 0.2297</h3>
+            <span class="side-pic">
+                <img class="side-pic circle-pic" src="images/slice/ipf-image-mid.jpg">
+            </span>
+            <span class="side-pic">
+                <img class="side-pic crop-side-pic" src="images/slice/ipf-block-mid.jpg">
+            </span>
         </div>
         <div id="lung-slice-bot" class="hidden">
-            <h3 class="top-text">QtD score = 0.1913</h3>
-            <img class="side-pic" src="images/slice/slice-bot.jpg">
-            <img class="side-pic" src="images/slice/image-bot.png">
+            <h3 class="top-text">Healthy QtD score = 0.1913</h3>
+            <span class="side-pic">
+                <img class="side-pic" src="images/slice/image-bot.png">
+            </span>
+            <span class="side-pic">
+                <img class="side-pic crop-side-pic" src="images/slice/healthy-block-bot.jpg">
+            </span>
+            
+            <br>
+
+            <h3 class="bottom-text">IPF QtD score = 0.5554</h3>
+            <span class="side-pic">
+                <img class="side-pic circle-pic" src="images/slice/ipf-image-bot.jpg">
+            </span>
+            <span class="side-pic">
+                <img class="side-pic crop-side-pic" src="images/slice/ipf-block-bot.jpg">
+            </span>
         </div>
-	</article>
+    </article>
+    <article class="colour-bar-slice">
+        <img src="images/colour-bar.png">
+    </article>
 	<article class="right middle center-text">
         <img id="lung-pic-top" src="images/slice/lung-top.png" class="lung-pic hidden">
         <img id="lung-pic-mid" src="images/slice/lung-mid.png" class="lung-pic hidden">

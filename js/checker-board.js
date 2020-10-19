@@ -29,6 +29,14 @@ function initCheckerBoard(){
 
     let scores = [score1, score2, score3];
 
+    let initText = document.getElementById('checker-info-text');
+    let initText2 = document.getElementById('checker-info-text-2');
+
+    function removeInitText(){
+        initText.style.display = 'none';
+        initText2.style.display = 'none';
+    }
+
     button1.addEventListener('click', () => makeImageActive(checkerPic1, checkerPics));
     button2.addEventListener('click', () => makeImageActive(checkerPic2, checkerPics));
     button3.addEventListener('click', () => makeImageActive(checkerPic3, checkerPics));
@@ -36,5 +44,9 @@ function initCheckerBoard(){
     button1.addEventListener('click', () => makeImageActive(score1, scores));
     button2.addEventListener('click', () => makeImageActive(score2, scores));
     button3.addEventListener('click', () => makeImageActive(score3, scores));
+
+    button1.addEventListener('click', removeInitText, {once: true});
+    button2.addEventListener('click', removeInitText, {once: true});
+    button3.addEventListener('click', removeInitText, {once: true});
 }
 
