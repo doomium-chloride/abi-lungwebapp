@@ -306,15 +306,6 @@ function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
     var sliceOffset = sliceSize * slice;
 
     let dataSlice = typedData.slice(sliceOffset, sliceOffset + rows*cols);
-
-    if(mask && false){
-        let morph = new Morph(rows, cols, dataSlice);
-        let erosion = new StructuringElement(5);
-        morph.erodeWithElement(erosion);
-        //morph.erodeWithElement();
-        //console.log(morph);
-        dataSlice = morph.data;
-    }
     
     let output = new Array(rows);
     // draw pixels
