@@ -13,6 +13,9 @@ let userFiles = {
     mask: null
 }
 
+let lockMain = true;
+let lockMask = true;
+
 //let nifti = require("nifti-js");
 function readNIFTI(name, data, mask = false) {
     var canvas = document.getElementById('myCanvas');
@@ -397,6 +400,14 @@ function readFile(file, target) {
             let data = readNIFTI(file.name, evt.target.result, target == 'mask');
             if(target){
                 saveNifti[target] = data;
+                switch(target){
+                    case 'main':
+                        lockMain = false;
+                        break
+                    case 'mask':
+                        lockMask = false;
+                        break
+                }
             }
         }
     };

@@ -83,10 +83,12 @@ function showDims(array){
     console.log(`dims=${len1}-${len2}-${len3}`);
 }
 document.getElementById('file').addEventListener('change', (e) => {
+    lockMain = true;
     handleFileSelect(e, 'main');
     loadUserFile('main');
 }, false);
 document.getElementById('mask').addEventListener('change', (e) => {
+    lockMask = true;
     handleFileSelect(e, 'mask');
     loadUserFile('mask');
 }, false);
@@ -95,6 +97,10 @@ document.getElementById('mask').addEventListener('change', (e) => {
 document.getElementById('applymask').addEventListener('click', () => {
     if(userFiles.main == null || userFiles.mask == null){
         alert("Please select both files");
+        return;
+    }
+    if(lockMain || lockMask){
+        alert('files not ready');
         return;
     }
     let mainArray = saveNifti.main.qtd
