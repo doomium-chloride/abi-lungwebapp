@@ -108,6 +108,7 @@ document.getElementById('applymask').addEventListener('click', () => {
     showDims(mainArray);
     showDims(maskArray);
     let result = mask3d(mainArray, maskArray);
+    qtdImg = result;
     result = computeQtD(result);
     result = processNifti(result);
     console.log(result);

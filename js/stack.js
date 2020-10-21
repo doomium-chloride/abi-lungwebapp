@@ -280,11 +280,19 @@ function initStack(){
 
     function setSliceImages(value){
         let number = qtdObj.image[value];
+
         let stackImagePath = imageStackPath + "image" + number + imgStackFormat;
         let stackBlockPath = imageStackPath + "block" + number + imgStackFormat;
 
         stackImage.src = stackImagePath;
         stackBlock.src = stackBlockPath;
+
+        if(qtdImg){
+            let sliceNum = Math.round(value * qtdImg.length / 100)
+            console.log(sliceNum);
+            setCanvas(sliceNum);
+            stackImage.src = qtdCanvas.toDataURL();
+        }
     }
 
     function preloadImages(){

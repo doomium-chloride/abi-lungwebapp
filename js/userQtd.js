@@ -16,6 +16,10 @@ let userFiles = {
 let lockMain = true;
 let lockMask = true;
 
+let qtdCanvas = document.createElement('canvas');
+
+let qtdImg = null;
+
 //let nifti = require("nifti-js");
 function readNIFTI(name, data, mask = false) {
     var canvas = document.getElementById('myCanvas');
@@ -62,7 +66,7 @@ function mask3d(array, mask){
     let len1 = array.length;
     let len2 = array[0].length;
     let len3 = array[0][0].length;
-    console.log(`${len1}-${len2}-${len3}`);
+
     let output = new Array(len1);
     for(let i = 0; i < len1; i++){
         let rows = new Array(len2);
@@ -348,11 +352,69 @@ function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
     return output;
 }
 
+function setCanvas(slice) {
+
+    let img = qtdImg[slice];
+
+    // get nifti dimensions
+    var cols = img[0].length;
+    var rows = img.length;
+
+    let canvas = qtdCanvas;
+    // set canvas dimensions to nifti slice dimensions
+    canvas.width = cols;
+    canvas.height = rows;
+
+    // make canvas image data
+    var ctx = canvas.getContext("2d");
+    var canvasImageData = ctx.createImageData(canvas.width, canvas.height);
+
+    let lowest = getMinMax2d(img, false, false);
+    let highest = getMinMax2d(img, true, false);
+    
+    // draw pixels
+    for (var row = 0; row < rows; row++) {
+        let rowOffset = row * cols;
+        for (var col = 0; col < cols; col++) {
+            let value = img[row][col];
+
+            /* 
+            Assumes data is 8-bit, otherwise you would need to first convert 
+            to 0-255 range based on datatype range, data range (iterate through
+            data to find), or display range (cal_min/max).
+            
+            Other things to take into consideration:
+                - data scale: scl_slope and scl_inter, apply to raw value before 
+                applying display range
+                - orientation: displays in raw orientation, see nifti orientation 
+                info for how to orient data
+                - assumes voxel shape (pixDims) is isometric, if not, you'll need 
+                to apply transform to the canvas
+                - byte order: see littleEndian flag
+            */
+
+            value = to255(value, lowest, highest);
+
+            if(value > highest)
+                highest = value;
+            if(value < lowest)
+                lowest = value;
+            
+            canvasImageData.data[(rowOffset + col) * 4] = value & 0xFF;
+            canvasImageData.data[(rowOffset + col) * 4 + 1] = value & 0xFF;
+            canvasImageData.data[(rowOffset + col) * 4 + 2] = value & 0xFF;
+            canvasImageData.data[(rowOffset + col) * 4 + 3] = 0xFF;
+        }
+    }
+    ctx.putImageData(canvasImageData, 0, 0);
+    
+}
+
 function calcQtD(slice){
     let qtd = quadTree(slice, qtCond);
 
     let n = countNonZero2d(slice);
-    console.log(`qtd=${qtd.length};n=${n}`);
+
     if(n == 0){
         return 0;
     }
@@ -437,7 +499,7 @@ function getWithinC(num){
 function makeQtdBins(qtd){
     let data = {}
     let size = qtd.length;
-    console.log("sizeb4bin="+size)
+
     for(let i = 0; i < size; i++){
         let num = getWithinC(i * 100 / (size+1));
         let key = num + "";
@@ -468,8 +530,7 @@ function processQtdBins(bins){
     let data = {};
     for(const bin in bins){
         let array = bins[bin];
-        console.log("bin=" + bin);
-        console.log(array)
+
         let qtd = mean(array);
         data[bin] = qtd;
     }
