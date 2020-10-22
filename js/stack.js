@@ -240,7 +240,7 @@ function initStack(){
                     },
                     scaleLabel : {
                         display: true,
-                        labelString: 'Height from base of lung',
+                        labelString: 'Height from base of lung %',
                         fontColor: 'white'
                     }
                 }]
