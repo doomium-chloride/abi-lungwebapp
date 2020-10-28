@@ -140,7 +140,8 @@ function initSliders(){
     updateLungModel(true);
 
 }
-
+// PCA info is too long
+// Allows toggle left and right for more info
 function longInfoHanlder(baseStr, info, forward){
     let current = infoState[info];
     let newNum;
@@ -183,7 +184,7 @@ function longInfoHanlder(baseStr, info, forward){
     }
 }
 
-
+// Connect info button to info
 function initPCAinfo(){
     let infoPCAtext = document.getElementById('info-text-pca');
     let infoButton = document.getElementById('info-pca');
@@ -201,7 +202,7 @@ function initPCAinfo(){
     infoArray.push(infoPCAtext)
 
 }
-
+// Connect height slider to code
 function initHeightSlider(){// height will freeze unless on autofill
     const variable = 'height';
     const sliderID = 'slider-' + variable;
@@ -217,7 +218,7 @@ function initHeightSlider(){// height will freeze unless on autofill
     sliderSetValue(sliderVariables[variable], variable, false)
     setSliderValue(sliderVariables[variable], slider, span, units);
 }
-
+// Connect sex slider
 function initGenderSlider(){//gender is an exception, and not optional
     const variable = "gender";
 
@@ -245,7 +246,7 @@ function initGenderSlider(){//gender is an exception, and not optional
     sliderSetValue(sliderVariables[variable], variable, false)
     showGenderValue(sliderVariables[variable], span);
 }
-
+// Connect arbitrary slider
 function initSliderCombo(variable, units = "", optional = false, info = false){
     let sliderID = 'slider-' + variable;
     let spanID = 'show-' + variable;
@@ -271,12 +272,12 @@ function initSliderPart(sliderID, spanID, variable, units, optional = false, inf
         infoArray.push(infoText);
     }
 }
-
+// Change slider span
 function showValue(event, span, units = ""){
     let value = event.target.value;
     span.innerText = value  + " " + units;
 }
-
+// When slider event 'input', this is called
 function sliderListener(event, variable, keepViewPort = true){
     sliderSetValue(event.target.value, variable, keepViewPort);
 }
@@ -314,7 +315,7 @@ function updateLungModel(keepViewPort = true){
     
     
 }
-
+// control slider and update model
 function sliderSetValue(value, variable, keepViewPort = true){
     sliderVariables[variable] = parseFloat(value);
     if(globalAutoFill){
@@ -324,7 +325,7 @@ function sliderSetValue(value, variable, keepViewPort = true){
     updateLungModel(keepViewPort);
 
 }
-
+// autofill
 function autoSetVariables(){
     let len = optionalSliders.length;
     for(let i = 0; i < len; i++){
@@ -336,7 +337,7 @@ function autoSetVariables(){
     }
     updateLungModel();
 }
-
+// old function
 function setLungScale(vector3){
     lungScale.x = vector3[0];
     lungScale.y = vector3[1];
@@ -358,7 +359,7 @@ function dumbFormula(value){
 function dummyFormula(age, fev1, tlc){
     return [1 + dumbFormula(age), 1 + dumbFormula(fev1), 1 + dumbFormula(tlc)];
 }
-
+// the PCA weights formula
 function weights1(age, fvc, dlco){
     const b = [1.3773, -0.0364, 0.3754, -0.0409];
     return b[0] + (b[1] * age) + (b[2] * fvc) + (b[3] * dlco);
@@ -385,7 +386,7 @@ function formulaObj(obj){
     return formulaEI(obj.age, obj.bmi, obj.fvc, obj.dlco, obj.rvtlc, obj.tlc);
 }
 
-
+// for autofill
 function autoFormula(variable){
     switch(variable){
         case 'fvc':
@@ -404,7 +405,7 @@ function autoFormula(variable){
             //do nothing, send notice in console. This should not be reached.
     }
 }
-
+// lung parameter formulas
 function formulaRvtlc(age, male){
     if(male == 1){
         return (age * 0.29125) + 14.7;
@@ -444,7 +445,7 @@ function autoSet(value, slider){
     slider.value = value;
     slider.dispatchEvent(event);
 }
-
+// lock sliders
 function toggleSliders(disabled){
     const locked = "locked";
     let len = optionalSliders.length;

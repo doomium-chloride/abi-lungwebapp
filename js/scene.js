@@ -153,7 +153,7 @@ const pca = [
 ]
 
 console.log(pca)
-
+// load one scene with more than 1 model
 const loadMultiScene = function(data, uniforms, saveData, callBack = null) {
 	if (!zincRenderer) {
 		console.error('zinc not loaded');
@@ -234,7 +234,7 @@ const loadScene = function(data, uniforms, rng = null) {
     loadModels(name, scene, data, material);
     });
 };
-
+// load more than 1 model
 const loadMultiModels = function (name, scene, data, material, saveData, callBack = null) {
     let loadedSizes = [];
     let totalSize = 0;
@@ -394,7 +394,7 @@ const loadModels = function (name, scene, data, material) {
         );
     }
 };
-
+// dynamically generate PCA lung mesh
 function pcaLinear(geometry, pca, index, side, weights){
 
     const tlc = Math.cbrt(sliderVariables.tlc / 2);
@@ -514,7 +514,7 @@ function reloadModels(){
         n--;
     }
 }
-
+// reload/refresh model
 function reloadMultiModels(saveData){
     
     let models = saveData.models;
