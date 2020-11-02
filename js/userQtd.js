@@ -348,6 +348,7 @@ function drawSlice(slice, niftiHeader, niftiImage, mask = false) {
 
     if(mask){
         output = binaryErosion(output, 2);
+        output = ccThresholding(output);
     }
     return output;
 }
@@ -541,4 +542,155 @@ function processNifti(qtd){
     let bins = makeQtdBins(qtd);
     let data = processQtdBins(bins);
     return data;
+}
+
+function index2key(index1, index2){
+    return `${index1}-${index2}`;
+}
+
+function key2index(key){
+    let arr = key.split('-');
+    let index1 = parseInt(arr[0]);
+    let index2 = parseInt(arr[1]);
+    return [index1, index2];
+}
+
+function copy2d(array){
+    let rlen = array.length;
+    let clen = array[0].length;
+    let row = new Array(rlen);
+    for(let i = 0; i < rlen; i++){
+        let col = new Array(clen);
+        for(let j = 0; j < clen; j++){
+            col[j] = array[i][j];
+        }
+        row[i] = col;
+    }
+    return row;
+}
+
+function labelFeatures(mask){
+    let index2feature = {};
+    let feature2index ={};
+    let len1 = mask.length;
+    let len2 = mask[0].length;
+    let feature = 0;
+    let label = copy2d(mask);
+    function add2feature2index(f, key){
+        let fkey = f +"";
+        if(fkey in feature2index){
+            let set = feature2index[fkey];
+            set.add(key);
+        } else{
+            let set = new Set();
+            set.add(key);
+            feature2index[fkey] = set;
+        }
+    }
+    function checkNeighbours(mask, i, j, f){
+        let key = index2key(i, j);
+        if(mask[i][j] <= 0){
+            return;
+        }
+        if(key in index2feature){
+            if(index2feature[key] != f){
+                console.error(index2feature[key] + " is not " + f);
+            }
+            return;
+        }
+        mask[i][j] = f
+        add2feature2index(f, key);
+        index2feature[key] = f;
+        if(i >= 1){
+            checkNeighbours(mask, i - 1, j, f);
+        }
+        if(i < (len1 - 1)){
+            checkNeighbours(mask, i + 1, j, f);
+        }
+        if(j >= 1){
+            checkNeighbours(mask, i, j - 1, f);
+        }
+        if(j < (len2 - 1)){
+            checkNeighbours(mask, i, j + 1, f);
+        }
+        return mask;
+    }
+    for(let i = 0; i < len1; i++){
+        for(let j = 0; j < len2; j++){
+            let key = index2key(i, j);
+            let nonZero = label[i][j] > 0;
+            if(nonZero){
+                if(key in index2feature){
+                    continue;// do nothing
+                } else{
+                    feature++;
+                    checkNeighbours(label, i, j, feature);
+                }
+            }
+        }
+    }
+    return [label, feature];
+}
+
+function getUnique2d(array){
+    let len1 = array.length;
+    let len2 = array[0].length;
+    let count = 0;
+    let total = {};
+    let uniques = [];
+    let index = [];
+    for(let i = 0; i < len1; i++){
+        for(let j = 0; j < len2; j++){
+            let num = array[i][j];
+            if(num in total){
+                total[num] = total[num] + 1;
+            } else{
+                total[num] = 1;
+                uniques.push(num);
+                index.push(count);
+            }
+            count++;
+        }
+    }
+    let totalCount = [];
+    for(let i = 0; i < uniques.length; i++){
+        let key = uniques[i];
+        totalCount.push(total[key]);
+    }
+    return [uniques, index, totalCount];
+}
+
+function ccThresholding(mask){
+    let labelArray = labelFeatures(mask);
+    let labels = labelArray[0];
+    let numOfLabels = labelArray[1];
+
+    let uniqueArray = getUnique2d(labels);
+    let unique = uniqueArray[0];
+    let indecies = uniqueArray[1];
+    let counts = uniqueArray[2];
+
+    let thresholdLabels = [];
+
+    for(let i = 0; i < unique.length; i++){
+        if(counts[i] > 500){
+            thresholdLabels.push(unique[i]);
+        }
+    }
+
+    let rlen = mask.length;
+    let clen = mask[0].length;
+
+    let newMask = copy2d(mask);
+    for(let i = 0; i < rlen; i++){
+        for(let j = 0; j < clen; j++){
+            let check = labels[i][j] in thresholdLabels;
+            if(check){ 
+                newMask[i][j] = labels[i][j];
+            } else {
+                newMask[i][j] = 0;
+            }
+        }
+    }
+    return newMask;
 }
